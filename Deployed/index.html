@@ -421,6 +421,10 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   -webkit-backdrop-filter:blur(12px);
 }
 .app-nav button {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
   min-width:0;
   border:0;
   background:transparent;
@@ -432,6 +436,8 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   font-weight:800;
   cursor:pointer;
 }
+.nav-icon { line-height:1; }
+.nav-short { display:none; }
 .app-nav button[aria-current="page"] {
   background:var(--primary);
   color:var(--on-primary);
@@ -780,6 +786,9 @@ body[data-current-view="reference"] #evening-view,
 body[data-current-view="reference"] #allday-view { display:none; }
 
 @media (max-width:620px) {
+  .shell {
+    padding-bottom:calc(112px + env(safe-area-inset-bottom));
+  }
   .hero-theme {
     top:14px;
     right:14px;
@@ -789,14 +798,53 @@ body[data-current-view="reference"] #allday-view { display:none; }
     font-size:.92rem;
   }
   .app-nav {
-    top:60px;
-    overflow-x:auto;
-    grid-template-columns:none;
-    grid-auto-flow:column;
-    grid-auto-columns:max-content;
-    justify-content:start;
+    position:fixed;
+    inset:auto 0 0 0;
+    top:auto;
+    z-index:40;
+    grid-template-columns:repeat(5, minmax(0,1fr));
+    gap:2px;
+    width:100%;
+    margin:0;
+    padding:8px max(8px, env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-right));
+    background:color-mix(in srgb, var(--surface) 88%, transparent);
+    border:0;
+    border-top:1px solid var(--line);
+    border-radius:18px 18px 0 0;
+    box-shadow:0 -8px 24px rgba(24,61,50,.08);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
   }
-  .app-nav button { padding:9px 10px; }
+  .app-nav button {
+    min-height:50px;
+    flex-direction:column;
+    gap:3px;
+    padding:6px 4px;
+    border-radius:14px;
+    font-size:.7rem;
+  }
+  .app-nav button[aria-current="page"] {
+    background:var(--surface-2);
+    color:var(--primary);
+  }
+  .app-nav button[aria-current="page"] .nav-icon {
+    background:var(--primary);
+    color:var(--on-primary);
+  }
+  .nav-icon {
+    display:grid;
+    place-items:center;
+    width:28px;
+    height:24px;
+    border-radius:999px;
+    font-size:1.02rem;
+    line-height:1;
+  }
+  .nav-full { display:none; }
+  .nav-short { display:inline; }
+  .offline-pill {
+    bottom:calc(78px + env(safe-area-inset-bottom));
+  }
   .routine-summary-grid { grid-template-columns:1fr; }
 }
 @media (max-width:420px) {
@@ -838,11 +886,11 @@ body[data-current-view="reference"] #allday-view { display:none; }
 
 
   <nav class="app-nav" aria-label="Navigasi bacaan harian">
-    <button type="button" data-app-view="home" aria-current="page">Home</button>
-    <button type="button" data-app-view="morning">☀️ Pagi</button>
-    <button type="button" data-app-view="evening">🌙 Petang</button>
-    <button type="button" data-app-view="allday">♾️ Sepanjang Hari</button>
-    <button type="button" data-app-view="reference">Kandungan</button>
+    <button type="button" data-app-view="home" aria-label="Home" aria-current="page"><span class="nav-icon" aria-hidden="true">🏠</span><span class="nav-full">Home</span><span class="nav-short">Home</span></button>
+    <button type="button" data-app-view="morning" aria-label="Pagi"><span class="nav-icon" aria-hidden="true">☀️</span><span class="nav-full">Pagi</span><span class="nav-short">Pagi</span></button>
+    <button type="button" data-app-view="evening" aria-label="Petang"><span class="nav-icon" aria-hidden="true">🌙</span><span class="nav-full">Petang</span><span class="nav-short">Petang</span></button>
+    <button type="button" data-app-view="allday" aria-label="Sepanjang Hari"><span class="nav-icon" aria-hidden="true">∞</span><span class="nav-full">Sepanjang Hari</span><span class="nav-short">Harian</span></button>
+    <button type="button" data-app-view="reference" aria-label="Kandungan"><span class="nav-icon" aria-hidden="true">☰</span><span class="nav-full">Kandungan</span><span class="nav-short">Isi</span></button>
   </nav>
   <button type="button" class="install-app-button" id="install-app-button">Install App</button>
   <div class="offline-pill" id="offline-pill" role="status">Offline</div>
