@@ -1,7 +1,8 @@
-const CACHE_NAME = "uwa-bacaan-harian-v1";
+const CACHE_NAME = "uwa-bacaan-harian-v2";
+const INDEX_URL = "./index.html";
 const APP_SHELL = [
   "./",
-  "./index.html",
+  INDEX_URL,
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
@@ -21,12 +22,39 @@ self.addEventListener("activate", (event) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys
-          .filter((key) => key.startsWith("uwa-") && key !== CACHE_NAME)
+          .filter((key) => key.startsWith("uwa-bacaan-harian-") && key !== CACHE_NAME)
           .map((key) => caches.delete(key))
       ))
       .then(() => self.clients.claim())
   );
 });
+
+async function networkFirstIndex(request) {
+  const cache = await caches.open(CACHE_NAME);
+  try {
+    const networkResponse = await fetch(request);
+    if (networkResponse && networkResponse.ok) {
+      await cache.put(INDEX_URL, networkResponse.clone());
+      await cache.put("./", networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (error) {
+    const cachedIndex = await cache.match(INDEX_URL) || await cache.match("./");
+    return cachedIndex || Response.error();
+  }
+}
+
+async function cacheFirstAsset(request) {
+  const cachedResponse = await caches.match(request);
+  if (cachedResponse) return cachedResponse;
+
+  const networkResponse = await fetch(request);
+  if (networkResponse && networkResponse.ok) {
+    const cache = await caches.open(CACHE_NAME);
+    await cache.put(request, networkResponse.clone());
+  }
+  return networkResponse;
+}
 
 self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
@@ -34,21 +62,13 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) return cachedResponse;
-      return fetch(event.request).then((networkResponse) => {
-        const responseCopy = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseCopy);
-        });
-        return networkResponse;
-      }).catch(() => {
-        if (event.request.mode === "navigate") {
-          return caches.match("./index.html");
-        }
-        return Response.error();
-      });
-    })
-  );
+  const isNavigation = event.request.mode === "navigate";
+  const isIndex = requestUrl.pathname.endsWith("/") || requestUrl.pathname.endsWith("/index.html");
+
+  if (isNavigation || isIndex) {
+    event.respondWith(networkFirstIndex(event.request));
+    return;
+  }
+
+  event.respondWith(cacheFirstAsset(event.request));
 });
