@@ -1,0 +1,1941 @@
+<!doctype html>
+<html lang="ms">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#183d32">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Bacaan Harian">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<title>Koleksi Bacaan Harian · UWA Mark 7</title>
+<script>
+(function () {
+  try {
+    var savedTheme = localStorage.getItem('uwa-theme');
+    if (savedTheme) document.documentElement.dataset.theme = savedTheme;
+  } catch (error) {}
+})();
+</script>
+<style>
+:root {
+  --bg:#f4f1e8;
+  --surface:#fffdf8;
+  --surface-2:#f3f8f5;
+  --ink:#1d2722;
+  --muted:#657068;
+  --primary:#183d32;
+  --primary-2:#2f6b58;
+  --on-primary:#ffffff;
+  --border:#d7dfd8;
+  --accent:#d7b56d;
+  --shadow:0 8px 28px rgba(24,61,50,.09);
+  --bg-glow:rgba(47,107,88,.08);
+  --hero-bg:linear-gradient(145deg,#183d32,#2f6b58);
+  --hero-accent:transparent;
+  --control-bg:rgba(255,253,248,.94);
+  --control-shadow:0 4px 14px rgba(24,61,50,.08);
+  --card-border:rgba(24,61,50,.09);
+  --arabic-ink:#111b16;
+  --meaning-ink:#3f4943;
+  --fadilat-bg:linear-gradient(145deg,#183d32,#214b3e);
+  --menu-shadow:0 18px 44px rgba(24,61,50,.18);
+  --theme-check:#183d32;
+  --green:var(--primary);
+  --green-2:var(--primary-2);
+  --line:var(--border);
+  --arabic-size:clamp(1.8rem, 6vw, 2.65rem);
+  --body-size:1rem;
+}
+html[data-theme="midnight"] {
+  --bg:#10161c;
+  --surface:#18222a;
+  --surface-2:#202d35;
+  --ink:#edf2f0;
+  --muted:#a8b7b1;
+  --primary:#82b89c;
+  --primary-2:#9ed0b5;
+  --on-primary:#ffffff;
+  --border:#31414a;
+  --accent:#b3c6a5;
+  --shadow:none;
+  --bg-glow:rgba(130,184,156,.06);
+  --hero-bg:linear-gradient(145deg,#0b1218,#1d3a36);
+  --hero-accent:transparent;
+  --control-bg:rgba(24,34,42,.96);
+  --control-shadow:none;
+  --card-border:#2b3a42;
+  --arabic-ink:#f5faf6;
+  --meaning-ink:#d4ded8;
+  --fadilat-bg:linear-gradient(145deg,#19322f,#223b35);
+  --menu-shadow:0 18px 44px rgba(0,0,0,.34);
+  --theme-check:#9ed0b5;
+}
+html[data-theme="sepia"] {
+  --bg:#efe5d3;
+  --surface:#fff8ea;
+  --surface-2:#f3ead8;
+  --ink:#2f2a24;
+  --muted:#70685d;
+  --primary:#4f7056;
+  --primary-2:#668965;
+  --on-primary:#ffffff;
+  --border:#d8cab6;
+  --accent:#b89155;
+  --shadow:0 8px 26px rgba(77,58,33,.09);
+  --bg-glow:rgba(102,137,101,.09);
+  --hero-bg:linear-gradient(145deg,#47654e,#74906c);
+  --hero-accent:transparent;
+  --control-bg:rgba(255,248,234,.96);
+  --control-shadow:0 4px 14px rgba(77,58,33,.08);
+  --card-border:rgba(77,58,33,.12);
+  --arabic-ink:#221d18;
+  --meaning-ink:#524a40;
+  --fadilat-bg:linear-gradient(145deg,#4f7056,#5f754f);
+  --menu-shadow:0 18px 44px rgba(77,58,33,.16);
+  --theme-check:#4f7056;
+}
+html[data-theme="minimal"] {
+  --bg:#f6f7f8;
+  --surface:#ffffff;
+  --surface-2:#f1f3f4;
+  --ink:#202326;
+  --muted:#667078;
+  --primary:#255f4d;
+  --primary-2:#3b7b65;
+  --on-primary:#ffffff;
+  --border:#dfe4e7;
+  --accent:#7a8b84;
+  --shadow:0 2px 12px rgba(20,28,34,.05);
+  --bg-glow:rgba(59,123,101,.06);
+  --hero-bg:linear-gradient(145deg,#245846,#3b7b65);
+  --hero-accent:transparent;
+  --control-bg:rgba(255,255,255,.96);
+  --control-shadow:0 2px 10px rgba(20,28,34,.06);
+  --card-border:#e1e6e8;
+  --arabic-ink:#15191b;
+  --meaning-ink:#41474c;
+  --fadilat-bg:linear-gradient(145deg,#255f4d,#2e6d58);
+  --menu-shadow:0 14px 34px rgba(20,28,34,.12);
+  --theme-check:#255f4d;
+}
+html[data-theme="royal"] {
+  --bg:#ece9df;
+  --surface:#fffdf3;
+  --surface-2:#f4f1e4;
+  --ink:#1d2721;
+  --muted:#687164;
+  --primary:#0f4336;
+  --primary-2:#28664f;
+  --on-primary:#fffdf3;
+  --border:#d8d2bf;
+  --accent:#b89b55;
+  --shadow:0 10px 30px rgba(15,67,54,.1);
+  --bg-glow:rgba(40,102,79,.08);
+  --hero-bg:linear-gradient(145deg,#0b332a,#155a47 72%,#8f7844);
+  --hero-accent:#b89b55;
+  --control-bg:rgba(255,253,243,.96);
+  --control-shadow:0 4px 14px rgba(15,67,54,.08);
+  --card-border:rgba(15,67,54,.1);
+  --arabic-ink:#101c17;
+  --meaning-ink:#3f4941;
+  --fadilat-bg:linear-gradient(145deg,#0f4336,#1f5947);
+  --menu-shadow:0 18px 44px rgba(15,67,54,.18);
+  --theme-check:#9b7b34;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  margin:0;
+  background:
+    radial-gradient(circle at 20% 0%, var(--bg-glow), transparent 28rem),
+    var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:var(--body-size);
+  line-height:1.6;
+}
+a { color:var(--green-2); }
+.shell { width:min(760px, 100%); margin:0 auto; padding:0 14px 80px; }
+.hero {
+  position:relative;
+  margin:0 -14px 18px;
+  padding:54px 22px 34px;
+  text-align:center;
+  color:var(--on-primary);
+  background:var(--hero-bg);
+  border-bottom:3px solid var(--hero-accent);
+  border-radius:0 0 28px 28px;
+  box-shadow:var(--shadow);
+}
+.hero-theme {
+  position:absolute;
+  top:18px;
+  right:18px;
+  z-index:3;
+}
+.hero-theme .theme-toggle {
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,253,248,.95);
+  color:var(--primary);
+  border-radius:999px;
+  padding:10px 14px;
+  font-weight:800;
+  box-shadow:var(--control-shadow);
+}
+.hero-theme .theme-menu {
+  text-align:left;
+}
+.utility-controls-hidden {
+  display:none !important;
+}
+.hero .kicker { letter-spacing:.14em; font-weight:700; font-size:.76rem; opacity:.8; }
+.hero h1 { margin:.35rem 0 .2rem; font-size:clamp(2rem,8vw,3.1rem); line-height:1.05; }
+.hero p { margin:.45rem auto 0; max-width:520px; opacity:.88; }
+.arabic-logo {
+  margin-top:1rem;
+  font-family:"Amiri","Noto Naskh Arabic","Traditional Arabic",serif;
+  font-size:2rem;
+  direction:rtl;
+}
+.controls {
+  position:sticky;
+  top:8px;
+  z-index:20;
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:12px 0 18px;
+}
+.controls button {
+  border:1px solid var(--line);
+  background:var(--control-bg);
+  color:var(--green);
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:700;
+  box-shadow:var(--control-shadow);
+}
+.theme-control {
+  position:relative;
+}
+.theme-toggle {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.theme-toggle::after {
+  content:"";
+  width:0;
+  height:0;
+  border-left:4px solid transparent;
+  border-right:4px solid transparent;
+  border-top:5px solid currentColor;
+}
+.theme-menu {
+  position:absolute;
+  right:0;
+  top:calc(100% + 8px);
+  width:min(230px, calc(100vw - 28px));
+  padding:6px;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:16px;
+  box-shadow:var(--menu-shadow);
+}
+.theme-menu[hidden] {
+  display:none;
+}
+.theme-option {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border:0;
+  box-shadow:none;
+  border-radius:12px;
+  padding:9px 10px;
+  background:transparent;
+  color:var(--ink);
+  text-align:left;
+}
+.theme-option:hover,
+.theme-option:focus-visible {
+  background:var(--surface-2);
+}
+.theme-option[aria-checked="true"] {
+  color:var(--primary);
+  background:var(--surface-2);
+}
+.theme-option[aria-checked="true"]::after {
+  content:"✓";
+  color:var(--theme-check);
+  font-weight:900;
+}
+.save-arabic[hidden] {
+  display:none;
+}
+html[data-arabic-editing="true"] .arabic {
+  position:relative;
+  outline:2px solid var(--primary-2);
+  outline-offset:6px;
+  border-radius:14px;
+  background:var(--surface-2);
+}
+html[data-arabic-editing="true"] .arabic::before {
+  content:"Editing Arabic";
+  position:absolute;
+  top:-1.45rem;
+  right:8px;
+  padding:2px 7px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--muted);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:.68rem;
+  line-height:1.2;
+  font-weight:800;
+}
+.arabic[contenteditable="true"] {
+  caret-color:var(--primary);
+  -webkit-user-select:text;
+  user-select:text;
+}
+.arabic-reset {
+  display:none;
+  margin:6px auto 12px;
+  border:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--primary);
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:.78rem;
+  font-weight:800;
+}
+html[data-arabic-editing="true"] .arabic-reset {
+  display:block;
+}
+.toc, .zikir-card {
+  background:var(--surface);
+  border:1px solid var(--card-border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+.toc { padding:18px; margin-bottom:18px; scroll-margin-top:70px; }
+.toc h2 { margin:0 0 4px; color:var(--green); }
+.toc .sub { color:var(--muted); margin:0 0 12px; font-size:.92rem; }
+.toc table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px; }
+.toc th { text-align:left; color:var(--on-primary); background:var(--green); padding:9px 10px; font-size:.86rem; }
+.toc td { border-bottom:1px solid var(--line); padding:9px 10px; }
+.toc tr:nth-child(even) td { background:var(--surface-2); }
+.toc td.num { width:56px; text-align:center; font-weight:800; }
+.toc a { display:block; text-decoration:none; color:inherit; }
+.zikir-card {
+  padding:18px;
+  margin:0 0 18px;
+  scroll-margin-top:72px;
+  overflow:hidden;
+}
+.card-head { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.badge {
+  width:42px; height:42px; flex:0 0 42px;
+  border-radius:13px;
+  display:grid; place-items:center;
+  color:var(--on-primary); background:var(--green);
+  font-weight:800;
+}
+.eyebrow { color:var(--muted); font-size:.73rem; letter-spacing:.13em; font-weight:800; }
+.zikir-card h2 { margin:0; color:var(--green); font-size:1.22rem; line-height:1.25; }
+.arabic {
+  text-align:center;
+  font-family:"Amiri","Noto Naskh Arabic","Traditional Arabic","Geeza Pro",serif;
+  font-size:var(--arabic-size);
+  line-height:1.95;
+  color:var(--arabic-ink);
+  margin:16px 0 12px;
+  padding:4px 2px;
+  font-weight:500;
+}
+.meaning {
+  margin:10px 0;
+  text-align:center;
+  font-style:italic;
+  color:var(--meaning-ink);
+}
+.meta {
+  width:max-content;
+  max-width:100%;
+  margin:12px auto;
+  padding:7px 11px;
+  background:var(--surface-2);
+  color:var(--green);
+  border:1px solid var(--line);
+  border-radius:999px;
+  text-align:center;
+  font-size:.9rem;
+  font-weight:700;
+}
+.fadilat {
+  margin-top:14px;
+  padding:14px 16px;
+  text-align:center;
+  color:var(--on-primary);
+  background:var(--fadilat-bg);
+  border-radius:16px;
+}
+.f-title { font-weight:800; font-size:1rem; margin-bottom:2px; }
+.card-actions { text-align:right; margin-top:10px; }
+.card-actions a { text-decoration:none; font-size:.86rem; font-weight:700; }
+footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 0; }
+@media (min-width:700px) {
+  .shell { padding-left:20px; padding-right:20px; }
+  .hero { margin-left:-20px; margin-right:-20px; }
+  .zikir-card { padding:24px; }
+}
+@media (max-width:420px) {
+  .controls { justify-content:flex-start; }
+  .controls button { padding:8px 10px; }
+  .theme-control { margin-left:auto; }
+  .theme-menu { right:0; }
+}
+
+/* ===== MARK 7 · DAILY FLOW ===== */
+.app-nav {
+  position:sticky;
+  top:66px;
+  z-index:18;
+  display:grid;
+  grid-template-columns:repeat(5, minmax(0,1fr));
+  gap:6px;
+  margin:0 0 18px;
+  padding:6px;
+  background:color-mix(in srgb, var(--surface) 94%, transparent);
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:var(--control-shadow);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+.app-nav button {
+  min-width:0;
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  border-radius:12px;
+  padding:9px 5px;
+  font-size:.78rem;
+  line-height:1.15;
+  font-weight:800;
+  cursor:pointer;
+}
+.app-nav button[aria-current="page"] {
+  background:var(--primary);
+  color:var(--on-primary);
+}
+.install-app-button {
+  display:none;
+  border:1px solid var(--line);
+  background:var(--control-bg);
+  color:var(--primary);
+  border-radius:999px;
+  padding:8px 12px;
+  font-weight:800;
+  box-shadow:var(--control-shadow);
+}
+.install-app-button.is-visible {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+.offline-pill {
+  position:fixed;
+  left:50%;
+  bottom:14px;
+  transform:translateX(-50%);
+  z-index:35;
+  display:none;
+  padding:5px 10px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:var(--surface);
+  color:var(--muted);
+  box-shadow:var(--control-shadow);
+  font-size:.78rem;
+  font-weight:800;
+}
+.offline-pill.is-visible {
+  display:block;
+}
+.install-sheet {
+  position:fixed;
+  inset:0;
+  z-index:50;
+  display:grid;
+  place-items:end center;
+  padding:16px;
+  background:rgba(0,0,0,.28);
+}
+.install-sheet[hidden] {
+  display:none;
+}
+.install-sheet-panel {
+  width:min(420px, 100%);
+  padding:18px;
+  background:var(--surface);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:var(--menu-shadow);
+}
+.install-sheet-panel h2 {
+  margin:0 0 8px;
+  color:var(--primary);
+  font-size:1.08rem;
+}
+.install-sheet-panel ol {
+  margin:10px 0 14px;
+  padding-left:22px;
+}
+.install-sheet-panel button {
+  width:100%;
+  border:0;
+  border-radius:999px;
+  padding:10px 12px;
+  background:var(--primary);
+  color:var(--on-primary);
+  font-weight:800;
+}
+.daily-view[hidden] { display:none !important; }
+
+.daily-home {
+  display:grid;
+  gap:16px;
+  margin-bottom:18px;
+}
+.today-card,
+.routine-panel,
+.allday-panel,
+.need-panel {
+  background:var(--surface);
+  border:1px solid var(--card-border);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+}
+.today-card { padding:18px; }
+.today-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:12px;
+  margin-bottom:14px;
+}
+.today-title h2,
+.routine-panel h2,
+.allday-panel h2,
+.need-panel h2 {
+  margin:0;
+  color:var(--primary);
+}
+.today-title p {
+  margin:0;
+  color:var(--muted);
+  font-size:.86rem;
+}
+.routine-summary-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.routine-summary {
+  border:1px solid var(--line);
+  background:var(--surface-2);
+  border-radius:17px;
+  padding:14px;
+}
+.routine-summary .routine-icon {
+  font-size:1.45rem;
+  line-height:1;
+}
+.routine-summary h3 {
+  margin:8px 0 2px;
+  color:var(--ink);
+  font-size:1rem;
+}
+.routine-count {
+  color:var(--muted);
+  font-size:.84rem;
+}
+.progress-track {
+  height:8px;
+  margin:10px 0 11px;
+  overflow:hidden;
+  border-radius:99px;
+  background:var(--line);
+}
+.progress-fill {
+  height:100%;
+  width:0;
+  border-radius:inherit;
+  background:var(--primary-2);
+  transition:width .2s ease;
+}
+.routine-summary button,
+.start-routine,
+.need-chip,
+.bubble-link,
+.checklist-name,
+.card-complete {
+  font:inherit;
+}
+.routine-summary button,
+.start-routine {
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--primary);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:.8rem;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.quick-allday {
+  padding:18px;
+}
+.quick-allday-head {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:12px;
+}
+.quick-allday h2 { margin:0; color:var(--primary); }
+.quick-allday p { margin:3px 0 0; color:var(--muted); font-size:.86rem; }
+
+.bubble-cloud {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:9px 7px;
+  padding:8px 2px 4px;
+}
+.bubble-link {
+  border:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--primary);
+  text-decoration:none;
+  border-radius:999px;
+  padding:9px 13px;
+  font-size:.83rem;
+  font-weight:800;
+  cursor:pointer;
+  transition:transform .15s ease, background .15s ease;
+}
+.bubble-link:nth-child(3n+1) { transform:translateY(-3px) rotate(-1deg); }
+.bubble-link:nth-child(3n+2) { transform:translateY(3px) rotate(1deg); }
+.bubble-link:hover,
+.bubble-link:focus-visible { background:var(--surface); transform:scale(1.03); }
+
+.need-panel { padding:18px; }
+.need-panel > p { color:var(--muted); margin:4px 0 13px; font-size:.88rem; }
+.need-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.need-chip {
+  border:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--ink);
+  border-radius:14px;
+  padding:10px;
+  text-align:left;
+  font-size:.84rem;
+  font-weight:750;
+  cursor:pointer;
+}
+.need-chip:hover,
+.need-chip:focus-visible { border-color:var(--primary-2); }
+.need-results {
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-top:12px;
+}
+.need-results:empty { display:none; }
+.need-result {
+  border:1px solid var(--line);
+  background:var(--surface);
+  color:var(--primary);
+  border-radius:999px;
+  padding:7px 10px;
+  font-size:.8rem;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.routine-panel,
+.allday-panel {
+  padding:18px;
+  margin-bottom:18px;
+}
+.routine-head {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  margin-bottom:13px;
+}
+.routine-head p { margin:2px 0 0; color:var(--muted); font-size:.86rem; }
+.routine-large-progress {
+  min-width:72px;
+  text-align:center;
+  color:var(--primary);
+  font-weight:900;
+}
+.routine-large-progress span {
+  display:block;
+  font-size:1.25rem;
+  line-height:1;
+}
+.checklist {
+  display:grid;
+  gap:7px;
+}
+.check-row {
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:9px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:8px 10px;
+  background:var(--surface-2);
+}
+.check-row input {
+  width:20px;
+  height:20px;
+  accent-color:var(--primary);
+}
+.checklist-name {
+  border:0;
+  background:transparent;
+  color:var(--ink);
+  padding:0;
+  text-align:left;
+  font-weight:750;
+  cursor:pointer;
+}
+.repeat-badge {
+  white-space:nowrap;
+  color:var(--primary);
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:4px 7px;
+  font-size:.72rem;
+  font-weight:850;
+}
+.check-row.done { opacity:.68; }
+.check-row.done .checklist-name { text-decoration:line-through; }
+
+.card-complete {
+  display:none;
+  width:max-content;
+  margin:12px auto 0;
+  border:1px solid var(--line);
+  background:var(--surface-2);
+  color:var(--primary);
+  border-radius:999px;
+  padding:7px 11px;
+  font-size:.8rem;
+  font-weight:850;
+  cursor:pointer;
+}
+body[data-current-view="morning"] .zikir-card .card-complete,
+body[data-current-view="evening"] .zikir-card .card-complete {
+  display:block;
+}
+.card-complete.done {
+  background:var(--primary);
+  color:var(--on-primary);
+  border-color:var(--primary);
+}
+
+.allday-intro { color:var(--muted); margin:4px 0 10px; font-size:.88rem; }
+
+body[data-current-view="home"] main,
+body[data-current-view="home"] .toc { display:none; }
+body[data-current-view="morning"] .toc,
+body[data-current-view="evening"] .toc,
+body[data-current-view="allday"] .toc { display:none; }
+body[data-current-view="reference"] #daily-home,
+body[data-current-view="reference"] #morning-view,
+body[data-current-view="reference"] #evening-view,
+body[data-current-view="reference"] #allday-view { display:none; }
+
+@media (max-width:620px) {
+  .hero-theme {
+    top:14px;
+    right:14px;
+  }
+  .hero-theme .theme-toggle {
+    padding:9px 12px;
+    font-size:.92rem;
+  }
+  .app-nav {
+    top:60px;
+    overflow-x:auto;
+    grid-template-columns:none;
+    grid-auto-flow:column;
+    grid-auto-columns:max-content;
+    justify-content:start;
+  }
+  .app-nav button { padding:9px 10px; }
+  .routine-summary-grid { grid-template-columns:1fr; }
+}
+@media (max-width:420px) {
+  .need-grid { grid-template-columns:1fr 1fr; }
+  .today-title { align-items:start; flex-direction:column; }
+}
+
+</style>
+</head>
+<body>
+<div class="shell">
+  <header class="hero">
+    <div class="hero-theme">
+      <div class="theme-control">
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="theme-menu">Theme</button>
+        <div class="theme-menu" id="theme-menu" role="menu" hidden>
+          <button type="button" class="theme-option" role="menuitemradio" data-theme="emerald" aria-checked="true">Emerald Classic</button>
+          <button type="button" class="theme-option" role="menuitemradio" data-theme="midnight" aria-checked="false">Midnight</button>
+          <button type="button" class="theme-option" role="menuitemradio" data-theme="sepia" aria-checked="false">Warm Sepia</button>
+          <button type="button" class="theme-option" role="menuitemradio" data-theme="minimal" aria-checked="false">Minimal Light</button>
+          <button type="button" class="theme-option" role="menuitemradio" data-theme="royal" aria-checked="false">Royal Green</button>
+        </div>
+      </div>
+    </div>
+    <h1>Koleksi Bacaan Harian</h1>
+    <p>Susunan Bacaan dari Hadis yang Sahih · Amalan Pagi dan Petang</p>
+    <div class="arabic-logo" lang="ar" dir="rtl">أَذْكَارٌ وَأَدْعِيَةٌ</div>
+  </header>
+
+  <div class="utility-controls-hidden" aria-hidden="true">
+    <button type="button" onclick="resizeArabic(-0.15)">A− Arab</button>
+    <button type="button" onclick="resizeArabic(0.15)">A+ Arab</button>
+    <button type="button" onclick="window.location.hash='kandungan'">Kandungan</button>
+    <button type="button" id="edit-arabic-toggle" aria-pressed="false">Edit Arabic: OFF</button>
+    <button type="button" class="save-arabic" id="save-arabic" hidden>Save Arabic</button>
+  </div>
+</div>
+  </div>
+
+
+  <nav class="app-nav" aria-label="Navigasi bacaan harian">
+    <button type="button" data-app-view="home" aria-current="page">Home</button>
+    <button type="button" data-app-view="morning">☀️ Pagi</button>
+    <button type="button" data-app-view="evening">🌙 Petang</button>
+    <button type="button" data-app-view="allday">♾️ Sepanjang Hari</button>
+    <button type="button" data-app-view="reference">Kandungan</button>
+  </nav>
+  <button type="button" class="install-app-button" id="install-app-button">Install App</button>
+  <div class="offline-pill" id="offline-pill" role="status">Offline</div>
+  <div class="install-sheet" id="ios-install-sheet" role="dialog" aria-modal="true" aria-labelledby="ios-install-title" hidden>
+    <div class="install-sheet-panel">
+      <h2 id="ios-install-title">Pasang pada iPhone</h2>
+      <ol>
+        <li>Tekan butang Share ⬆</li>
+        <li>Pilih “Add to Home Screen”</li>
+        <li>Tekan “Add”</li>
+      </ol>
+      <button type="button" id="dismiss-install-help">OK</button>
+    </div>
+  </div>
+
+  <section class="daily-home daily-view" id="daily-home">
+    <div class="today-card">
+      <div class="today-title">
+        <div>
+          <h2>Hari Ini</h2>
+          <p>Pilih rutin mengikut waktu atau sambung bacaan yang belum selesai.</p>
+        </div>
+      </div>
+      <div class="routine-summary-grid">
+        <div class="routine-summary">
+          <div class="routine-icon">☀️</div>
+          <h3>Rutin Pagi</h3>
+          <div class="routine-count" id="morning-home-count">0 / 12 selesai</div>
+          <div class="progress-track"><div class="progress-fill" id="morning-home-progress"></div></div>
+          <button type="button" data-open-routine="morning">Mulakan / Sambung</button>
+        </div>
+        <div class="routine-summary">
+          <div class="routine-icon">🌙</div>
+          <h3>Rutin Petang</h3>
+          <div class="routine-count" id="evening-home-count">0 / 12 selesai</div>
+          <div class="progress-track"><div class="progress-fill" id="evening-home-progress"></div></div>
+          <button type="button" data-open-routine="evening">Mulakan / Sambung</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="today-card quick-allday">
+      <div class="quick-allday-head">
+        <div>
+          <h2>♾️ Sepanjang Hari</h2>
+          <p>Bacaan yang boleh dirujuk dan diamalkan bila-bila masa.</p>
+        </div>
+        <button class="start-routine" type="button" data-open-routine="allday">Lihat semua</button>
+      </div>
+      <div class="bubble-cloud" id="home-allday-bubbles"></div>
+    </div>
+
+    <div class="need-panel">
+      <h2>Cari Mengikut Keperluan</h2>
+      <p>Jalan pintas kepada bacaan yang berkaitan dengan keperluan tertentu.</p>
+      <div class="need-grid">
+        <button type="button" class="need-chip" data-need="protection">🛡️ Perlindungan</button>
+        <button type="button" class="need-chip" data-need="health">❤️ Kesihatan</button>
+        <button type="button" class="need-chip" data-need="anxiety">😟 Keresahan / Hutang</button>
+        <button type="button" class="need-chip" data-need="forgiveness">🤲 Keampunan</button>
+        <button type="button" class="need-chip" data-need="tawakkul">🕊️ Tawakal</button>
+        <button type="button" class="need-chip" data-need="gratitude">🌿 Syukur & Ibadah</button>
+      </div>
+      <div class="need-results" id="need-results"></div>
+    </div>
+  </section>
+
+  <section class="routine-panel daily-view" id="morning-view" hidden>
+    <div class="routine-head">
+      <div>
+        <h2>☀️ Rutin Pagi</h2>
+        <p>Checklist harian. Progress disimpan untuk hari semasa.</p>
+      </div>
+      <div class="routine-large-progress"><span id="morning-count-big">0/12</span>selesai</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="morning-progress-big"></div></div>
+    <div class="checklist" id="morning-checklist"></div>
+  </section>
+
+  <section class="routine-panel daily-view" id="evening-view" hidden>
+    <div class="routine-head">
+      <div>
+        <h2>🌙 Rutin Petang</h2>
+        <p>Checklist harian. Progress pagi dan petang disimpan berasingan.</p>
+      </div>
+      <div class="routine-large-progress"><span id="evening-count-big">0/12</span>selesai</div>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="evening-progress-big"></div></div>
+    <div class="checklist" id="evening-checklist"></div>
+  </section>
+
+  <section class="allday-panel daily-view" id="allday-view" hidden>
+    <h2>♾️ Sepanjang Hari</h2>
+    <p class="allday-intro">Pilih mana-mana bacaan. Bahagian ini tidak menggunakan checklist wajib.</p>
+    <div class="bubble-cloud" id="allday-bubbles"></div>
+  </section>
+
+  <section class="toc" id="kandungan">
+    <h2>Kandungan</h2>
+    <p class="sub">Tekan nombor atau nama zikir untuk terus ke bahagian tersebut.</p>
+    <table>
+      <thead><tr><th>No.</th><th>Nama Zikir</th></tr></thead>
+      <tbody>
+        <tr><td class="num"><a href="#zikir-1">1</a></td><td><a href="#zikir-1">Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-2">2</a></td><td><a href="#zikir-2">Selawat Ibrahimiyyah</a></td></tr><tr><td class="num"><a href="#zikir-3">3</a></td><td><a href="#zikir-3">La Hawla wa La Quwwata</a></td></tr><tr><td class="num"><a href="#zikir-4">4</a></td><td><a href="#zikir-4">Tiga Qul</a></td></tr><tr><td class="num"><a href="#zikir-5">5</a></td><td><a href="#zikir-5">Reda Allah, Islam &amp; Rasul</a></td></tr><tr><td class="num"><a href="#zikir-6">6</a></td><td><a href="#zikir-6">Tauhid &amp; Kekuasaan Allah</a></td></tr><tr><td class="num"><a href="#zikir-7">7</a></td><td><a href="#zikir-7">Bismillah Pelindung Mudarat</a></td></tr><tr><td class="num"><a href="#zikir-8">8</a></td><td><a href="#zikir-8">Ya Hayyu Ya Qayyum</a></td></tr><tr><td class="num"><a href="#zikir-9">9</a></td><td><a href="#zikir-9">Sayyidul Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-10">10</a></td><td><a href="#zikir-10">Tasbih Sebanyak Makhluk</a></td></tr><tr><td class="num"><a href="#zikir-11">11</a></td><td><a href="#zikir-11">Subhanallahi wa Bihamdih</a></td></tr><tr><td class="num"><a href="#zikir-12">12</a></td><td><a href="#zikir-12">Persaksian Pagi</a></td></tr><tr><td class="num"><a href="#zikir-13">13</a></td><td><a href="#zikir-13">Kalimah Allah yang Sempurna</a></td></tr><tr><td class="num"><a href="#zikir-14">14</a></td><td><a href="#zikir-14">Persaksian Petang</a></td></tr><tr><td class="num"><a href="#zikir-15">15</a></td><td><a href="#zikir-15">Doa Nabi Yunus</a></td></tr><tr><td class="num"><a href="#zikir-16">16</a></td><td><a href="#zikir-16">Berlindung daripada Dukacita &amp; Hutang</a></td></tr><tr><td class="num"><a href="#zikir-17">17</a></td><td><a href="#zikir-17">Hasbiyallahu</a></td></tr><tr><td class="num"><a href="#zikir-18">18</a></td><td><a href="#zikir-18">Memohon Afiat Dunia &amp; Akhirat</a></td></tr><tr><td class="num"><a href="#zikir-19">19</a></td><td><a href="#zikir-19">Memohon Kesihatan</a></td></tr><tr><td class="num"><a href="#zikir-20">20</a></td><td><a href="#zikir-20">Memohon Keteguhan</a></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <main>
+    
+    <article class="zikir-card" id="zikir-1">
+      <div class="card-head">
+        <div class="badge">1</div>
+        <div>
+          <div class="eyebrow">ZIKIR 1</div>
+          <h2>Istighfar</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ، وَأَتُوبُ إِلَيْهِ</div>
+      <p class="meaning">“Aku memohon ampun kepada Allah yang Maha Agung tiada Tuhan melainkan Dia, yang Maha Hidup dan Maha Berdiri Sendiri dan aku bertaubat kepada-Nya.”</p>
+      
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Diampunkan dosa walaupun sebesar dosa melarikan diri dari medan perang. (HR al-Tirmizi)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-2">
+      <div class="card-head">
+        <div class="badge">2</div>
+        <div>
+          <div class="eyebrow">ZIKIR 2</div>
+          <h2>Selawat Ibrahimiyyah</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ صَلِّ عَلَىٰ سَيِّدِنَا مُحَمَّدٍ وَعَلَىٰ آلِ سَيِّدِنَا مُحَمَّدٍ كَمَا صَلَّيْتَ عَلَىٰ سَيِّدِنَا إِبْرَاهِيمَ وَعَلَىٰ آلِ سَيِّدِنَا إِبْرَاهِيمَ وَبَارِكْ عَلَىٰ سَيِّدِنَا مُحَمَّدٍ وَعَلَىٰ آلِ سَيِّدِنَا مُحَمَّدٍ كَمَا بَارَكْتَ عَلَىٰ سَيِّدِنَا إِبْرَاهِيمَ وَعَلَىٰ آلِ سَيِّدِنَا إِبْرَاهِيمَ فِي الْعَالَمِينَ إِنَّكَ حَمِيدٌ مَجِيدٌ</div>
+      <p class="meaning">“Ya Allah, limpahkanlah rahmat kepada Nabi Muhammad dan kepada keluarga Nabi Muhammad, sebagaimana telah Engkau limpahkan rahmat kepada Nabi Ibrahim dan keluarga Nabi Ibrahim. Limpahkan pula keberkatan kepada Nabi Muhammad dan kepada keluarga Nabi Muhammad, sebagaimana telah Engkau limpahkan keberkatan kepada Nabi Ibrahim dan kepada keluarga Nabi Ibrahim. Sesungguhnya di alam semesta Engkau Maha Terpuji dan Maha Agung.”</p>
+      
+      
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-3">
+      <div class="card-head">
+        <div class="badge">3</div>
+        <div>
+          <div class="eyebrow">ZIKIR 3</div>
+          <h2>La Hawla wa La Quwwata</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</div>
+      <p class="meaning">“Tiada daya dan kekuatan melainkan dengan (pertolongan) Allah.”</p>
+      
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Zikir ini adalah salah satu khazanah daripada khazanah syurga. (HR al-Bukhari)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-4">
+      <div class="card-head">
+        <div class="badge">4</div>
+        <div>
+          <div class="eyebrow">ZIKIR 4</div>
+          <h2>Tiga Qul</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">سُورَةُ الْإِخْلَاصِ، سُورَةُ الْفَلَقِ، سُورَةُ النَّاسِ<br><br>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<br>قُلْ هُوَ ٱللَّهُ أَحَدٌ (١) ٱللَّهُ ٱلصَّمَدُ (٢) لَمْ يَلِدْ وَلَمْ يُولَدْ (٣) وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ (٤)<br><br>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ (١) مِن شَرِّ مَا خَلَقَ (٢) وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ (٣) وَمِن شَرِّ ٱلنَّفَّـٰثَـٰتِ فِى ٱلْعُقَدِ (٤) وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ (٥)<br><br>بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ<br>قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ (١) مَلِكِ ٱلنَّاسِ (٢) إِلَـٰهِ ٱلنَّاسِ (٣) مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ (٤) ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ (٥) مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ (٦)</div>
+      
+      <div class="meta">Dibaca 3× (pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Dicukupkan segala sesuatu kepada orang yang membacanya. (HR al-Tirmizi)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-5">
+      <div class="card-head">
+        <div class="badge">5</div>
+        <div>
+          <div class="eyebrow">ZIKIR 5</div>
+          <h2>Reda Allah, Islam &amp; Rasul</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">رَضِيتُ بِاللَّهِ رَبًّا وَبِالْإِسْلَامِ دِينًا وَبِمُحَمَّدٍ نَبِيًّا وَرَسُولًا</div>
+      <p class="meaning">“Aku reda Allah sebagai Tuhanku, Islam sebagai agamaku, dan Nabi Muhammad sebagai nabi dan rasulku.”</p>
+      <div class="meta">Dibaca 3× (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Sesiapa yang membaca zikir ini pada waktu pagi dan petang, maka adalah menjadi hak bagi Allah untuk meredainya. (HR Ahmad)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-6">
+      <div class="card-head">
+        <div class="badge">6</div>
+        <div>
+          <div class="eyebrow">ZIKIR 6</div>
+          <h2>Tauhid &amp; Kekuasaan Allah</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">لَا إِلٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</div>
+      <p class="meaning">“Tiada Tuhan selain Allah, yang Maha Esa, tiada sekutu bagi-Nya, bagi-Nya kerajaan dan bagi-Nya segala pujian, dan Dia Maha Berkuasa atas segala sesuatu.”</p>
+      <div class="meta">Dibaca 1× atau lebih (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Ganjaran membaca zikir ini pada waktu pagi dan petang adalah seumpama pahala membebaskan seorang hamba daripada anak-anak Nabi Ismail. Selain itu, pembacanya akan dicatatkan dengan 10 kebaikan dalam buku amalannya, dihapuskan 10 kesalahan serta dilindungi daripada gangguan syaitan sepanjang hari tersebut. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-7">
+      <div class="card-head">
+        <div class="badge">7</div>
+        <div>
+          <div class="eyebrow">ZIKIR 7</div>
+          <h2>Bismillah Pelindung Mudarat</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ</div>
+      <p class="meaning">“Dengan nama Allah yang tidak ada sesuatu pun yang dapat mendatangkan bahaya (dengan disebut namanya), baik di bumi mahupun di langit dan Dia Maha Mendengar lagi Maha Mengetahui.”</p>
+      <div class="meta">Dibaca 3× (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Terlindung daripada sebarang mudarat pada hari itu. (HR al-Tirmizi)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-8">
+      <div class="card-head">
+        <div class="badge">8</div>
+        <div>
+          <div class="eyebrow">ZIKIR 8</div>
+          <h2>Ya Hayyu Ya Qayyum</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">يَا حَيُّ يَا قَيُّومُ، بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ وَلَا تَكِلْنِي إِلَىٰ نَفْسِي طَرْفَةَ عَيْنٍ</div>
+      <p class="meaning">“Ya Hayyu Ya Qayyum, dengan rahmat-Mu aku memohon pertolongan. Perbaikilah segala urusanku dan janganlah Engkau serahkan diriku kepada diriku sendiri walaupun sekelip mata.”</p>
+      <div class="meta">Dibaca 1× atau lebih (zikir pagi dan petang)</div>
+      
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-9">
+      <div class="card-head">
+        <div class="badge">9</div>
+        <div>
+          <div class="eyebrow">ZIKIR 9</div>
+          <h2>Sayyidul Istighfar</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ أَنْتَ رَبِّي، لَا إِلٰهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَىٰ عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</div>
+      <p class="meaning">“Ya Allah, Engkaulah Tuhanku, tiada Tuhan selain Engkau. Engkau telah menciptakan aku dan aku adalah hamba-Mu. Aku berpegang kepada janjiku dengan-Mu sedaya upayaku. Aku berlindung dengan-Mu daripada kejahatan yang telah aku lakukan. Aku mengakui nikmat-Mu ke atasku dan aku mengakui dosaku. Maka ampunilah aku, sesungguhnya tiada yang mengampuni dosa kecuali Engkau.”</p>
+      <div class="meta">Dibaca 1× atau lebih (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Tergolong daripada kalangan ahli syurga dengan syarat dibaca dalam keadaan yakin. (HR al-Bukhari)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-10">
+      <div class="card-head">
+        <div class="badge">10</div>
+        <div>
+          <div class="eyebrow">ZIKIR 10</div>
+          <h2>Tasbih Sebanyak Makhluk</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ</div>
+      <p class="meaning">“Maha Suci Allah dan segala puji bagi-Nya sebanyak bilangan makhluk-Nya, keredaan diri-Nya, seberat timbangan Arasy-Nya dan sebanyak tinta kalimat-kalimat-Nya.”</p>
+      <div class="meta">Dibaca 3× (zikir pagi)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Diberikan pahala seolah-olah beribadah dari waktu subuh hingga waktu duha. (HR Muslim)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-11">
+      <div class="card-head">
+        <div class="badge">11</div>
+        <div>
+          <div class="eyebrow">ZIKIR 11</div>
+          <h2>Subhanallahi wa Bihamdih</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ</div>
+      <p class="meaning">“Maha Suci Allah dan segala puji bagi-Nya.”</p>
+      <div class="meta">Dibaca 100× (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Sesiapa yang membaca zikir ini, pada hari kiamat kelak tidak ada orang yang akan datang membawa amalan yang lebih baik daripadanya kecuali mereka yang lebih banyak membaca zikir ini daripadanya. (HR Muslim)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-12">
+      <div class="card-head">
+        <div class="badge">12</div>
+        <div>
+          <div class="eyebrow">ZIKIR 12</div>
+          <h2>Persaksian Pagi</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ إِنِّي أَصْبَحْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ وَجَمِيعَ خَلْقِكَ أَنَّكَ أَنْتَ اللَّهُ، لَا إِلٰهَ إِلَّا أَنْتَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ</div>
+      <p class="meaning">“Ya Allah, aku berada di waktu pagi bersaksi atas-Mu dan kepada para pembawa Arasy-Mu, kepada semua malaikat-Mu dan kepada semua makhluk-Mu bahawa Engkau adalah Allah yang tidak ada Tuhan selain Engkau dan bahawa Muhammad adalah hamba-Mu dan rasul-Mu.”</p>
+      <div class="meta">Dibaca 4× (zikir pagi)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Sesiapa yang mengucapkan zikir ini sebanyak empat kali maka Allah akan membebaskan seluruh tubuhnya daripada disentuh api neraka. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-13">
+      <div class="card-head">
+        <div class="badge">13</div>
+        <div>
+          <div class="eyebrow">ZIKIR 13</div>
+          <h2>Kalimah Allah yang Sempurna</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ</div>
+      <p class="meaning">“Aku berlindung dengan kalimah-kalimah Allah yang sempurna daripada kejahatan makhluk-Nya.”</p>
+      <div class="meta">Dibaca 3× (zikir petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Terlindung daripada sebarang bahaya terutama haiwan berbisa pada hari itu. (HR al-Tirmizi)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-14">
+      <div class="card-head">
+        <div class="badge">14</div>
+        <div>
+          <div class="eyebrow">ZIKIR 14</div>
+          <h2>Persaksian Petang</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ إِنِّي أَمْسَيْتُ أُشْهِدُكَ وَأُشْهِدُ حَمَلَةَ عَرْشِكَ وَمَلَائِكَتَكَ وَجَمِيعَ خَلْقِكَ أَنَّكَ أَنْتَ اللَّهُ، لَا إِلٰهَ إِلَّا أَنْتَ، وَأَنَّ مُحَمَّدًا عَبْدُكَ وَرَسُولُكَ</div>
+      <p class="meaning">“Ya Allah, aku berada di waktu petang bersaksi atas-Mu dan kepada para pembawa Arasy-Mu, kepada semua malaikat-Mu dan kepada semua makhluk-Mu bahawa Engkau adalah Allah yang tidak ada Tuhan selain Engkau dan bahawa Muhammad adalah hamba-Mu dan rasul-Mu.”</p>
+      <div class="meta">Dibaca 4× (zikir petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Sesiapa yang mengucapkan zikir ini sebanyak empat kali maka Allah akan membebaskan seluruh tubuhnya daripada disentuh api neraka. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-15">
+      <div class="card-head">
+        <div class="badge">15</div>
+        <div>
+          <div class="eyebrow">ZIKIR 15</div>
+          <h2>Doa Nabi Yunus</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">لَآ إِلَـٰهَ إِلَّآ أَنتَ سُبْحَـٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّـٰلِمِينَ</div>
+      <p class="meaning">“Tiada Tuhan (yang dapat menolong) melainkan Engkau. Maha Suci Engkau. Sesungguhnya, aku dalam kalangan orang yang menzalimi diri sendiri.”</p>
+      
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Tidaklah seseorang meminta sesuatu kepada Allah dengan menyebut zikir ini kecuali Allah akan memakbulkan permintaannya. (HR al-Tirmizi)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-16">
+      <div class="card-head">
+        <div class="badge">16</div>
+        <div>
+          <div class="eyebrow">ZIKIR 16</div>
+          <h2>Berlindung daripada Dukacita &amp; Hutang</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَأَعُوذُ بِكَ مِنَ الْعَجْزِ وَالْكَسَلِ وَأَعُوذُ بِكَ مِنَ الْجُبْنِ وَالْبُخْلِ وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ</div>
+      <p class="meaning">“Ya Allah, sesungguhnya aku berlindung kepada-Mu daripada perasaan gelisah dan dukacita, aku juga berlindung kepada-Mu daripada kelemahan dan kemalasan, aku juga berlindung kepada-Mu daripada sifat pengecut dan kedekut dan aku berlindung kepada-Mu daripada beban hutang yang menindas serta kekuasaan manusia yang menzalimi.”</p>
+      
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Memohon kepada Allah agar menghilangkan rasa malas, gelisah, sedih dan lemah serta memohon perlindungan daripada sifat penakut dan kedekut. Seterusnya memohon agar dilindungi daripada beban hutang serta kezaliman manusia. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-17">
+      <div class="card-head">
+        <div class="badge">17</div>
+        <div>
+          <div class="eyebrow">ZIKIR 17</div>
+          <h2>Hasbiyallahu</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">حَسْبِىَ ٱللَّهُ لَآ إِلَـٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ ٱلْعَرْشِ ٱلْعَظِيمِ</div>
+      <p class="meaning">“Cukuplah Allah bagiku, tiada tuhan yang berhak disembah melainkan Dia. Kepada-Nya aku bertawakal dan Dialah Tuhan yang memiliki Arasy yang agung.”</p>
+      <div class="meta">Dibaca 7× (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Allah mencukupkan apa yang menjadi kerisauan dunia dan akhirat bagi yang membacanya tujuh kali pagi dan petang. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-18">
+      <div class="card-head">
+        <div class="badge">18</div>
+        <div>
+          <div class="eyebrow">ZIKIR 18</div>
+          <h2>Memohon Afiat Dunia &amp; Akhirat</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَافِيَةَ فِي الدُّنْيَا وَالْآخِرَةِ، اللَّهُمَّ إِنِّي أَسْأَلُكَ الْعَفْوَ وَالْعَافِيَةَ فِي دِينِي وَدُنْيَايَ وَأَهْلِي وَمَالِي، اللَّهُمَّ اسْتُرْ عَوْرَاتِي وَآمِنْ رَوْعَاتِي، اللَّهُمَّ احْفَظْنِي مِنْ بَيْنِ يَدَيَّ وَمِنْ خَلْفِي وَعَنْ يَمِينِي وَعَنْ شِمَالِي وَمِنْ فَوْقِي، وَأَعُوذُ بِعَظَمَتِكَ أَنْ أُغْتَالَ مِنْ تَحْتِي</div>
+      <p class="meaning">“Ya Allah, sesungguhnya aku memohon kepada-Mu kesejahteraan dunia dan akhirat. Ya Allah, aku memohon kepada-Mu keampunan dan keselamatan dalam agamaku, duniaku, keluargaku dan hartaku. Ya Allah, lindungilah auratku (aib dan kelemahanku) dan tenangkanlah ketakutanku. Ya Allah, peliharalah aku dari hadapan, belakang, kanan, kiri dan atas. Dan aku berlindung dengan keagungan-Mu daripada ditimpa bahaya dari bawahku.”</p>
+      <div class="meta">Dibaca 1× atau lebih (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Memohon agar Allah melindungi daripada enam arah, ditutup keaiban, diberikan kekuatan, pengampunan serta pelindungan pada agama, diri, keluarga dan harta. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-19">
+      <div class="card-head">
+        <div class="badge">19</div>
+        <div>
+          <div class="eyebrow">ZIKIR 19</div>
+          <h2>Memohon Kesihatan</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ عَافِنِي فِي بَدَنِي، اللَّهُمَّ عَافِنِي فِي سَمْعِي، اللَّهُمَّ عَافِنِي فِي بَصَرِي، لَا إِلٰهَ إِلَّا أَنْتَ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، لَا إِلٰهَ إِلَّا أَنْتَ</div>
+      <p class="meaning">“Ya Allah, berilah kesihatan pada tubuh badanku. Ya Allah, berilah kesihatan pada pendengaranku. Ya Allah, berilah kesihatan pada penglihatanku. Tiada tuhan yang berhak disembah melainkan Engkau. Ya Allah, sesungguhnya aku berlindung kepada-Mu daripada kekufuran dan kefakiran. Ya Allah, aku berlindung kepada-Mu daripada azab kubur. Tiada tuhan yang berhak disembah melainkan Engkau.”</p>
+      <div class="meta">Dibaca 3× (zikir pagi dan petang)</div>
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Memohon kepada Allah agar dikurniakan kesihatan tubuh badan, pendengaran dan penglihatan serta dilindungi daripada kekufuran, kefakiran dan azab kubur. (HR Abu Daud)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+    <article class="zikir-card" id="zikir-20">
+      <div class="card-head">
+        <div class="badge">20</div>
+        <div>
+          <div class="eyebrow">ZIKIR 20</div>
+          <h2>Memohon Keteguhan</h2>
+        </div>
+      </div>
+
+      <div class="arabic" lang="ar" dir="rtl">اللَّهُمَّ إِنِّي أَسْأَلُكَ الثَّبَاتَ فِي الْأَمْرِ، وَالْعَزِيمَةَ عَلَى الرُّشْدِ، وَأَسْأَلُكَ مُوجِبَاتِ رَحْمَتِكَ، وَعَزَائِمَ مَغْفِرَتِكَ، وَأَسْأَلُكَ شُكْرَ نِعْمَتِكَ، وَحُسْنَ عِبَادَتِكَ، وَأَسْأَلُكَ قَلْبًا سَلِيمًا، وَلِسَانًا صَادِقًا، وَأَسْأَلُكَ مِنْ خَيْرِ مَا تَعْلَمُ، وَأَعُوذُ بِكَ مِنْ شَرِّ مَا تَعْلَمُ، وَأَسْتَغْفِرُكَ لِمَا تَعْلَمُ، إِنَّكَ أَنْتَ عَلَّامُ الْغُيُوبِ</div>
+      <p class="meaning">“Ya Allah, sesungguhnya aku memohon kepada-Mu keteguhan dalam urusan (agama dan kehidupan) serta tekad yang kuat untuk mengikuti kebenaran dan petunjuk-Mu. Aku memohon kepada-Mu perkara-perkara yang mendatangkan rahmat-Mu dan azam yang membawa kepada keampunan-Mu. Aku juga memohon kepada-Mu agar aku sentiasa bersyukur atas nikmat-Mu dan beribadah kepada-Mu dengan sebaiknya. Ya Allah, kurniakanlah kepadaku hati yang sejahtera dan lidah yang jujur serta berikanlah kepadaku segala kebaikan yang Engkau ketahui dan lindungilah aku daripada segala kejahatan yang Engkau ketahui. Aku memohon keampunan kepada-Mu atas segala yang Engkau ketahui. Sesungguhnya Engkaulah Yang Maha Mengetahui akan segala perkara ghaib.”</p>
+      
+      <div class="fadilat"><div class="f-title">Fadilat Zikir</div><div>Zikir ini lebih baik daripada menyimpan emas dan perak. (HR al-Hakim)</div></div>
+      <div class="card-actions">
+        <a href="#kandungan">↑ Kandungan</a>
+      </div>
+    </article>
+    
+  </main>
+
+  <footer>UWA · Mark 7 HTML · Kandungan berdasarkan Mark 4</footer>
+</div>
+
+<script>
+let arabicScale = 1;
+const themeToggle = document.getElementById('theme-toggle');
+const themeMenu = document.getElementById('theme-menu');
+const themeOptions = Array.from(document.querySelectorAll('.theme-option'));
+const themeMeta = document.querySelector('meta[name="theme-color"]');
+const editArabicToggle = document.getElementById('edit-arabic-toggle');
+const saveArabicButton = document.getElementById('save-arabic');
+const arabicBlocks = Array.from(document.querySelectorAll('.zikir-card .arabic'));
+const originalArabic = {};
+let arabicEditMode = false;
+const themes = {
+  emerald: { label:'Emerald Classic', color:'#183d32' },
+  midnight: { label:'Midnight', color:'#0b1218' },
+  sepia: { label:'Warm Sepia', color:'#47654e' },
+  minimal: { label:'Minimal Light', color:'#245846' },
+  royal: { label:'Royal Green', color:'#0b332a' }
+};
+function resizeArabic(delta) {
+  arabicScale = Math.min(1.7, Math.max(0.75, arabicScale + delta));
+  document.documentElement.style.setProperty(
+    '--arabic-size',
+    `clamp(${1.8*arabicScale}rem, ${6*arabicScale}vw, ${2.65*arabicScale}rem)`
+  );
+}
+function getZikirId(arabicBlock) {
+  const article = arabicBlock.closest('.zikir-card');
+  return article ? article.id : '';
+}
+function escapeHtmlText(text) {
+  return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+function normalizeEditableBreaks(root) {
+  let html = '';
+  root.childNodes.forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      html += escapeHtmlText(node.textContent).replace(/\n/g, '<br>');
+      return;
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) return;
+    const tag = node.tagName.toLowerCase();
+    if (tag === 'br') {
+      html += '<br>';
+      return;
+    }
+    const childHtml = normalizeEditableBreaks(node);
+    if (['div', 'p'].includes(tag) && html && !html.endsWith('<br>')) html += '<br>';
+    html += childHtml;
+    if (['div', 'p'].includes(tag) && !html.endsWith('<br>')) html += '<br>';
+  });
+  return html;
+}
+function sanitizeArabicHtml(html) {
+  const template = document.createElement('template');
+  template.innerHTML = html;
+  return normalizeEditableBreaks(template.content).replace(/(<br>){3,}/g, '<br><br>').replace(/(<br>)+$/g, '');
+}
+function getSavedArabicEdits() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('uwa-arabic-edits') || '{}');
+    return saved && typeof saved === 'object' && !Array.isArray(saved) ? saved : {};
+  } catch (error) {
+    return {};
+  }
+}
+function saveArabicEdits(edits) {
+  try {
+    localStorage.setItem('uwa-arabic-edits', JSON.stringify(edits));
+  } catch (error) {}
+}
+function applySavedArabicEdits() {
+  const edits = getSavedArabicEdits();
+  arabicBlocks.forEach((block) => {
+    const zikirId = getZikirId(block);
+    if (zikirId && Object.prototype.hasOwnProperty.call(edits, zikirId)) {
+      block.innerHTML = sanitizeArabicHtml(edits[zikirId]);
+    } else if (zikirId && originalArabic[zikirId]) {
+      block.innerHTML = originalArabic[zikirId];
+    }
+  });
+}
+function insertPlainTextAtCursor(text) {
+  const selection = window.getSelection();
+  if (!selection || !selection.rangeCount) return;
+  selection.deleteFromDocument();
+  const fragment = document.createDocumentFragment();
+  text.split(/\r\n|\r|\n/).forEach((line, index) => {
+    if (index) fragment.appendChild(document.createElement('br'));
+    fragment.appendChild(document.createTextNode(line));
+  });
+  const range = selection.getRangeAt(0);
+  range.insertNode(fragment);
+  selection.collapseToEnd();
+}
+function setArabicEditMode(isEditing) {
+  arabicEditMode = isEditing;
+  document.documentElement.dataset.arabicEditing = String(isEditing);
+  editArabicToggle.textContent = `Edit Arabic: ${isEditing ? 'ON' : 'OFF'}`;
+  editArabicToggle.setAttribute('aria-pressed', String(isEditing));
+  saveArabicButton.hidden = !isEditing;
+  arabicBlocks.forEach((block) => {
+    if (isEditing) {
+      block.setAttribute('contenteditable', 'true');
+      block.setAttribute('spellcheck', 'false');
+    } else {
+      block.removeAttribute('contenteditable');
+      block.removeAttribute('spellcheck');
+    }
+  });
+  if (!isEditing) applySavedArabicEdits();
+}
+function saveCurrentArabicEdits() {
+  const edits = getSavedArabicEdits();
+  arabicBlocks.forEach((block) => {
+    const zikirId = getZikirId(block);
+    if (!zikirId) return;
+    const cleaned = sanitizeArabicHtml(block.innerHTML);
+    block.innerHTML = cleaned;
+    if (cleaned === originalArabic[zikirId]) {
+      delete edits[zikirId];
+    } else {
+      edits[zikirId] = cleaned;
+    }
+  });
+  saveArabicEdits(edits);
+  setArabicEditMode(false);
+}
+function resetArabicBlock(block) {
+  const zikirId = getZikirId(block);
+  if (!zikirId || !confirm('Reset Arabic text for this zikir to the original version?')) return;
+  const edits = getSavedArabicEdits();
+  delete edits[zikirId];
+  saveArabicEdits(edits);
+  block.innerHTML = originalArabic[zikirId];
+}
+function getSavedTheme() {
+  try {
+    return localStorage.getItem('uwa-theme');
+  } catch (error) {
+    return null;
+  }
+}
+function saveTheme(theme) {
+  try {
+    localStorage.setItem('uwa-theme', theme);
+  } catch (error) {}
+}
+function setTheme(theme) {
+  const nextTheme = themes[theme] ? theme : 'emerald';
+  if (nextTheme === 'emerald') {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.dataset.theme = nextTheme;
+  }
+  themeOptions.forEach((option) => {
+    option.setAttribute('aria-checked', String(option.dataset.theme === nextTheme));
+  });
+  themeToggle.setAttribute('aria-label', `Theme: ${themes[nextTheme].label}`);
+  if (themeMeta) themeMeta.setAttribute('content', themes[nextTheme].color);
+  saveTheme(nextTheme);
+}
+function closeThemeMenu() {
+  themeMenu.hidden = true;
+  themeToggle.setAttribute('aria-expanded', 'false');
+}
+themeToggle.addEventListener('click', () => {
+  const willOpen = themeMenu.hidden;
+  themeMenu.hidden = !willOpen;
+  themeToggle.setAttribute('aria-expanded', String(willOpen));
+});
+themeOptions.forEach((option) => {
+  option.addEventListener('click', () => {
+    setTheme(option.dataset.theme);
+    closeThemeMenu();
+    themeToggle.focus();
+  });
+});
+document.addEventListener('click', (event) => {
+  if (!event.target.closest('.theme-control')) closeThemeMenu();
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeThemeMenu();
+});
+arabicBlocks.forEach((block) => {
+  const zikirId = getZikirId(block);
+  if (!zikirId) return;
+  originalArabic[zikirId] = block.innerHTML;
+  const resetButton = document.createElement('button');
+  resetButton.type = 'button';
+  resetButton.className = 'arabic-reset';
+  resetButton.textContent = 'Reset Arabic';
+  resetButton.addEventListener('click', () => resetArabicBlock(block));
+  block.insertAdjacentElement('afterend', resetButton);
+  block.addEventListener('paste', (event) => {
+    if (!arabicEditMode) return;
+    event.preventDefault();
+    insertPlainTextAtCursor(event.clipboardData.getData('text/plain'));
+  });
+});
+editArabicToggle.addEventListener('click', () => {
+  setArabicEditMode(!arabicEditMode);
+});
+saveArabicButton.addEventListener('click', saveCurrentArabicEdits);
+applySavedArabicEdits();
+setTheme(getSavedTheme() || 'emerald');
+</script>
+
+<script>
+/* ===== MARK 7 · DAILY FLOW ===== */
+(() => {
+  const morningRoutine = [
+    [4, '×3'], [5, '×3'], [6, '×1+'], [7, '×3'], [8, '×1+'], [9, '×1+'],
+    [10, '×3'], [11, '×100'], [12, '×4'], [17, '×7'], [18, '×1+'], [19, '×3']
+  ];
+  const eveningRoutine = [
+    [4, '×3'], [5, '×3'], [6, '×1+'], [7, '×3'], [8, '×1+'], [9, '×1+'],
+    [11, '×100'], [13, '×3'], [14, '×4'], [17, '×7'], [18, '×1+'], [19, '×3']
+  ];
+  const allDayIds = [1, 2, 3, 15, 16, 20];
+  const needGroups = {
+    protection: [7, 13, 18],
+    health: [19],
+    anxiety: [16],
+    forgiveness: [1, 9],
+    tawakkul: [17],
+    gratitude: [10, 11, 20]
+  };
+
+  const cards = Array.from(document.querySelectorAll('.zikir-card'));
+  const cardById = new Map(cards.map(card => [Number(card.id.replace('zikir-', '')), card]));
+  const names = {};
+  cards.forEach(card => {
+    const id = Number(card.id.replace('zikir-', ''));
+    names[id] = card.querySelector('h2')?.textContent.trim() || `Zikir ${id}`;
+    if (!card.querySelector('.card-complete')) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'card-complete';
+      button.dataset.zikirId = String(id);
+      button.textContent = 'Tandakan selesai';
+      const actions = card.querySelector('.card-actions');
+      if (actions) actions.before(button);
+      else card.appendChild(button);
+    }
+  });
+
+  const navButtons = Array.from(document.querySelectorAll('[data-app-view]'));
+  const morningView = document.getElementById('morning-view');
+  const eveningView = document.getElementById('evening-view');
+  const allDayView = document.getElementById('allday-view');
+  const dailyHome = document.getElementById('daily-home');
+  const toc = document.getElementById('kandungan');
+
+  function localDayKey() {
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const d = String(now.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  }
+
+  function storageKey(type) {
+    return `uwa-daily-${localDayKey()}-${type}`;
+  }
+
+  function getDone(type) {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(storageKey(type)) || '[]');
+      return new Set(Array.isArray(parsed) ? parsed.map(Number) : []);
+    } catch {
+      return new Set();
+    }
+  }
+
+  function saveDone(type, set) {
+    try {
+      localStorage.setItem(storageKey(type), JSON.stringify(Array.from(set)));
+    } catch {}
+  }
+
+  function routineFor(type) {
+    return type === 'morning' ? morningRoutine : eveningRoutine;
+  }
+
+  function progress(type) {
+    const routine = routineFor(type);
+    const done = getDone(type);
+    const validDone = routine.filter(([id]) => done.has(id)).length;
+    return { done, count: validDone, total: routine.length, pct: routine.length ? (validDone / routine.length) * 100 : 0 };
+  }
+
+  function setProgressBar(id, pct) {
+    const el = document.getElementById(id);
+    if (el) el.style.width = `${pct}%`;
+  }
+
+  function updateProgressUI() {
+    ['morning', 'evening'].forEach(type => {
+      const p = progress(type);
+      const homeCount = document.getElementById(`${type}-home-count`);
+      const bigCount = document.getElementById(`${type}-count-big`);
+      if (homeCount) homeCount.textContent = `${p.count} / ${p.total} selesai`;
+      if (bigCount) bigCount.textContent = `${p.count}/${p.total}`;
+      setProgressBar(`${type}-home-progress`, p.pct);
+      setProgressBar(`${type}-progress-big`, p.pct);
+    });
+    syncChecklistState();
+    syncCardButtons();
+  }
+
+  function buildChecklist(type) {
+    const root = document.getElementById(`${type}-checklist`);
+    if (!root || root.dataset.ready === 'true') return;
+    const routine = routineFor(type);
+    routine.forEach(([id, repeat]) => {
+      const row = document.createElement('div');
+      row.className = 'check-row';
+      row.dataset.zikirId = String(id);
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.setAttribute('aria-label', `Tanda selesai ${names[id]}`);
+      checkbox.addEventListener('change', () => {
+        const done = getDone(type);
+        if (checkbox.checked) done.add(id);
+        else done.delete(id);
+        saveDone(type, done);
+        updateProgressUI();
+      });
+
+      const nameButton = document.createElement('button');
+      nameButton.type = 'button';
+      nameButton.className = 'checklist-name';
+      nameButton.textContent = names[id];
+      nameButton.addEventListener('click', () => scrollToZikir(id));
+
+      const repeatBadge = document.createElement('span');
+      repeatBadge.className = 'repeat-badge';
+      repeatBadge.textContent = repeat;
+
+      row.append(checkbox, nameButton, repeatBadge);
+      root.appendChild(row);
+    });
+    root.dataset.ready = 'true';
+  }
+
+  function syncChecklistState() {
+    ['morning', 'evening'].forEach(type => {
+      const done = getDone(type);
+      document.querySelectorAll(`#${type}-checklist .check-row`).forEach(row => {
+        const id = Number(row.dataset.zikirId);
+        const checked = done.has(id);
+        row.classList.toggle('done', checked);
+        const checkbox = row.querySelector('input[type="checkbox"]');
+        if (checkbox) checkbox.checked = checked;
+      });
+    });
+  }
+
+  function currentRoutineType() {
+    return document.body.dataset.currentView === 'evening' ? 'evening' :
+           document.body.dataset.currentView === 'morning' ? 'morning' : null;
+  }
+
+  function syncCardButtons() {
+    const type = currentRoutineType();
+    const done = type ? getDone(type) : new Set();
+    document.querySelectorAll('.card-complete').forEach(button => {
+      const id = Number(button.dataset.zikirId);
+      const inRoutine = type && routineFor(type).some(([routineId]) => routineId === id);
+      button.hidden = !inRoutine;
+      if (!inRoutine) return;
+      const isDone = done.has(id);
+      button.classList.toggle('done', isDone);
+      button.textContent = isDone ? '✓ Selesai' : 'Tandakan selesai';
+    });
+  }
+
+  document.addEventListener('click', event => {
+    const completeButton = event.target.closest('.card-complete');
+    if (!completeButton) return;
+    const type = currentRoutineType();
+    if (!type) return;
+    const id = Number(completeButton.dataset.zikirId);
+    const done = getDone(type);
+    if (done.has(id)) done.delete(id);
+    else done.add(id);
+    saveDone(type, done);
+    updateProgressUI();
+  });
+
+  function renderBubbles(targetId, ids) {
+    const root = document.getElementById(targetId);
+    if (!root) return;
+    root.innerHTML = '';
+    ids.forEach(id => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'bubble-link';
+      button.textContent = names[id];
+      button.addEventListener('click', () => {
+        switchView('allday');
+        setTimeout(() => scrollToZikir(id), 20);
+      });
+      root.appendChild(button);
+    });
+  }
+
+  function showCards(ids) {
+    const allowed = ids ? new Set(ids) : null;
+    cards.forEach(card => {
+      const id = Number(card.id.replace('zikir-', ''));
+      card.hidden = allowed ? !allowed.has(id) : false;
+    });
+  }
+
+  function routineIds(type) {
+    return routineFor(type).map(([id]) => id);
+  }
+
+  function switchView(view, { scrollTop = true } = {}) {
+    const valid = ['home', 'morning', 'evening', 'allday', 'reference'];
+    if (!valid.includes(view)) view = 'home';
+
+    document.body.dataset.currentView = view;
+    navButtons.forEach(button => {
+      if (button.dataset.appView === view) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+
+    dailyHome.hidden = view !== 'home';
+    morningView.hidden = view !== 'morning';
+    eveningView.hidden = view !== 'evening';
+    allDayView.hidden = view !== 'allday';
+    toc.hidden = view !== 'reference';
+
+    if (view === 'home') showCards([]);
+    if (view === 'morning') showCards(routineIds('morning'));
+    if (view === 'evening') showCards(routineIds('evening'));
+    if (view === 'allday') showCards(allDayIds);
+    if (view === 'reference') showCards(null);
+
+    syncCardButtons();
+    if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function scrollToZikir(id) {
+    const card = cardById.get(id);
+    if (!card || card.hidden) return;
+    card.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  navButtons.forEach(button => {
+    button.addEventListener('click', () => switchView(button.dataset.appView));
+  });
+
+  document.querySelectorAll('[data-open-routine]').forEach(button => {
+    button.addEventListener('click', () => switchView(button.dataset.openRoutine));
+  });
+
+  document.querySelectorAll('.toc a[href^="#zikir-"]').forEach(link => {
+    link.addEventListener('click', event => {
+      const match = link.getAttribute('href').match(/#zikir-(\d+)/);
+      if (!match) return;
+      event.preventDefault();
+      const id = Number(match[1]);
+      switchView('reference', { scrollTop:false });
+      setTimeout(() => scrollToZikir(id), 20);
+    });
+  });
+
+  document.querySelectorAll('.need-chip').forEach(button => {
+    button.addEventListener('click', () => {
+      const root = document.getElementById('need-results');
+      root.innerHTML = '';
+      (needGroups[button.dataset.need] || []).forEach(id => {
+        const result = document.createElement('button');
+        result.type = 'button';
+        result.className = 'need-result';
+        result.textContent = names[id];
+        result.addEventListener('click', () => {
+          switchView('reference', { scrollTop:false });
+          setTimeout(() => scrollToZikir(id), 20);
+        });
+        root.appendChild(result);
+      });
+    });
+  });
+
+  window.addEventListener('hashchange', () => {
+    if (location.hash === '#kandungan') {
+      switchView('reference', { scrollTop:false });
+      setTimeout(() => toc.scrollIntoView({ behavior:'smooth', block:'start' }), 20);
+      return;
+    }
+    const match = location.hash.match(/^#zikir-(\d+)$/);
+    if (match) {
+      switchView('reference', { scrollTop:false });
+      setTimeout(() => scrollToZikir(Number(match[1])), 20);
+    }
+  });
+
+  buildChecklist('morning');
+  buildChecklist('evening');
+  renderBubbles('home-allday-bubbles', allDayIds);
+  renderBubbles('allday-bubbles', allDayIds);
+  updateProgressUI();
+
+  if (location.hash === '#kandungan' || /^#zikir-\d+$/.test(location.hash)) {
+    switchView('reference', { scrollTop:false });
+    if (/^#zikir-\d+$/.test(location.hash)) {
+      setTimeout(() => scrollToZikir(Number(location.hash.replace('#zikir-', ''))), 20);
+    }
+  } else {
+    switchView('home', { scrollTop:false });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  const installButton = document.getElementById('install-app-button');
+  const iosInstallSheet = document.getElementById('ios-install-sheet');
+  const dismissInstallHelp = document.getElementById('dismiss-install-help');
+  const offlinePill = document.getElementById('offline-pill');
+  let deferredInstallPrompt = null;
+
+  function isStandaloneMode() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+  }
+
+  function isIosSafari() {
+    const ua = window.navigator.userAgent;
+    const isIos = /iPad|iPhone|iPod/.test(ua) ||
+      (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+    const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua);
+    return isIos && isSafari;
+  }
+
+  function showInstallButton() {
+    if (!installButton || isStandaloneMode()) return;
+    installButton.classList.add('is-visible');
+  }
+
+  function hideInstallButton() {
+    if (installButton) installButton.classList.remove('is-visible');
+  }
+
+  function setOfflineState() {
+    if (!offlinePill) return;
+    offlinePill.classList.toggle('is-visible', !window.navigator.onLine);
+  }
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+    });
+  }
+
+  window.addEventListener('beforeinstallprompt', (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    showInstallButton();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    hideInstallButton();
+  });
+
+  if (installButton) {
+    installButton.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        try {
+          await deferredInstallPrompt.userChoice;
+        } catch (error) {}
+        deferredInstallPrompt = null;
+        hideInstallButton();
+        return;
+      }
+      if (isIosSafari() && !isStandaloneMode() && iosInstallSheet) {
+        iosInstallSheet.hidden = false;
+      }
+    });
+  }
+
+  if (dismissInstallHelp) {
+    dismissInstallHelp.addEventListener('click', () => {
+      if (iosInstallSheet) iosInstallSheet.hidden = true;
+      try {
+        localStorage.setItem('uwa-ios-install-help-dismissed', 'true');
+      } catch (error) {}
+    });
+  }
+
+  if (iosInstallSheet) {
+    iosInstallSheet.addEventListener('click', (event) => {
+      if (event.target === iosInstallSheet) iosInstallSheet.hidden = true;
+    });
+  }
+
+  if (isStandaloneMode()) {
+    hideInstallButton();
+  } else if (isIosSafari()) {
+    let dismissed = false;
+    try {
+      dismissed = localStorage.getItem('uwa-ios-install-help-dismissed') === 'true';
+    } catch (error) {}
+    if (!dismissed) showInstallButton();
+  }
+
+  window.addEventListener('online', setOfflineState);
+  window.addEventListener('offline', setOfflineState);
+  setOfflineState();
+})();
+</script>
+
+</body>
+</html>
