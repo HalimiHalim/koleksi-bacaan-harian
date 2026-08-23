@@ -405,8 +405,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 
 /* ===== MARK 7 · DAILY FLOW ===== */
 .app-nav {
-  position:sticky;
-  top:66px;
+  position:static;
   z-index:18;
   display:grid;
   grid-template-columns:repeat(5, minmax(0,1fr));
@@ -799,7 +798,9 @@ body[data-current-view="reference"] #allday-view { display:none; }
   }
   .app-nav {
     position:fixed;
-    inset:auto 0 0 0;
+    left:0;
+    right:0;
+    bottom:0;
     top:auto;
     z-index:40;
     grid-template-columns:repeat(5, minmax(0,1fr));
@@ -880,8 +881,6 @@ body[data-current-view="reference"] #allday-view { display:none; }
     <button type="button" onclick="window.location.hash='kandungan'">Kandungan</button>
     <button type="button" id="edit-arabic-toggle" aria-pressed="false">Edit Arabic: OFF</button>
     <button type="button" class="save-arabic" id="save-arabic" hidden>Save Arabic</button>
-  </div>
-</div>
   </div>
 
 
