@@ -2,10 +2,20 @@
 
 This is a lightweight offline-installable PWA for UWA Mark 7.
 
+## Structure
+
+```text
+index.html
+manifest.webmanifest
+service-worker.js
+icons/
+source/
+```
+
 ## Local Testing
 
 Service workers do not operate when `index.html` is opened directly with `file://`.
-Serve the folder over `localhost` instead:
+You can open `index.html` directly for a quick visual check, but PWA caching must be tested through `localhost`:
 
 ```bash
 python3 -m http.server 8080
@@ -32,6 +42,12 @@ Open the deployed HTTPS URL in Chrome. When prompted, choose Install. If no prom
 ## Offline Behaviour
 
 After the first complete load over `https://` or `localhost`, the service worker caches the app shell. The app can then open and run offline using the cached files.
+
+To test offline mode, load the app once through `localhost`, wait for the service worker to register, then reload with the network disabled.
+
+## Refreshing Old Caches
+
+If an installed app still shows an older build, open it once while online and reload. If needed, clear the site's browser storage/service worker cache from the browser developer tools, then open the app again.
 
 ## Deployment
 
