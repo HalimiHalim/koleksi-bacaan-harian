@@ -1,7 +1,8 @@
-const CACHE_NAME = "uwa-bacaan-harian-v2";
+const CACHE_NAME = "uwa-bacaan-harian-v3";
 const INDEX_URL = "./index.html";
+const ROOT_URL = "./";
 const APP_SHELL = [
-  "./",
+  ROOT_URL,
   INDEX_URL,
   "./manifest.webmanifest",
   "./icons/icon-192.png",
@@ -32,14 +33,14 @@ self.addEventListener("activate", (event) => {
 async function networkFirstIndex(request) {
   const cache = await caches.open(CACHE_NAME);
   try {
-    const networkResponse = await fetch(request);
+    const networkResponse = await fetch(request, { cache: "no-store" });
     if (networkResponse && networkResponse.ok) {
       await cache.put(INDEX_URL, networkResponse.clone());
-      await cache.put("./", networkResponse.clone());
+      await cache.put(ROOT_URL, networkResponse.clone());
     }
     return networkResponse;
   } catch (error) {
-    const cachedIndex = await cache.match(INDEX_URL) || await cache.match("./");
+    const cachedIndex = await cache.match(INDEX_URL) || await cache.match(ROOT_URL);
     return cachedIndex || Response.error();
   }
 }
