@@ -1,10 +1,11 @@
-const CACHE_NAME = "uwa-bacaan-harian-v4-root";
+const CACHE_NAME = "uwa-bacaan-harian-v8-remove-zone";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
   ROOT_URL,
   INDEX_URL,
   "./manifest.webmanifest",
+  "./fonts/NotoNaskhArabic-wght.ttf",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"

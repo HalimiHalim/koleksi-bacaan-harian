@@ -19,6 +19,13 @@
 })();
 </script>
 <style>
+@font-face {
+  font-family:"UWA Naskh Arabic";
+  src:url("./fonts/NotoNaskhArabic-wght.ttf") format("truetype");
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+}
 :root {
   --bg:#f4f1e8;
   --surface:#fffdf8;
@@ -157,7 +164,7 @@ body {
   line-height:1.6;
 }
 a { color:var(--green-2); }
-.shell { width:min(760px, 100%); margin:0 auto; padding:0 14px 80px; }
+.shell { width:min(1100px, 100%); margin:0 auto; padding:0 14px 80px; }
 .hero {
   position:relative;
   margin:0 -14px 18px;
@@ -327,12 +334,35 @@ html[data-arabic-editing="true"] .arabic-reset {
 }
 .toc { padding:18px; margin-bottom:18px; scroll-margin-top:70px; }
 .toc h2 { margin:0 0 4px; color:var(--green); }
+.toc-heading { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.toc-heading h2 { margin:0; }
+.action-primary, .action-secondary {
+  border:1px solid var(--primary); border-radius:999px; padding:9px 16px;
+  font:inherit; font-weight:800; cursor:pointer;
+}
+.action-primary { background:var(--primary); color:var(--on-primary); }
+.action-secondary { background:var(--surface-2); color:var(--primary); border-color:var(--line); }
+.action-primary:disabled { opacity:.6; cursor:wait; }
 .toc .sub { color:var(--muted); margin:0 0 12px; font-size:.92rem; }
 .toc table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:12px; }
 .toc th { text-align:left; color:var(--on-primary); background:var(--green); padding:9px 10px; font-size:.86rem; }
 .toc td { border-bottom:1px solid var(--line); padding:9px 10px; }
 .toc tr:nth-child(even) td { background:var(--surface-2); }
 .toc td.num { width:56px; text-align:center; font-weight:800; }
+.toc td.toc-actions { width:154px; }
+.toc-row-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:5px; }
+.toc-row-actions button, .picker-actions button { min-height:44px; border-radius:11px; border:1px solid var(--line); background:var(--surface-2); color:var(--primary); padding:6px 9px; font:inherit; font-size:.78rem; font-weight:800; cursor:pointer; }
+.toc-row-actions button:focus-visible, .picker-actions button:focus-visible, .drag-handle:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+.toc .picker-row td { padding:10px; background:var(--surface) !important; }
+.add-picker { display:grid; gap:9px; padding:12px; border:1px solid var(--line); border-radius:14px; background:var(--surface-2); }
+.add-picker fieldset { display:flex; flex-wrap:wrap; gap:8px 14px; margin:0; padding:0; border:0; }
+.add-picker legend { font-weight:800; color:var(--primary); margin-bottom:8px; }
+.add-picker label { display:flex; align-items:center; gap:7px; min-height:44px; }
+.add-picker label:has(input:disabled) { color:var(--muted); }
+.add-picker input { width:19px; height:19px; accent-color:var(--primary); }
+.picker-actions { display:flex; justify-content:flex-end; gap:8px; }
+.picker-actions .picker-save { background:var(--primary); border-color:var(--primary); color:var(--on-primary); }
+.picker-message { margin:0; color:var(--primary); font-size:.86rem; font-weight:700; }
 .toc a { display:block; text-decoration:none; color:inherit; }
 .zikir-card {
   padding:18px;
@@ -352,7 +382,7 @@ html[data-arabic-editing="true"] .arabic-reset {
 .zikir-card h2 { margin:0; color:var(--green); font-size:1.22rem; line-height:1.25; }
 .arabic {
   text-align:center;
-  font-family:"Amiri","Noto Naskh Arabic","Traditional Arabic","Geeza Pro",serif;
+  font-family:"UWA Naskh Arabic",serif;
   font-size:var(--arabic-size);
   line-height:1.95;
   color:var(--arabic-ink);
@@ -598,9 +628,10 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .routine-summary button,
 .start-routine {
-  border:1px solid var(--line);
-  background:var(--surface);
-  color:var(--primary);
+  min-height:44px;
+  border:1px solid var(--primary);
+  background:var(--primary);
+  color:var(--on-primary);
   border-radius:999px;
   padding:7px 10px;
   font-size:.8rem;
@@ -630,6 +661,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   padding:8px 2px 4px;
 }
 .bubble-link {
+  min-height:44px;
   border:1px solid var(--line);
   background:var(--surface-2);
   color:var(--primary);
@@ -654,6 +686,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   gap:8px;
 }
 .need-chip {
+  min-height:44px;
   border:1px solid var(--line);
   background:var(--surface-2);
   color:var(--ink);
@@ -697,6 +730,8 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   margin-bottom:13px;
 }
 .routine-head p { margin:2px 0 0; color:var(--muted); font-size:.86rem; }
+.routine-head-actions { display:flex; align-items:center; gap:10px; }
+.sort-toggle { white-space:nowrap; }
 .routine-large-progress {
   min-width:72px;
   text-align:center;
@@ -722,6 +757,59 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   padding:8px 10px;
   background:var(--surface-2);
 }
+.checklist.is-sorting .check-row { grid-template-columns:minmax(0,1fr) auto auto; }
+.checklist.is-sorting .check-row input { display:none; }
+.drag-handle {
+  display:none; place-items:center; width:44px; height:44px; padding:0;
+  border:1px solid var(--line); border-radius:12px; background:var(--surface);
+  color:var(--primary); font-size:1.3rem; line-height:1; cursor:grab;
+  touch-action:auto; user-select:none; -webkit-user-select:none;
+}
+.checklist.is-sorting .drag-handle { display:grid; }
+.drag-handle:active { cursor:grabbing; }
+.check-row.drag-placeholder { border:2px dashed var(--primary-2); background:var(--surface); opacity:.65; }
+.check-row.keyboard-lifted { outline:2px solid var(--primary-2); box-shadow:var(--shadow); }
+.drag-ghost { position:fixed; z-index:90; pointer-events:none; margin:0; box-shadow:0 16px 36px rgba(24,61,50,.25); opacity:.96; }
+.remove-zone {
+  display:grid; justify-items:center; gap:3px; width:100%; min-height:104px;
+  margin-top:14px; padding:16px; border:2px dashed var(--line); border-radius:16px;
+  background:var(--surface-2); color:var(--muted); font:inherit; cursor:pointer;
+  scroll-margin-bottom:110px;
+}
+.remove-zone[hidden], .undo-remove[hidden] { display:none; }
+.remove-zone-icon { font-size:1.35rem; line-height:1; }
+.remove-zone-title { font-weight:850; color:var(--ink); }
+.remove-zone-hint { font-size:.82rem; }
+.remove-zone.is-target, .remove-zone:focus-visible {
+  border-style:solid; border-color:#a52b27; background:#fff0ed; color:#8d2521;
+  outline:2px solid #a52b27; outline-offset:2px;
+}
+.remove-zone.is-target .remove-zone-title { color:#8d2521; }
+.sort-feedback { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.sort-feedback .app-feedback { margin:0; }
+.undo-remove { min-height:44px; padding:6px 12px; border:1px solid var(--primary); border-radius:999px; background:var(--surface); color:var(--primary); font:inherit; font-weight:800; cursor:pointer; }
+.app-feedback { min-height:1.5em; color:var(--primary); font-weight:700; font-size:.9rem; }
+.app-feedback:empty { min-height:0; }
+.edit-page { background:var(--surface); border:1px solid var(--card-border); border-radius:22px; padding:clamp(18px,4vw,34px); box-shadow:var(--shadow); margin-bottom:18px; }
+.edit-page h2 { color:var(--primary); margin:12px 0 2px; }
+.edit-page .edit-number { color:var(--muted); margin:0 0 20px; }
+.edit-back { font-weight:800; text-decoration:none; }
+.edit-form { display:grid; gap:16px; }
+.edit-field { display:grid; gap:6px; font-weight:750; }
+.edit-field input, .edit-field textarea { width:100%; min-width:0; border:1px solid var(--line); border-radius:12px; padding:11px 12px; background:var(--surface); color:var(--ink); font:inherit; font-weight:400; }
+.edit-field textarea { min-height:108px; resize:vertical; }
+.edit-field textarea[lang="ar"] { font-family:"UWA Naskh Arabic",serif; font-size:1.4rem; line-height:1.9; text-align:right; }
+.edit-actions { display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; }
+.edit-error { color:#a32222; font-weight:700; min-height:1.5em; }
+.action-danger { min-height:44px; padding:8px 14px; border:1px solid #a52b27; border-radius:999px; background:transparent; color:#a52b27; font:inherit; font-weight:800; cursor:pointer; }
+.delete-area { border-top:1px solid var(--line); margin-top:24px; padding-top:18px; }
+.delete-area[hidden], .delete-confirm[hidden] { display:none; }
+.delete-confirm { display:grid; gap:12px; margin-top:14px; padding:14px; border:1px solid #b85a53; border-radius:14px; background:var(--surface-2); }
+.delete-confirm p { margin:0; }
+.delete-confirm-actions { display:flex; justify-content:flex-end; gap:8px; flex-wrap:wrap; }
+.custom-card .arabic, .custom-card .meaning, .custom-card .fadilat { white-space:pre-wrap; overflow-wrap:anywhere; }
+.custom-card h2, .checklist-name { overflow-wrap:anywhere; }
+body[data-current-view="edit"] main { display:none; }
 .check-row input {
   width:20px;
   height:20px;
@@ -751,6 +839,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 
 .card-complete {
   display:none;
+  min-height:44px;
   width:max-content;
   margin:12px auto 0;
   border:1px solid var(--line);
@@ -763,7 +852,8 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   cursor:pointer;
 }
 body[data-current-view="morning"] .zikir-card .card-complete,
-body[data-current-view="evening"] .zikir-card .card-complete {
+body[data-current-view="evening"] .zikir-card .card-complete,
+body[data-current-view="allday"] .zikir-card .card-complete {
   display:block;
 }
 .card-complete.done {
@@ -851,6 +941,19 @@ body[data-current-view="reference"] #allday-view { display:none; }
 @media (max-width:420px) {
   .need-grid { grid-template-columns:1fr 1fr; }
   .today-title { align-items:start; flex-direction:column; }
+}
+@media (max-width:520px) {
+  .routine-head { flex-wrap:wrap; }
+  .routine-head > div:first-child { min-width:0; }
+  .routine-head-actions { width:100%; justify-content:space-between; }
+  .toc table { table-layout:fixed; }
+  .toc td { overflow-wrap:anywhere; }
+  .toc td.num { width:40px; padding:7px 3px; }
+  .toc td.toc-actions { width:86px; padding:7px 3px; }
+  .toc-row-actions button { width:100%; min-height:44px; padding:5px 2px; }
+  .toc th { padding:8px 4px; }
+  .toc th:first-child { width:40px; }
+  .toc th:last-child { width:86px; }
 }
 
 </style>
@@ -963,10 +1066,12 @@ body[data-current-view="reference"] #allday-view { display:none; }
         <h2>☀️ Rutin Pagi</h2>
         <p>Checklist harian. Progress disimpan untuk hari semasa.</p>
       </div>
-      <div class="routine-large-progress"><span id="morning-count-big">0/12</span>selesai</div>
+      <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="morning" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="morning-count-big">0/12</span>selesai</div></div>
     </div>
     <div class="progress-track"><div class="progress-fill" id="morning-progress-big"></div></div>
+    <div class="sort-feedback"><p class="app-feedback" id="morning-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="morning" hidden>Undo</button></div>
     <div class="checklist" id="morning-checklist"></div>
+    <button type="button" class="remove-zone" data-remove="morning" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
   </section>
 
   <section class="routine-panel daily-view" id="evening-view" hidden>
@@ -975,27 +1080,54 @@ body[data-current-view="reference"] #allday-view { display:none; }
         <h2>🌙 Rutin Petang</h2>
         <p>Checklist harian. Progress pagi dan petang disimpan berasingan.</p>
       </div>
-      <div class="routine-large-progress"><span id="evening-count-big">0/12</span>selesai</div>
+      <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="evening" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="evening-count-big">0/12</span>selesai</div></div>
     </div>
     <div class="progress-track"><div class="progress-fill" id="evening-progress-big"></div></div>
+    <div class="sort-feedback"><p class="app-feedback" id="evening-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="evening" hidden>Undo</button></div>
     <div class="checklist" id="evening-checklist"></div>
+    <button type="button" class="remove-zone" data-remove="evening" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
   </section>
 
-  <section class="allday-panel daily-view" id="allday-view" hidden>
-    <h2>♾️ Sepanjang Hari</h2>
-    <p class="allday-intro">Pilih mana-mana bacaan. Bahagian ini tidak menggunakan checklist wajib.</p>
-    <div class="bubble-cloud" id="allday-bubbles"></div>
+  <section class="routine-panel daily-view" id="allday-view" hidden>
+    <div class="routine-head"><div><h2>♾️ Sepanjang Hari</h2><p>Checklist harian untuk bacaan sepanjang hari.</p></div>
+      <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
+    <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
+    <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
+    <div class="checklist" id="allday-checklist"></div>
+    <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
   </section>
 
   <section class="toc" id="kandungan">
-    <h2>Kandungan</h2>
+    <div class="toc-heading"><h2>Kandungan</h2><button type="button" class="action-primary" id="add-reading">＋ Tambah</button></div>
+    <p class="app-feedback" id="app-feedback" role="status" aria-live="polite"></p>
     <p class="sub">Tekan nombor atau nama zikir untuk terus ke bahagian tersebut.</p>
     <table>
-      <thead><tr><th>No.</th><th>Nama Zikir</th></tr></thead>
+      <thead><tr><th>No.</th><th>Nama Zikir</th><th>Tindakan</th></tr></thead>
       <tbody>
         <tr><td class="num"><a href="#zikir-1">1</a></td><td><a href="#zikir-1">Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-2">2</a></td><td><a href="#zikir-2">Selawat Ibrahimiyyah</a></td></tr><tr><td class="num"><a href="#zikir-3">3</a></td><td><a href="#zikir-3">La Hawla wa La Quwwata</a></td></tr><tr><td class="num"><a href="#zikir-4">4</a></td><td><a href="#zikir-4">Tiga Qul</a></td></tr><tr><td class="num"><a href="#zikir-5">5</a></td><td><a href="#zikir-5">Reda Allah, Islam &amp; Rasul</a></td></tr><tr><td class="num"><a href="#zikir-6">6</a></td><td><a href="#zikir-6">Tauhid &amp; Kekuasaan Allah</a></td></tr><tr><td class="num"><a href="#zikir-7">7</a></td><td><a href="#zikir-7">Bismillah Pelindung Mudarat</a></td></tr><tr><td class="num"><a href="#zikir-8">8</a></td><td><a href="#zikir-8">Ya Hayyu Ya Qayyum</a></td></tr><tr><td class="num"><a href="#zikir-9">9</a></td><td><a href="#zikir-9">Sayyidul Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-10">10</a></td><td><a href="#zikir-10">Tasbih Sebanyak Makhluk</a></td></tr><tr><td class="num"><a href="#zikir-11">11</a></td><td><a href="#zikir-11">Subhanallahi wa Bihamdih</a></td></tr><tr><td class="num"><a href="#zikir-12">12</a></td><td><a href="#zikir-12">Persaksian Pagi</a></td></tr><tr><td class="num"><a href="#zikir-13">13</a></td><td><a href="#zikir-13">Kalimah Allah yang Sempurna</a></td></tr><tr><td class="num"><a href="#zikir-14">14</a></td><td><a href="#zikir-14">Persaksian Petang</a></td></tr><tr><td class="num"><a href="#zikir-15">15</a></td><td><a href="#zikir-15">Doa Nabi Yunus</a></td></tr><tr><td class="num"><a href="#zikir-16">16</a></td><td><a href="#zikir-16">Berlindung daripada Dukacita &amp; Hutang</a></td></tr><tr><td class="num"><a href="#zikir-17">17</a></td><td><a href="#zikir-17">Hasbiyallahu</a></td></tr><tr><td class="num"><a href="#zikir-18">18</a></td><td><a href="#zikir-18">Memohon Afiat Dunia &amp; Akhirat</a></td></tr><tr><td class="num"><a href="#zikir-19">19</a></td><td><a href="#zikir-19">Memohon Kesihatan</a></td></tr><tr><td class="num"><a href="#zikir-20">20</a></td><td><a href="#zikir-20">Memohon Keteguhan</a></td></tr>
       </tbody>
     </table>
+  </section>
+
+  <section class="edit-page daily-view" id="edit-view" hidden>
+    <a href="#kandungan" class="edit-back" id="edit-back">← Kembali ke Kandungan</a>
+    <h2 id="edit-title">Tambah bacaan baharu</h2>
+    <p class="edit-number" id="edit-number">Entry 21</p>
+    <form class="edit-form" id="reading-form" novalidate>
+      <label class="edit-field">Nama bacaan <span aria-hidden="true">*</span><input id="reading-name" name="name" required autocomplete="off"></label>
+      <label class="edit-field">Teks Arab <textarea id="reading-arabic" name="arabic" dir="rtl" lang="ar"></textarea></label>
+      <label class="edit-field">Terjemahan <textarea id="reading-meaning" name="meaning"></textarea></label>
+      <label class="edit-field">Fadilat / rujukan <textarea id="reading-reference" name="reference"></textarea></label>
+      <p class="edit-error" id="edit-error" role="alert"></p>
+      <div class="edit-actions"><button type="button" class="action-secondary" id="cancel-reading">Batal</button><button type="submit" class="action-primary" id="save-reading">Simpan bacaan</button></div>
+    </form>
+    <div class="delete-area" id="delete-area" hidden>
+      <button type="button" class="action-danger" id="delete-reading">Delete Bacaan</button>
+      <div class="delete-confirm" id="delete-confirm" hidden role="group" aria-labelledby="delete-question">
+        <p id="delete-question"></p>
+        <div class="delete-confirm-actions"><button type="button" class="action-secondary" id="delete-cancel">Batal</button><button type="button" class="action-danger" id="delete-accept">Padam</button></div>
+      </div>
+    </div>
   </section>
 
   <main>
@@ -1598,6 +1730,8 @@ setTheme(getSavedTheme() || 'emerald');
   const names = {};
   cards.forEach(card => {
     const id = Number(card.id.replace('zikir-', ''));
+    card.dataset.readingId = String(id);
+    card.dataset.builtIn = 'true';
     names[id] = card.querySelector('h2')?.textContent.trim() || `Zikir ${id}`;
     if (!card.querySelector('.card-complete')) {
       const button = document.createElement('button');
@@ -1617,6 +1751,484 @@ setTheme(getSavedTheme() || 'emerald');
   const allDayView = document.getElementById('allday-view');
   const dailyHome = document.getElementById('daily-home');
   const toc = document.getElementById('kandungan');
+  const editView = document.getElementById('edit-view');
+  const readingForm = document.getElementById('reading-form');
+  const readingName = document.getElementById('reading-name');
+  const editError = document.getElementById('edit-error');
+  const appFeedback = document.getElementById('app-feedback');
+  const customStorageKey = 'uwa-custom-readings-v1';
+  const deletedIdsKey = 'uwa-deleted-reading-ids-v1';
+  let customReadings = [];
+  let customStorageError = false;
+  let savingReading = false;
+  let editingId = null;
+  let formMode = 'add';
+  let addDraft = { name:'', arabic:'', meaning:'', reference:'' };
+  const editDrafts = new Map();
+  let formBaseline = { ...addDraft };
+
+  function isBuiltIn(id) {
+    return /^([1-9]|1\d|20)$/.test(String(id));
+  }
+
+  function userReading(id) {
+    if (isBuiltIn(id)) return null;
+    return customReadings.find(item => item.id === id) || null;
+  }
+
+  function loadCustomReadings() {
+    try {
+      const raw = localStorage.getItem(customStorageKey);
+      if (raw === null) return { items:[], error:false };
+      const parsed = JSON.parse(raw);
+      const valid = Array.isArray(parsed) && parsed.every(item => item &&
+        typeof item.id === 'string' && /^u-[a-z0-9-]+$/.test(item.id) &&
+        ['name', 'arabic', 'meaning', 'reference'].every(key => typeof item[key] === 'string') &&
+        item.name.trim());
+      if (!valid || new Set(parsed.map(item => item.id)).size !== parsed.length) throw new Error('Invalid saved readings');
+      return { items:parsed, error:false };
+    } catch {
+      return { items:[], error:true };
+    }
+  }
+
+  function loadDeletedIds() {
+    try {
+      const raw = localStorage.getItem(deletedIdsKey);
+      if (raw === null) return { ids:[], error:false };
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed) || !parsed.every(id => typeof id === 'string' && /^u-[a-z0-9-]+$/.test(id)) ||
+          new Set(parsed).size !== parsed.length) throw new Error('Invalid deleted IDs');
+      return { ids:parsed, error:false };
+    } catch { return { ids:[], error:true }; }
+  }
+
+  function makeCustomId() {
+    if (globalThis.crypto?.randomUUID) return `u-${crypto.randomUUID()}`;
+    return `u-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+
+  function addTextElement(parent, tag, className, value) {
+    const element = document.createElement(tag);
+    element.className = className;
+    element.textContent = value;
+    parent.appendChild(element);
+    return element;
+  }
+
+  function renderCustomReading(item, number) {
+    const row = document.createElement('tr');
+    row.className = 'custom-row';
+    row.dataset.readingId = item.id;
+    names[item.id] = item.name;
+    const numberCell = document.createElement('td');
+    numberCell.className = 'num';
+    const nameCell = document.createElement('td');
+    const cardId = `bacaan-${item.id}`;
+    for (const [cell, label] of [[numberCell, String(number)], [nameCell, item.name]]) {
+      const link = document.createElement('a');
+      link.href = `#${cardId}`;
+      link.textContent = label;
+      link.addEventListener('click', event => {
+        event.preventDefault();
+        switchView('reference', { scrollTop:false });
+        setTimeout(() => document.getElementById(cardId)?.scrollIntoView({ behavior:'smooth', block:'start' }), 20);
+      });
+      cell.appendChild(link);
+    }
+    row.append(numberCell, nameCell, createActionCell(item.id, item.name, false));
+    toc.querySelector('tbody').appendChild(row);
+
+    const card = document.createElement('article');
+    card.className = 'zikir-card custom-card';
+    card.id = cardId;
+    card.dataset.readingId = item.id;
+    card.dataset.builtIn = 'false';
+    const head = addTextElement(card, 'div', 'card-head', '');
+    addTextElement(head, 'div', 'badge', String(number));
+    const heading = addTextElement(head, 'div', 'card-title', '');
+    addTextElement(heading, 'div', 'eyebrow', `BACAAN ${number}`);
+    addTextElement(heading, 'h2', '', item.name);
+    if (item.arabic) {
+      const arabic = addTextElement(card, 'div', 'arabic', item.arabic);
+      arabic.lang = 'ar';
+      arabic.dir = 'rtl';
+    }
+    if (item.meaning) addTextElement(card, 'p', 'meaning', item.meaning);
+    if (item.reference) {
+      const block = addTextElement(card, 'div', 'fadilat', '');
+      addTextElement(block, 'div', 'f-title', 'Fadilat / rujukan');
+      addTextElement(block, 'div', '', item.reference);
+    }
+    const actions = addTextElement(card, 'div', 'card-actions', '');
+    const complete = document.createElement('button');
+    complete.type = 'button';
+    complete.className = 'card-complete';
+    complete.dataset.zikirId = item.id;
+    complete.textContent = 'Tandakan selesai';
+    card.insertBefore(complete, actions);
+    const back = document.createElement('a');
+    back.href = '#kandungan';
+    back.textContent = '↑ Kandungan';
+    actions.appendChild(back);
+    document.querySelector('main').appendChild(card);
+    cards.push(card);
+    return row;
+  }
+
+  function refreshCustomDisplay() {
+    document.querySelectorAll('.custom-row, .picker-row').forEach(row => row.remove());
+    document.querySelectorAll('.custom-card').forEach(card => card.remove());
+    cards.splice(0, cards.length, ...cards.filter(card => card.dataset.builtIn === 'true'));
+    Object.keys(names).filter(id => id.startsWith('u-')).forEach(id => delete names[id]);
+    customReadings.forEach((item, index) => renderCustomReading(item, 21 + index));
+    buildChecklist('morning'); buildChecklist('evening'); buildChecklist('allday');
+    renderBubbles('home-allday-bubbles', routineIds('allday'));
+    updateProgressUI();
+  }
+
+  let activePicker = null;
+  const destinations = [['morning','Pagi'], ['evening','Petang'], ['allday','Sepanjang Hari']];
+
+  function createActionCell(id, name, builtIn) {
+    const cell = document.createElement('td');
+    cell.className = 'toc-actions';
+    const actions = addTextElement(cell, 'div', 'toc-row-actions', '');
+    const add = document.createElement('button');
+    add.type = 'button';
+    add.textContent = 'Add to';
+    add.setAttribute('aria-label', `Add to ${name}`);
+    add.addEventListener('click', () => openAddPicker(id, add));
+    actions.appendChild(add);
+    if (!builtIn) {
+      const edit = document.createElement('button');
+      edit.type = 'button';
+      edit.textContent = 'Edit';
+      edit.setAttribute('aria-label', `Edit ${name}`);
+      edit.addEventListener('click', () => openEditReading(id));
+      actions.appendChild(edit);
+    }
+    return cell;
+  }
+
+  function setupBuiltInActions() {
+    Array.from(toc.querySelectorAll('tbody tr')).forEach(row => {
+      const match = row.querySelector('a')?.getAttribute('href')?.match(/^#zikir-(\d+)$/);
+      if (!match || !isBuiltIn(match[1])) return;
+      row.dataset.readingId = match[1];
+      row.dataset.builtIn = 'true';
+      row.appendChild(createActionCell(match[1], names[match[1]], true));
+    });
+  }
+
+  function closePicker({ focus = true } = {}) {
+    if (!activePicker) return;
+    const button = activePicker.button;
+    activePicker.row.remove();
+    activePicker = null;
+    if (focus && button.isConnected) button.focus({ preventScroll:true });
+  }
+
+  function openAddPicker(id, button) {
+    if (!isBuiltIn(id) && !userReading(id)) return false;
+    if (activePicker?.id === id) { closePicker(); return true; }
+    closePicker({ focus:false });
+    const owner = button.closest('tr');
+    const pickerRow = document.createElement('tr');
+    pickerRow.className = 'picker-row';
+    const cell = document.createElement('td');
+    cell.colSpan = 3;
+    const picker = addTextElement(cell, 'div', 'add-picker', '');
+    const fieldset = document.createElement('fieldset');
+    const legend = document.createElement('legend');
+    legend.textContent = `Add to: ${names[id]}`;
+    fieldset.appendChild(legend);
+    const checkboxes = [];
+    let hasError = false;
+    destinations.forEach(([type, label]) => {
+      const membership = readMembers(type);
+      if (membership.error) hasError = true;
+      const item = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.value = type;
+      const present = membership.ids.includes(String(id));
+      checkbox.disabled = present || membership.error;
+      item.append(checkbox, document.createTextNode(`${label}${present ? ' · Sudah ditambah' : ''}`));
+      fieldset.appendChild(item);
+      checkboxes.push(checkbox);
+    });
+    picker.appendChild(fieldset);
+    const message = addTextElement(picker, 'p', 'picker-message', hasError ? 'Data rutin tidak dapat dibaca. Data asal tidak diubah.' : '');
+    message.setAttribute('role', 'status');
+    const actions = addTextElement(picker, 'div', 'picker-actions', '');
+    const cancel = document.createElement('button');
+    cancel.type = 'button'; cancel.textContent = 'Batal';
+    cancel.addEventListener('click', () => closePicker());
+    const save = document.createElement('button');
+    save.type = 'button'; save.className = 'picker-save'; save.textContent = 'Tambah';
+    save.disabled = hasError || checkboxes.every(input => input.disabled);
+    save.addEventListener('click', () => {
+      const selected = checkboxes.filter(input => input.checked && !input.disabled).map(input => input.value);
+      if (!selected.length) { message.textContent = 'Pilih sekurang-kurangnya satu destinasi.'; return; }
+      const changes = [];
+      for (const type of selected) {
+        const membership = readMembers(type);
+        if (membership.error) { message.textContent = 'Data rutin tidak dapat dibaca. Data asal tidak diubah.'; return; }
+        if (membership.ids.includes(String(id))) continue;
+        changes.push([memberKey(type), JSON.stringify([...membership.ids, String(id)])]);
+      }
+      if (!changes.length) { message.textContent = 'Semua destinasi dipilih sudah mempunyai bacaan ini.'; return; }
+      save.disabled = true;
+      if (!applyStorageTransaction(changes)) {
+        message.textContent = storageFailureMessage();
+        save.disabled = false;
+        return;
+      }
+      closePicker();
+      if (lastRemoval && lastRemoval.id === String(id) && selected.includes(lastRemoval.type)) {
+        document.querySelector(`[data-undo="${lastRemoval.type}"]`).hidden = true;
+        lastRemoval = null;
+      }
+      ['morning','evening','allday'].forEach(buildChecklist);
+      renderBubbles('home-allday-bubbles', routineIds('allday'));
+      updateProgressUI();
+      const labels = selected.map(type => destinations.find(item => item[0] === type)[1]);
+      appFeedback.textContent = `Ditambah ke ${labels.length > 1 ? `${labels.slice(0, -1).join(', ')} dan ${labels[labels.length - 1]}` : labels[0]}.`;
+    });
+    actions.append(cancel, save);
+    pickerRow.appendChild(cell);
+    owner.after(pickerRow);
+    activePicker = { id, row:pickerRow, button };
+    const firstChoice = checkboxes.find(input => !input.disabled);
+    if (firstChoice) firstChoice.focus(); else cancel.focus();
+    picker.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { event.preventDefault(); closePicker(); }
+    });
+    return true;
+  }
+
+  function updateEntryNumber() {
+    document.getElementById('edit-number').textContent = `Entry ${21 + customReadings.length}`;
+  }
+
+  function formValues() {
+    return {
+      name:readingName.value,
+      arabic:document.getElementById('reading-arabic').value,
+      meaning:document.getElementById('reading-meaning').value,
+      reference:document.getElementById('reading-reference').value
+    };
+  }
+
+  function setFormValues(values) {
+    readingName.value = values.name;
+    document.getElementById('reading-arabic').value = values.arabic;
+    document.getElementById('reading-meaning').value = values.meaning;
+    document.getElementById('reading-reference').value = values.reference;
+  }
+
+  function valuesDiffer(left, right) {
+    return ['name','arabic','meaning','reference'].some(key => left[key] !== right[key]);
+  }
+
+  function saveCurrentDraft() {
+    const values = formValues();
+    if (formMode === 'add') addDraft = values;
+    else if (editingId) {
+      if (valuesDiffer(values, formBaseline)) editDrafts.set(editingId, values);
+      else editDrafts.delete(editingId);
+    }
+  }
+
+  function hasDraft() {
+    saveCurrentDraft();
+    return valuesDiffer(addDraft, { name:'', arabic:'', meaning:'', reference:'' }) || editDrafts.size > 0;
+  }
+
+  function openAddForm() {
+    closePicker({ focus:false });
+    saveCurrentDraft();
+    formMode = 'add'; editingId = null;
+    formBaseline = { name:'', arabic:'', meaning:'', reference:'' };
+    setFormValues(addDraft);
+    updateEntryNumber();
+    document.getElementById('edit-title').textContent = 'Tambah bacaan baharu';
+    document.getElementById('save-reading').textContent = 'Simpan bacaan';
+    document.getElementById('delete-area').hidden = true;
+    document.getElementById('delete-confirm').hidden = true;
+    editError.textContent = '';
+    switchView('edit');
+    readingName.focus();
+  }
+
+  function openEditReading(id) {
+    if (isBuiltIn(id)) return false;
+    const item = userReading(id);
+    if (!item) return false;
+    closePicker({ focus:false });
+    saveCurrentDraft();
+    formMode = 'edit'; editingId = id;
+    formBaseline = { name:item.name, arabic:item.arabic, meaning:item.meaning, reference:item.reference };
+    setFormValues(editDrafts.get(id) || formBaseline);
+    document.getElementById('edit-title').textContent = 'Edit Bacaan';
+    document.getElementById('edit-number').textContent = `Entry ${21 + customReadings.findIndex(reading => reading.id === id)}`;
+    document.getElementById('save-reading').textContent = 'Simpan Perubahan';
+    document.getElementById('delete-area').hidden = false;
+    document.getElementById('delete-confirm').hidden = true;
+    editError.textContent = '';
+    switchView('edit');
+    readingName.focus();
+    return true;
+  }
+
+  document.getElementById('add-reading').addEventListener('click', openAddForm);
+  document.getElementById('edit-back').addEventListener('click', event => {
+    event.preventDefault();
+    switchView('reference');
+  });
+  document.getElementById('cancel-reading').addEventListener('click', () => {
+    if (valuesDiffer(formValues(), formBaseline) && !confirm('Buang perubahan yang belum disimpan?')) return;
+    if (formMode === 'add') addDraft = { ...formBaseline };
+    else editDrafts.delete(editingId);
+    setFormValues(formBaseline);
+    editError.textContent = '';
+    switchView('reference');
+  });
+  window.addEventListener('beforeunload', event => {
+    if (!hasDraft()) return;
+    event.preventDefault();
+    event.returnValue = '';
+  });
+
+  readingForm.addEventListener('submit', event => {
+    event.preventDefault();
+    if (savingReading) return;
+    if (formMode === 'edit' && (!editingId || isBuiltIn(editingId) || !userReading(editingId))) {
+      editError.textContent = 'Bacaan asal dikunci dan tidak boleh diedit.';
+      return;
+    }
+    const name = readingName.value.trim();
+    if (!name) {
+      editError.textContent = 'Nama bacaan wajib diisi.';
+      readingName.focus();
+      return;
+    }
+    const fresh = loadCustomReadings();
+    const deleted = loadDeletedIds();
+    if (fresh.error || customStorageError || (formMode === 'add' && deleted.error)) {
+      editError.textContent = 'Data bacaan tersimpan tidak dapat dibaca. Simpanan baharu dihentikan supaya data asal tidak ditimpa.';
+      return;
+    }
+    savingReading = true;
+    const saveButton = document.getElementById('save-reading');
+    saveButton.disabled = true;
+    const item = {
+      id:formMode === 'edit' ? editingId : makeCustomId(), name,
+      arabic:document.getElementById('reading-arabic').value,
+      meaning:document.getElementById('reading-meaning').value,
+      reference:document.getElementById('reading-reference').value
+    };
+    if (formMode === 'add') while (fresh.items.some(existing => existing.id === item.id) || deleted.ids.includes(item.id)) item.id = makeCustomId();
+    const editIndex = formMode === 'edit' ? fresh.items.findIndex(existing => existing.id === editingId) : -1;
+    if (formMode === 'edit' && editIndex < 0) {
+      editError.textContent = 'Bacaan ini tiada dalam storan. Muat semula aplikasi dan cuba lagi.';
+      savingReading = false; saveButton.disabled = false; return;
+    }
+    const next = [...fresh.items];
+    if (editIndex >= 0) next[editIndex] = item;
+    else next.push(item);
+    try {
+      if (!applyStorageTransaction([[customStorageKey, JSON.stringify(next)]])) throw new Error('Storage failed');
+      customReadings = next;
+      refreshCustomDisplay();
+      const row = toc.querySelector(`.custom-row[data-reading-id="${item.id}"]`);
+      if (formMode === 'add') {
+        addDraft = { name:'', arabic:'', meaning:'', reference:'' };
+        formBaseline = { ...addDraft };
+      } else {
+        editDrafts.delete(item.id);
+        formBaseline = { name:item.name, arabic:item.arabic, meaning:item.meaning, reference:item.reference };
+      }
+      setFormValues(formBaseline);
+      editError.textContent = '';
+      appFeedback.textContent = editIndex >= 0 ? 'Perubahan bacaan disimpan.' : 'Bacaan berjaya ditambah.';
+      switchView('reference', { scrollTop:false });
+      setTimeout(() => row.scrollIntoView({ behavior:'smooth', block:'center' }), 20);
+    } catch {
+      editError.textContent = 'Bacaan tidak dapat disimpan. Semak storan pelayar dan cuba lagi.';
+    } finally {
+      savingReading = false;
+      saveButton.disabled = false;
+    }
+  });
+
+  const deleteButton = document.getElementById('delete-reading');
+  const deleteConfirm = document.getElementById('delete-confirm');
+  document.getElementById('delete-reading').addEventListener('click', () => {
+    const item = userReading(editingId);
+    if (!item || isBuiltIn(editingId)) { editError.textContent = 'Bacaan asal dikunci dan tidak boleh dipadam.'; return; }
+    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Pagi, Petang dan Sepanjang Hari. Tindakan ini tidak boleh dibuat asal.`;
+    deleteConfirm.hidden = false;
+    document.getElementById('delete-cancel').focus();
+  });
+  function closeDeleteConfirm() {
+    deleteConfirm.hidden = true;
+    deleteButton.focus();
+  }
+  document.getElementById('delete-cancel').addEventListener('click', closeDeleteConfirm);
+  deleteConfirm.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { event.preventDefault(); closeDeleteConfirm(); }
+  });
+  document.getElementById('delete-accept').addEventListener('click', () => deleteUserReading(editingId));
+  function deleteUserReading(id) {
+    if (!id || isBuiltIn(id) || !userReading(id)) {
+      editError.textContent = 'Bacaan asal dikunci dan tidak boleh dipadam.'; return false;
+    }
+    const fresh = loadCustomReadings();
+    const deleted = loadDeletedIds();
+    if (fresh.error || deleted.error || !fresh.items.some(item => item.id === id)) {
+      editError.textContent = 'Data bacaan tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
+    }
+    const changes = [
+      [customStorageKey, JSON.stringify(fresh.items.filter(item => item.id !== id))],
+      [deletedIdsKey, JSON.stringify(deleted.ids.includes(id) ? deleted.ids : [...deleted.ids, id])]
+    ];
+    for (const [type] of destinations) {
+      const membership = readMembers(type);
+      const order = readOrder(type, membership.ids);
+      if (membership.error || order.error) {
+        editError.textContent = 'Data rutin tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
+      }
+      if (membership.ids.includes(id)) changes.push([memberKey(type), JSON.stringify(membership.ids.filter(value => value !== id))]);
+      if (order.raw !== null && order.ids.includes(id)) changes.push([orderKey(type), JSON.stringify(order.ids.filter(value => value !== id))]);
+    }
+    try {
+      for (let index = 0; index < localStorage.length; index++) {
+        const key = localStorage.key(index);
+        if (!/^uwa-daily-\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
+        const parsed = JSON.parse(localStorage.getItem(key));
+        if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+        if (parsed.some(value => String(value) === id)) changes.push([key, JSON.stringify(parsed.filter(value => String(value) !== id))]);
+      }
+    } catch {
+      editError.textContent = 'Data checklist tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
+    }
+    if (!applyStorageTransaction(changes)) {
+      editError.textContent = `Delete gagal disimpan. ${storageFailureMessage()}`; return false;
+    }
+    customReadings = fresh.items.filter(item => item.id !== id);
+    editDrafts.delete(id);
+    editingId = null; formMode = 'add';
+    formBaseline = { name:'', arabic:'', meaning:'', reference:'' };
+    setFormValues(addDraft);
+    deleteConfirm.hidden = true;
+    refreshCustomDisplay();
+    appFeedback.textContent = 'Bacaan dipadam.';
+    switchView('reference');
+    document.getElementById('add-reading').focus();
+    return true;
+  }
 
   function localDayKey() {
     const now = new Date();
@@ -1630,23 +2242,438 @@ setTheme(getSavedTheme() || 'emerald');
     return `uwa-daily-${localDayKey()}-${type}`;
   }
 
-  function getDone(type) {
+  function memberKey(type) { return `uwa-routine-members-${type}-v1`; }
+  function orderKey(type) { return `uwa-routine-order-${type}-v1`; }
+  function baseIds(type) {
+    return (type === 'morning' ? morningRoutine.map(item => item[0]) :
+      type === 'evening' ? eveningRoutine.map(item => item[0]) : allDayIds).map(String);
+  }
+  function validReadingId(id) {
+    return (typeof id === 'number' && Number.isInteger(id) && isBuiltIn(id)) ||
+      (typeof id === 'string' && (isBuiltIn(id) || /^u-[a-z0-9-]+$/.test(id)));
+  }
+
+  function readMembers(type) {
+    const base = baseIds(type);
     try {
-      const parsed = JSON.parse(localStorage.getItem(storageKey(type)) || '[]');
-      return new Set(Array.isArray(parsed) ? parsed.map(Number) : []);
+      const raw = localStorage.getItem(memberKey(type));
+      if (raw === null) return { ids:base, error:false, raw:null };
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid membership');
+      const ids = parsed.map(String);
+      if (new Set(ids).size !== ids.length || !ids.every(id => isBuiltIn(id) || userReading(id))) throw new Error('Unknown membership');
+      return { ids, error:false, raw };
     } catch {
+      return { ids:base, error:true, raw:null };
+    }
+  }
+
+  function readOrder(type, members) {
+    try {
+      const raw = localStorage.getItem(orderKey(type));
+      if (raw === null) return { ids:[...members], error:false, raw:null };
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid order');
+      const ids = parsed.map(String);
+      if (new Set(ids).size !== ids.length || !ids.every(id => members.includes(id))) throw new Error('Unknown order');
+      return { ids:[...ids, ...members.filter(id => !ids.includes(id))], error:false, raw };
+    } catch {
+      return { ids:[...members], error:true, raw:null };
+    }
+  }
+
+  let storageRollbackFailed = false;
+  function applyStorageTransaction(changes) {
+    storageRollbackFailed = false;
+    const previous = new Map();
+    const applied = [];
+    try {
+      for (const [key] of changes) previous.set(key, localStorage.getItem(key));
+      for (const [key, value] of changes) {
+        applied.push(key);
+        localStorage.setItem(key, value);
+        if (localStorage.getItem(key) !== value) throw new Error('Storage verification failed');
+      }
+      return true;
+    } catch {
+      for (const key of applied.reverse()) {
+        const value = previous.get(key);
+        try {
+          if (value === null) localStorage.removeItem(key);
+          else localStorage.setItem(key, value);
+        } catch { storageRollbackFailed = true; }
+      }
+      return false;
+    }
+  }
+
+  function storageFailureMessage() {
+    return storageRollbackFailed ? 'Simpanan gagal dan pemulihan mungkin tidak lengkap. Muat semula aplikasi sebelum mencuba lagi.' : 'Simpanan gagal. Data asal dikekalkan.';
+  }
+
+  const corruptDailyKeys = new Set();
+
+  function getDone(type) {
+    const key = storageKey(type);
+    try {
+      const parsed = JSON.parse(localStorage.getItem(key) || '[]');
+      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+      return new Set(parsed.map(String));
+    } catch {
+      corruptDailyKeys.add(key);
       return new Set();
     }
   }
 
   function saveDone(type, set) {
+    const key = storageKey(type);
+    if (corruptDailyKeys.has(key)) return false;
     try {
-      localStorage.setItem(storageKey(type), JSON.stringify(Array.from(set)));
-    } catch {}
+      const value = JSON.stringify(Array.from(set));
+      localStorage.setItem(key, value);
+      return localStorage.getItem(key) === value;
+    } catch { return false; }
   }
 
   function routineFor(type) {
-    return type === 'morning' ? morningRoutine : eveningRoutine;
+    const membership = readMembers(type);
+    const order = readOrder(type, membership.ids);
+    const base = type === 'morning' ? morningRoutine : type === 'evening' ? eveningRoutine : allDayIds.map(id => [id, '×1']);
+    const repeats = new Map(base.map(([id, repeat]) => [String(id), repeat]));
+    return order.ids.map(id => [id, repeats.get(id) || '×1']);
+  }
+
+  function saveRoutineOrder(type, ids) {
+    const membership = readMembers(type);
+    const order = readOrder(type, membership.ids);
+    if (membership.error || order.error || ids.length !== membership.ids.length ||
+        new Set(ids).size !== ids.length || !ids.every(id => membership.ids.includes(id))) return false;
+    try {
+      const key = orderKey(type);
+      const value = JSON.stringify(ids);
+      localStorage.setItem(key, value);
+      return localStorage.getItem(key) === value;
+    } catch {
+      return false;
+    }
+  }
+
+  function sortMessage(type, message) {
+    if (lastRemoval?.type === type) lastRemoval = null;
+    document.querySelector(`[data-undo="${type}"]`).hidden = true;
+    document.getElementById(`${type}-sort-status`).textContent = message;
+  }
+
+  const routineLabels = { morning:'Pagi', evening:'Petang', allday:'Sepanjang Hari' };
+  let lastRemoval = null;
+
+  function removeZone(type) { return document.querySelector(`[data-remove="${type}"]`); }
+
+  function setRemoveTarget(type, active, name = '') {
+    const zone = removeZone(type);
+    zone.classList.toggle('is-target', active);
+    zone.querySelector('.remove-zone-hint').textContent = active ?
+      `Lepaskan untuk keluarkan ${name}` : 'Seret dan lepaskan bacaan di sini';
+    zone.setAttribute('aria-label', active ?
+      `Remove from Checklist: keluarkan ${name} daripada ${routineLabels[type]}` :
+      `Remove from Checklist ${routineLabels[type]}. Angkat bacaan dahulu.`);
+  }
+
+  function pointInRemoveZone(type, x, y) {
+    const zone = removeZone(type);
+    if (zone.hidden || !Number.isFinite(x) || !Number.isFinite(y)) return false;
+    const nav = document.querySelector('.app-nav');
+    if (nav && getComputedStyle(nav).position === 'fixed' && y >= nav.getBoundingClientRect().top) return false;
+    const rect = zone.getBoundingClientRect();
+    return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+  }
+
+  function dailySnapshot(type) {
+    const key = storageKey(type);
+    if (corruptDailyKeys.has(key)) throw new Error('Invalid daily data');
+    const raw = localStorage.getItem(key);
+    const parsed = raw === null ? [] : JSON.parse(raw);
+    if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+    return { key, ids:parsed.map(String) };
+  }
+
+  function removeRoutineItem(state) {
+    const { type, row, name, original } = state;
+    const id = row.dataset.zikirId;
+    let membership, order, daily;
+    try {
+      membership = readMembers(type);
+      order = readOrder(type, membership.ids);
+      daily = dailySnapshot(type);
+      if (membership.error || order.error || !membership.ids.includes(id)) throw new Error('Invalid routine data');
+    } catch {
+      restoreRowOrder(state.root, original);
+      sortMessage(type, 'Removal gagal. Data checklist tidak dapat dibaca; item dikekalkan.');
+      return false;
+    }
+    const changes = [
+      [memberKey(type), JSON.stringify(membership.ids.filter(item => item !== id))],
+      [orderKey(type), JSON.stringify(order.ids.filter(item => item !== id))],
+      [daily.key, JSON.stringify(daily.ids.filter(item => item !== id))]
+    ];
+    if (!applyStorageTransaction(changes)) {
+      restoreRowOrder(state.root, original);
+      sortMessage(type, `Removal gagal. ${storageFailureMessage()} Item dikekalkan.`);
+      return false;
+    }
+    if (lastRemoval) document.querySelector(`[data-undo="${lastRemoval.type}"]`).hidden = true;
+    lastRemoval = {
+      type, id, name, memberIndex:membership.ids.indexOf(id),
+      orderIndex:order.ids.indexOf(id), wasChecked:daily.ids.includes(id), dailyKey:daily.key
+    };
+    buildChecklist(type);
+    renderBubbles('home-allday-bubbles', routineIds('allday'));
+    updateProgressUI();
+    document.getElementById(`${type}-sort-status`).textContent = `${name} dikeluarkan daripada ${routineLabels[type]}.`;
+    const undoButton = document.querySelector(`[data-undo="${type}"]`);
+    undoButton.hidden = false;
+    if (state.keyboard) undoButton.focus({ preventScroll:true });
+    return true;
+  }
+
+  function undoRoutineRemoval(type) {
+    const removal = lastRemoval;
+    if (!removal || removal.type !== type) return;
+    let membership, order, daily;
+    try {
+      membership = readMembers(type);
+      order = readOrder(type, membership.ids);
+      if (membership.error || order.error || membership.ids.includes(removal.id)) throw new Error('Invalid routine data');
+      const raw = localStorage.getItem(removal.dailyKey);
+      const parsed = raw === null ? [] : JSON.parse(raw);
+      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+      daily = parsed.map(String);
+    } catch {
+      document.getElementById(`${type}-sort-status`).textContent = 'Undo gagal. Data checklist tidak dapat dibaca.';
+      return;
+    }
+    const members = [...membership.ids];
+    const ids = [...order.ids];
+    members.splice(Math.min(removal.memberIndex, members.length), 0, removal.id);
+    ids.splice(Math.min(removal.orderIndex, ids.length), 0, removal.id);
+    if (removal.wasChecked && !daily.includes(removal.id)) daily.push(removal.id);
+    const changes = [
+      [memberKey(type), JSON.stringify(members)],
+      [orderKey(type), JSON.stringify(ids)],
+      [removal.dailyKey, JSON.stringify(daily)]
+    ];
+    if (!applyStorageTransaction(changes)) {
+      document.getElementById(`${type}-sort-status`).textContent = `Undo gagal. ${storageFailureMessage()}`;
+      return;
+    }
+    lastRemoval = null;
+    document.querySelector(`[data-undo="${type}"]`).hidden = true;
+    buildChecklist(type);
+    renderBubbles('home-allday-bubbles', routineIds('allday'));
+    updateProgressUI();
+    sortMessage(type, `${removal.name} dikembalikan ke ${routineLabels[type]}.`);
+  }
+
+  function restoreRowOrder(root, ids) {
+    const rows = new Map(Array.from(root.children).map(row => [row.dataset.zikirId, row]));
+    ids.forEach(id => root.appendChild(rows.get(id)));
+  }
+
+  function rowIds(root) {
+    return Array.from(root.children).map(row => row.dataset.zikirId);
+  }
+
+  function commitRowOrder(type, root, original) {
+    const ids = rowIds(root);
+    if (ids.every((id, index) => id === original[index])) return;
+    if (saveRoutineOrder(type, ids)) {
+      sortMessage(type, 'Susunan disimpan.');
+    } else {
+      restoreRowOrder(root, original);
+      sortMessage(type, 'Susunan tidak dapat disimpan. Semak ruang storan pelayar dan cuba lagi.');
+    }
+  }
+
+  let activeDrag = null;
+  let keyboardDrag = null;
+  let autoScrollFrame = 0;
+
+  function movePlaceholder(state, clientY, clientX = state.lastX) {
+    const { root, row } = state;
+    const otherRows = Array.from(root.children).filter(item => item !== row);
+    const originalOrder = rowIds(root).join(',');
+    const firstPositions = new Map(otherRows.map(item => [item, item.getBoundingClientRect().top]));
+    const before = otherRows.find(item => clientY < item.getBoundingClientRect().top + item.offsetHeight / 2);
+    if (before) root.insertBefore(row, before);
+    else root.appendChild(row);
+    if (rowIds(root).join(',') !== originalOrder && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      otherRows.forEach(item => {
+        const delta = firstPositions.get(item) - item.getBoundingClientRect().top;
+        if (delta) item.animate([{ transform:`translateY(${delta}px)` }, { transform:'translateY(0)' }], { duration:150, easing:'ease-out' });
+      });
+    }
+    state.ghost.style.top = `${clientY - state.offsetY}px`;
+    state.lastY = clientY;
+    state.lastX = clientX;
+    const overZone = pointInRemoveZone(state.type, clientX, clientY);
+    if (overZone !== state.overZone) {
+      state.overZone = overZone;
+      setRemoveTarget(state.type, overZone, state.name);
+      if (overZone) sortMessage(state.type, `${state.name} berada di atas Remove from Checklist ${routineLabels[state.type]}. Lepaskan untuk keluarkan.`);
+    }
+  }
+
+  function scrollDuringDrag() {
+    if (!activeDrag || !activeDrag.ghost) return;
+    const edge = 84;
+    const y = activeDrag.lastY;
+    const nav = document.querySelector('.app-nav');
+    const navRect = nav?.getBoundingClientRect();
+    const bottom = navRect && getComputedStyle(nav).position === 'fixed' ? navRect.top : innerHeight;
+    const delta = y < edge ? -Math.min(14, (edge - y) / 4) :
+      y > bottom - edge ? Math.min(14, (y - bottom + edge) / 4) : 0;
+    if (delta) {
+      window.scrollBy(0, delta);
+      movePlaceholder(activeDrag, y, activeDrag.lastX);
+    }
+    autoScrollFrame = requestAnimationFrame(scrollDuringDrag);
+  }
+
+  function liftPointerDrag(state, clientY) {
+    if (state.ghost || !state.root.classList.contains('is-sorting')) return;
+    const rect = state.row.getBoundingClientRect();
+    state.offsetY = clientY - rect.top;
+    state.ghost = state.row.cloneNode(true);
+    state.ghost.classList.add('drag-ghost');
+    state.ghost.classList.remove('done');
+    state.ghost.style.left = `${rect.left}px`;
+    state.ghost.style.top = `${rect.top}px`;
+    state.ghost.style.width = `${rect.width}px`;
+    document.body.appendChild(state.ghost);
+    state.row.classList.add('drag-placeholder');
+    state.handle.setAttribute('aria-grabbed', 'true');
+    sortMessage(state.type, `${state.name} diangkat dalam ${routineLabels[state.type]}. Lepaskan untuk menyimpan susunan, atau seret ke Remove from Checklist.`);
+    activeDrag = state;
+    autoScrollFrame = requestAnimationFrame(scrollDuringDrag);
+  }
+
+  function finishPointerDrag(state, commit, clientX = state.lastX, clientY = state.lastY) {
+    clearTimeout(state.timer);
+    if (state.ghost) {
+      const removing = commit && pointInRemoveZone(state.type, clientX, clientY);
+      cancelAnimationFrame(autoScrollFrame);
+      state.ghost.remove();
+      state.row.classList.remove('drag-placeholder');
+      state.handle.setAttribute('aria-grabbed', 'false');
+      setRemoveTarget(state.type, false);
+      if (activeDrag === state) activeDrag = null;
+      if (removing) removeRoutineItem(state);
+      else if (commit) commitRowOrder(state.type, state.root, state.original);
+      else {
+        restoreRowOrder(state.root, state.original);
+        sortMessage(state.type, 'Susunan dibatalkan.');
+      }
+      if (state.handle.isConnected) state.handle.focus({ preventScroll:true });
+    }
+    if (activeDrag === state) activeDrag = null;
+  }
+
+  function enableSortHandle(handle, type, root, row, name) {
+    handle.addEventListener('pointerdown', event => {
+      if (event.pointerType === 'touch' || event.pointerType === 'pen' || event.button !== 0 || keyboardDrag) return;
+      event.preventDefault();
+      const state = { type, root, row, handle, name, original:rowIds(root), lastX:event.clientX, lastY:event.clientY };
+      try { handle.setPointerCapture(event.pointerId); } catch {}
+      liftPointerDrag(state, event.clientY);
+      const move = moveEvent => { if (state.ghost) movePlaceholder(state, moveEvent.clientY, moveEvent.clientX); };
+      const end = endEvent => {
+        window.removeEventListener('pointermove', move);
+        window.removeEventListener('pointerup', end);
+        window.removeEventListener('pointercancel', cancel);
+        finishPointerDrag(state, endEvent.type === 'pointerup', endEvent.clientX, endEvent.clientY);
+      };
+      const cancel = cancelEvent => end(cancelEvent);
+      window.addEventListener('pointermove', move);
+      window.addEventListener('pointerup', end);
+      window.addEventListener('pointercancel', cancel);
+    });
+
+    let touchState = null;
+    handle.addEventListener('touchstart', event => {
+      if (event.touches.length !== 1 || keyboardDrag) return;
+      const touch = event.touches[0];
+      const state = { type, root, row, handle, name, original:rowIds(root), startY:touch.clientY, lastX:touch.clientX, lastY:touch.clientY };
+      touchState = state;
+      state.timer = setTimeout(() => {
+        if (touchState === state) liftPointerDrag(state, state.lastY);
+      }, 220);
+    }, { passive:true });
+    handle.addEventListener('touchmove', event => {
+      if (!touchState) return;
+      const touch = event.touches[0];
+      if (!touch) return;
+      touchState.lastY = touch.clientY;
+      touchState.lastX = touch.clientX;
+      if (!touchState.ghost && Math.abs(touch.clientY - touchState.startY) > 9) {
+        clearTimeout(touchState.timer);
+        touchState = null;
+        return; // Ordinary swipe can scroll before a deliberate hold.
+      }
+      if (touchState.ghost) {
+        event.preventDefault();
+        movePlaceholder(touchState, touch.clientY, touch.clientX);
+      }
+    }, { passive:false });
+    handle.addEventListener('touchend', event => {
+      const touch = event.changedTouches[0];
+      if (touchState) finishPointerDrag(touchState, true, touch?.clientX, touch?.clientY);
+      touchState = null;
+    });
+    handle.addEventListener('touchcancel', () => {
+      if (touchState) finishPointerDrag(touchState, false);
+      touchState = null;
+    });
+
+    handle.addEventListener('keydown', event => {
+      if (!root.classList.contains('is-sorting')) return;
+      if (event.key === ' ' || event.key === 'Enter') {
+        event.preventDefault();
+        if (!keyboardDrag) {
+          keyboardDrag = { type, root, row, handle, original:rowIds(root), name, keyboard:true };
+          row.classList.add('keyboard-lifted');
+          handle.setAttribute('aria-grabbed', 'true');
+          sortMessage(type, `${name} diangkat dalam ${routineLabels[type]}. Anak panah untuk alih, Enter atau Space untuk letak, Delete untuk keluarkan, Escape untuk batal. Anda juga boleh fokus ke Remove from Checklist.`);
+        } else if (keyboardDrag.handle === handle) {
+          row.classList.remove('keyboard-lifted');
+          handle.setAttribute('aria-grabbed', 'false');
+          commitRowOrder(type, root, keyboardDrag.original);
+          keyboardDrag = null;
+        }
+      } else if (keyboardDrag?.handle === handle && (event.key === 'ArrowUp' || event.key === 'ArrowDown')) {
+        event.preventDefault();
+        const rows = Array.from(root.children);
+        const position = rows.indexOf(row);
+        const next = position + (event.key === 'ArrowUp' ? -1 : 1);
+        if (next < 0 || next >= rows.length) return;
+        if (next < position) root.insertBefore(row, rows[next]);
+        else root.insertBefore(rows[next], row);
+        sortMessage(type, `${name}: kedudukan ${next + 1} daripada ${rows.length}.`);
+      } else if (keyboardDrag?.handle === handle && (event.key === 'Delete' || event.key === 'Backspace')) {
+        event.preventDefault();
+        const state = keyboardDrag;
+        keyboardDrag = null;
+        row.classList.remove('keyboard-lifted');
+        handle.setAttribute('aria-grabbed', 'false');
+        removeRoutineItem(state);
+      } else if (keyboardDrag?.handle === handle && event.key === 'Escape') {
+        event.preventDefault();
+        restoreRowOrder(root, keyboardDrag.original);
+        row.classList.remove('keyboard-lifted');
+        handle.setAttribute('aria-grabbed', 'false');
+        keyboardDrag = null;
+        sortMessage(type, 'Susunan dibatalkan.');
+      }
+    });
   }
 
   function progress(type) {
@@ -1662,7 +2689,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   function updateProgressUI() {
-    ['morning', 'evening'].forEach(type => {
+    ['morning', 'evening', 'allday'].forEach(type => {
       const p = progress(type);
       const homeCount = document.getElementById(`${type}-home-count`);
       const bigCount = document.getElementById(`${type}-count-big`);
@@ -1677,12 +2704,20 @@ setTheme(getSavedTheme() || 'emerald');
 
   function buildChecklist(type) {
     const root = document.getElementById(`${type}-checklist`);
-    if (!root || root.dataset.ready === 'true') return;
+    if (!root) return;
+    if (activeDrag?.root === root) finishPointerDrag(activeDrag, false);
+    if (keyboardDrag?.root === root) {
+      restoreRowOrder(root, keyboardDrag.original);
+      keyboardDrag.row.classList.remove('keyboard-lifted');
+      keyboardDrag.handle.setAttribute('aria-grabbed', 'false');
+      keyboardDrag = null;
+    }
+    root.replaceChildren();
     const routine = routineFor(type);
     routine.forEach(([id, repeat]) => {
       const row = document.createElement('div');
       row.className = 'check-row';
-      row.dataset.zikirId = String(id);
+      row.dataset.zikirId = id;
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
@@ -1691,7 +2726,7 @@ setTheme(getSavedTheme() || 'emerald');
         const done = getDone(type);
         if (checkbox.checked) done.add(id);
         else done.delete(id);
-        saveDone(type, done);
+        if (!saveDone(type, done)) sortMessage(type, 'Status checklist tidak dapat disimpan. Data asal tidak diubah.');
         updateProgressUI();
       });
 
@@ -1699,23 +2734,89 @@ setTheme(getSavedTheme() || 'emerald');
       nameButton.type = 'button';
       nameButton.className = 'checklist-name';
       nameButton.textContent = names[id];
-      nameButton.addEventListener('click', () => scrollToZikir(id));
+      nameButton.addEventListener('click', () => scrollToReading(id));
 
       const repeatBadge = document.createElement('span');
       repeatBadge.className = 'repeat-badge';
       repeatBadge.textContent = repeat;
 
-      row.append(checkbox, nameButton, repeatBadge);
+      const handle = document.createElement('button');
+      handle.type = 'button';
+      handle.className = 'drag-handle';
+      handle.textContent = '⠿';
+      handle.setAttribute('aria-label', `Susun ${names[id]} dalam ${routineLabels[type]}. Tahan dan seret, atau Space atau Enter untuk angkat, anak panah untuk alih, Delete untuk keluarkan, Escape untuk batal.`);
+      handle.setAttribute('aria-grabbed', 'false');
+      enableSortHandle(handle, type, root, row, names[id]);
+
+      row.append(checkbox, nameButton, repeatBadge, handle);
       root.appendChild(row);
     });
-    root.dataset.ready = 'true';
   }
 
+  document.querySelectorAll('.sort-toggle').forEach(button => {
+    button.addEventListener('click', () => {
+      const type = button.dataset.sort;
+      const root = document.getElementById(`${type}-checklist`);
+      if (activeDrag?.root === root) finishPointerDrag(activeDrag, false);
+      if (keyboardDrag?.root === root) {
+        restoreRowOrder(root, keyboardDrag.original);
+        keyboardDrag.row.classList.remove('keyboard-lifted');
+        keyboardDrag.handle.setAttribute('aria-grabbed', 'false');
+        keyboardDrag = null;
+      }
+      const enabled = !root.classList.contains('is-sorting');
+      root.classList.toggle('is-sorting', enabled);
+      removeZone(type).hidden = !enabled;
+      button.textContent = enabled ? 'Selesai' : 'Susun';
+      button.setAttribute('aria-pressed', String(enabled));
+      sortMessage(type, enabled ? 'Mod Susun. Tahan pemegang enam titik untuk seret, atau gunakan papan kekunci.' : 'Mod Susun ditutup.');
+    });
+  });
+
+  document.querySelectorAll('.remove-zone').forEach(zone => {
+    const type = zone.dataset.remove;
+    setRemoveTarget(type, false);
+    zone.addEventListener('focus', () => {
+      if (keyboardDrag?.type !== type) return;
+      setRemoveTarget(type, true, keyboardDrag.name);
+      sortMessage(type, `${keyboardDrag.name} berada di atas Remove from Checklist ${routineLabels[type]}. Tekan Enter atau Space untuk keluarkan, Escape untuk batal.`);
+    });
+    zone.addEventListener('blur', () => { if (!activeDrag?.overZone) setRemoveTarget(type, false); });
+    zone.addEventListener('click', () => {
+      if (keyboardDrag?.type !== type) {
+        sortMessage(type, `Angkat bacaan dalam ${routineLabels[type]} dahulu sebelum mengeluarkannya.`);
+        return;
+      }
+      const state = keyboardDrag;
+      keyboardDrag = null;
+      state.row.classList.remove('keyboard-lifted');
+      state.handle.setAttribute('aria-grabbed', 'false');
+      setRemoveTarget(type, false);
+      removeRoutineItem(state);
+    });
+    zone.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || keyboardDrag?.type !== type) return;
+      event.preventDefault();
+      const state = keyboardDrag;
+      keyboardDrag = null;
+      restoreRowOrder(state.root, state.original);
+      state.row.classList.remove('keyboard-lifted');
+      state.handle.setAttribute('aria-grabbed', 'false');
+      setRemoveTarget(type, false);
+      state.handle.focus({ preventScroll:true });
+      sortMessage(type, `${state.name} dibatalkan; tiada bacaan dikeluarkan.`);
+    });
+  });
+
+  document.querySelectorAll('.undo-remove').forEach(button => {
+    button.addEventListener('click', () => undoRoutineRemoval(button.dataset.undo));
+  });
+
   function syncChecklistState() {
-    ['morning', 'evening'].forEach(type => {
+    ['morning', 'evening', 'allday'].forEach(type => {
       const done = getDone(type);
       document.querySelectorAll(`#${type}-checklist .check-row`).forEach(row => {
-        const id = Number(row.dataset.zikirId);
+        const id = row.dataset.zikirId;
         const checked = done.has(id);
         row.classList.toggle('done', checked);
         const checkbox = row.querySelector('input[type="checkbox"]');
@@ -1726,14 +2827,15 @@ setTheme(getSavedTheme() || 'emerald');
 
   function currentRoutineType() {
     return document.body.dataset.currentView === 'evening' ? 'evening' :
-           document.body.dataset.currentView === 'morning' ? 'morning' : null;
+           document.body.dataset.currentView === 'morning' ? 'morning' :
+           document.body.dataset.currentView === 'allday' ? 'allday' : null;
   }
 
   function syncCardButtons() {
     const type = currentRoutineType();
     const done = type ? getDone(type) : new Set();
     document.querySelectorAll('.card-complete').forEach(button => {
-      const id = Number(button.dataset.zikirId);
+      const id = button.dataset.zikirId;
       const inRoutine = type && routineFor(type).some(([routineId]) => routineId === id);
       button.hidden = !inRoutine;
       if (!inRoutine) return;
@@ -1748,11 +2850,11 @@ setTheme(getSavedTheme() || 'emerald');
     if (!completeButton) return;
     const type = currentRoutineType();
     if (!type) return;
-    const id = Number(completeButton.dataset.zikirId);
+    const id = completeButton.dataset.zikirId;
     const done = getDone(type);
     if (done.has(id)) done.delete(id);
     else done.add(id);
-    saveDone(type, done);
+    if (!saveDone(type, done)) sortMessage(type, 'Status checklist tidak dapat disimpan. Data asal tidak diubah.');
     updateProgressUI();
   });
 
@@ -1767,7 +2869,7 @@ setTheme(getSavedTheme() || 'emerald');
       button.textContent = names[id];
       button.addEventListener('click', () => {
         switchView('allday');
-        setTimeout(() => scrollToZikir(id), 20);
+        setTimeout(() => scrollToReading(id), 20);
       });
       root.appendChild(button);
     });
@@ -1776,7 +2878,7 @@ setTheme(getSavedTheme() || 'emerald');
   function showCards(ids) {
     const allowed = ids ? new Set(ids) : null;
     cards.forEach(card => {
-      const id = Number(card.id.replace('zikir-', ''));
+      const id = card.dataset.readingId;
       card.hidden = allowed ? !allowed.has(id) : false;
     });
   }
@@ -1786,9 +2888,10 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   function switchView(view, { scrollTop = true } = {}) {
-    const valid = ['home', 'morning', 'evening', 'allday', 'reference'];
+    const valid = ['home', 'morning', 'evening', 'allday', 'reference', 'edit'];
     if (!valid.includes(view)) view = 'home';
 
+    if (document.body.dataset.currentView === 'edit' && view !== 'edit') saveCurrentDraft();
     document.body.dataset.currentView = view;
     navButtons.forEach(button => {
       if (button.dataset.appView === view) button.setAttribute('aria-current', 'page');
@@ -1800,12 +2903,14 @@ setTheme(getSavedTheme() || 'emerald');
     eveningView.hidden = view !== 'evening';
     allDayView.hidden = view !== 'allday';
     toc.hidden = view !== 'reference';
+    editView.hidden = view !== 'edit';
 
     if (view === 'home') showCards([]);
     if (view === 'morning') showCards(routineIds('morning'));
     if (view === 'evening') showCards(routineIds('evening'));
-    if (view === 'allday') showCards(allDayIds);
+    if (view === 'allday') showCards(routineIds('allday'));
     if (view === 'reference') showCards(null);
+    if (view === 'edit') showCards([]);
 
     syncCardButtons();
     if (scrollTop) window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1815,6 +2920,12 @@ setTheme(getSavedTheme() || 'emerald');
     const card = cardById.get(id);
     if (!card || card.hidden) return;
     card.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  function scrollToReading(id) {
+    if (isBuiltIn(id)) return scrollToZikir(Number(id));
+    const card = document.getElementById(`bacaan-${id}`);
+    if (card && !card.hidden) card.scrollIntoView({ behavior:'smooth', block:'start' });
   }
 
   navButtons.forEach(button => {
@@ -1864,19 +2975,32 @@ setTheme(getSavedTheme() || 'emerald');
     if (match) {
       switchView('reference', { scrollTop:false });
       setTimeout(() => scrollToZikir(Number(match[1])), 20);
+      return;
+    }
+    if (/^#bacaan-u-[a-z0-9-]+$/.test(location.hash)) {
+      switchView('reference', { scrollTop:false });
+      setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior:'smooth', block:'start' }), 20);
     }
   });
 
+  const loadedCustom = loadCustomReadings();
+  customReadings = loadedCustom.items;
+  customStorageError = loadedCustom.error;
+  setupBuiltInActions();
+  customReadings.forEach((item, index) => renderCustomReading(item, 21 + index));
+  if (customStorageError) appFeedback.textContent = 'Data bacaan tersimpan tidak dapat dibaca. Data asal tidak diubah.';
   buildChecklist('morning');
   buildChecklist('evening');
-  renderBubbles('home-allday-bubbles', allDayIds);
-  renderBubbles('allday-bubbles', allDayIds);
+  buildChecklist('allday');
+  renderBubbles('home-allday-bubbles', routineIds('allday'));
   updateProgressUI();
 
-  if (location.hash === '#kandungan' || /^#zikir-\d+$/.test(location.hash)) {
+  if (location.hash === '#kandungan' || /^#zikir-\d+$/.test(location.hash) || /^#bacaan-u-[a-z0-9-]+$/.test(location.hash)) {
     switchView('reference', { scrollTop:false });
     if (/^#zikir-\d+$/.test(location.hash)) {
       setTimeout(() => scrollToZikir(Number(location.hash.replace('#zikir-', ''))), 20);
+    } else if (/^#bacaan-u-[a-z0-9-]+$/.test(location.hash)) {
+      setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior:'smooth', block:'start' }), 20);
     }
   } else {
     switchView('home', { scrollTop:false });
