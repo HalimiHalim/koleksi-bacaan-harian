@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v8-remove-zone";
+const CACHE_NAME = "uwa-bacaan-harian-v9-khazanah";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [

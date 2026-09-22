@@ -1,7 +1,7 @@
 {
-  "name": "Koleksi Bacaan Harian",
-  "short_name": "Bacaan Harian",
-  "description": "Susunan Bacaan dari Hadis yang Sahih · Amalan Pagi dan Petang",
+  "name": "Himpunan Amalan Khazanah",
+  "short_name": "Khazanah",
+  "description": "Himpunan Bacaan dan Panduan Islam",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

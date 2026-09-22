@@ -1,6 +1,6 @@
-# Koleksi Bacaan Harian PWA
+# Himpunan Amalan Khazanah
 
-This is a lightweight offline-installable PWA for UWA Mark 7.
+Himpunan Bacaan dan Panduan Islam — a lightweight offline-installable PWA.
 
 ## Structure
 
