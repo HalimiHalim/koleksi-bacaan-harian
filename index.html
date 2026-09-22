@@ -839,6 +839,27 @@ body[data-current-view="edit"] main { display:none; }
 .check-row.done { opacity:.68; }
 .check-row.done .checklist-name { text-decoration:line-through; }
 
+.selawat-stanzas { display:grid; gap:18px; margin-top:20px; }
+.selawat-stanza { min-width:0; padding:16px; border:1px solid var(--line); border-radius:16px; background:var(--surface-2); }
+.selawat-stanza + .selawat-stanza { border-top-color:var(--accent); }
+.selawat-check { display:flex; align-items:center; gap:10px; width:fit-content; min-height:44px; margin-bottom:10px; padding:6px 8px; border-radius:10px; color:var(--primary); font-size:.82rem; font-weight:750; cursor:pointer; touch-action:pan-y; }
+.selawat-check input { width:22px; height:22px; margin:0; accent-color:var(--primary); }
+.selawat-check:focus-within { outline:3px solid var(--accent); outline-offset:2px; }
+.selawat-phrases { display:grid; gap:18px; direction:rtl; }
+.selawat-phrase { min-width:0; text-align:center; direction:ltr; }
+.selawat-arabic { margin:0; padding:5px 0; font-family:"UWA Naskh Arabic",serif; font-size:clamp(1.75rem,5.6vw,2.3rem); font-weight:400; line-height:2.1; color:var(--arabic-ink); }
+.selawat-meaning { margin:4px 0 0; color:var(--ink); font-size:.95rem; line-height:1.7; }
+.selawat-stanza.is-complete { background:var(--surface); border-color:var(--line); }
+.selawat-stanza.is-complete .selawat-arabic { color:color-mix(in srgb,var(--arabic-ink) 82%,var(--surface)); }
+.selawat-stanza.is-complete .selawat-meaning { color:var(--muted); }
+.selawat-closing { margin:24px 0 18px; text-align:center; }
+.selawat-foot { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.selawat-foot .action-secondary { min-height:44px; font-size:.82rem; }
+.selawat-sources { margin:0; color:var(--muted); font-size:.8rem; }
+@media (min-width:760px) {
+  .selawat-phrases { grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px 30px; }
+}
+
 .card-complete {
   display:none;
   min-height:44px;
@@ -1057,6 +1078,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
         <button type="button" class="need-chip" data-need="forgiveness">🤲 Keampunan</button>
         <button type="button" class="need-chip" data-need="tawakkul">🕊️ Tawakal</button>
         <button type="button" class="need-chip" data-need="gratitude">🌿 Syukur & Ibadah</button>
+        <button type="button" class="need-chip" data-need="nabi-muhammad">Nabi Muhammad</button>
       </div>
       <div class="need-results" id="need-results"></div>
     </div>
@@ -1107,6 +1129,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
       <thead><tr><th>No.</th><th>Nama Zikir</th><th>Tindakan</th></tr></thead>
       <tbody>
         <tr><td class="num"><a href="#zikir-1">1</a></td><td><a href="#zikir-1">Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-2">2</a></td><td><a href="#zikir-2">Selawat Ibrahimiyyah</a></td></tr><tr><td class="num"><a href="#zikir-3">3</a></td><td><a href="#zikir-3">La Hawla wa La Quwwata</a></td></tr><tr><td class="num"><a href="#zikir-4">4</a></td><td><a href="#zikir-4">Tiga Qul</a></td></tr><tr><td class="num"><a href="#zikir-5">5</a></td><td><a href="#zikir-5">Reda Allah, Islam &amp; Rasul</a></td></tr><tr><td class="num"><a href="#zikir-6">6</a></td><td><a href="#zikir-6">Tauhid &amp; Kekuasaan Allah</a></td></tr><tr><td class="num"><a href="#zikir-7">7</a></td><td><a href="#zikir-7">Bismillah Pelindung Mudarat</a></td></tr><tr><td class="num"><a href="#zikir-8">8</a></td><td><a href="#zikir-8">Ya Hayyu Ya Qayyum</a></td></tr><tr><td class="num"><a href="#zikir-9">9</a></td><td><a href="#zikir-9">Sayyidul Istighfar</a></td></tr><tr><td class="num"><a href="#zikir-10">10</a></td><td><a href="#zikir-10">Tasbih Sebanyak Makhluk</a></td></tr><tr><td class="num"><a href="#zikir-11">11</a></td><td><a href="#zikir-11">Subhanallahi wa Bihamdih</a></td></tr><tr><td class="num"><a href="#zikir-12">12</a></td><td><a href="#zikir-12">Persaksian Pagi</a></td></tr><tr><td class="num"><a href="#zikir-13">13</a></td><td><a href="#zikir-13">Kalimah Allah yang Sempurna</a></td></tr><tr><td class="num"><a href="#zikir-14">14</a></td><td><a href="#zikir-14">Persaksian Petang</a></td></tr><tr><td class="num"><a href="#zikir-15">15</a></td><td><a href="#zikir-15">Doa Nabi Yunus</a></td></tr><tr><td class="num"><a href="#zikir-16">16</a></td><td><a href="#zikir-16">Berlindung daripada Dukacita &amp; Hutang</a></td></tr><tr><td class="num"><a href="#zikir-17">17</a></td><td><a href="#zikir-17">Hasbiyallahu</a></td></tr><tr><td class="num"><a href="#zikir-18">18</a></td><td><a href="#zikir-18">Memohon Afiat Dunia &amp; Akhirat</a></td></tr><tr><td class="num"><a href="#zikir-19">19</a></td><td><a href="#zikir-19">Memohon Kesihatan</a></td></tr><tr><td class="num"><a href="#zikir-20">20</a></td><td><a href="#zikir-20">Memohon Keteguhan</a></td></tr>
+        <tr><td class="num"><a href="#zikir-21">21</a></td><td><a href="#zikir-21">Selawat Maulidur Rasul</a></td></tr>
       </tbody>
     </table>
   </section>
@@ -1114,7 +1137,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   <section class="edit-page daily-view" id="edit-view" hidden>
     <a href="#kandungan" class="edit-back" id="edit-back">← Kembali ke Kandungan</a>
     <h2 id="edit-title">Tambah bacaan baharu</h2>
-    <p class="edit-number" id="edit-number">Entry 21</p>
+    <p class="edit-number" id="edit-number">Entry 22</p>
     <form class="edit-form" id="reading-form" novalidate>
       <label class="edit-field">Nama bacaan <span aria-hidden="true">*</span><input id="reading-name" name="name" required autocomplete="off"></label>
       <label class="edit-field">Teks Arab <textarea id="reading-arabic" name="arabic" dir="rtl" lang="ar"></textarea></label>
@@ -1494,6 +1517,20 @@ body[data-current-view="reference"] #allday-view { display:none; }
       </div>
     </article>
     
+    <article class="zikir-card selawat-card" id="zikir-21" data-tags="nabi-muhammad">
+      <div class="card-head">
+        <div class="badge">21</div>
+        <div class="card-title"><div class="eyebrow">SELAWAT</div><h2>Selawat Maulidur Rasul</h2></div>
+      </div>
+      <div class="selawat-stanzas" id="selawat-stanzas"></div>
+      <div class="selawat-closing" id="selawat-closing"></div>
+      <div class="selawat-foot">
+        <button type="button" class="action-secondary" id="reset-selawat">Kosongkan Semua Tanda</button>
+        <p class="selawat-sources">Rujukan teks: <a href="https://taqwa.my/selawat-maulidur-rasul-rumi/" target="_blank" rel="noopener noreferrer">Taqwa</a> · <a href="https://www.perkim.net.my/wp-content/uploads/doc/Selawat%20Kepada%20Nabi%20Muhammad%20Sempena%20Maulidur%20Rasul.pdf" target="_blank" rel="noopener noreferrer">PERKIM</a></p>
+      </div>
+      <p class="app-feedback" id="selawat-status" role="status" aria-live="polite"></p>
+      <div class="card-actions"><a href="#kandungan">↑ Kandungan</a></div>
+    </article>
   </main>
 
   <footer>Himpunan Bacaan dan Panduan Islam</footer>
@@ -1727,7 +1764,77 @@ setTheme(getSavedTheme() || 'emerald');
     gratitude: [10, 11, 20]
   };
 
+  // Ten red boxes in the supplied image: right page, then left; each row reads right to left.
+  // Text: Taqwa; omitted stanza s07 and the unboxed closing are verified against its linked PERKIM PDF.
+  const selawatReading = {
+    id:"21", title:"Selawat Maulidur Rasul", tags:["nabi-muhammad"],
+    stanzas:[
+      { id:"s01", phrases:[
+        {"arabic":"صَلَّى اللهُ عَلَى مُحَمَّد","meaning":"Selawat Allah ke atas Muhammad"},
+        {"arabic":"صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ","meaning":"Selawat salam dipohon lagi"},
+        {"arabic":"صَلَّى اللهُ عَلَى مُحَمَّد","meaning":"Selawat Allah ke atas Muhammad"},
+        {"arabic":"صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ","meaning":"Selawat salam dipohon lagi"},
+      ] },
+      { id:"s02", phrases:[
+        {"arabic":"يَا نَبِيْ سَلاَمٌ عَلَيْكَ","meaning":"Wahai Nabi salam atasmu"},
+        {"arabic":"يَا رَسُوْل سَلاَمٌ عَلَيْكَ","meaning":"Wahai Rasul, salam atasmu"},
+        {"arabic":"يَا حَبِيْبُ سَلاَمٌ عَلَيْكَ","meaning":"Wahai kekasih, salam atasmu"},
+        {"arabic":"صَلَوَاتُ الله عَلَيْكَ","meaning":"Selawat Allah ke atasmu"},
+      ] },
+      { id:"s03", phrases:[
+        {"arabic":"أَشْرَقَ الْبَدْرُ عَلَيْنَا","meaning":"Bulan purnama menyinari kita"},
+        {"arabic":"فَاخْتَفَتْ مِنْهُ الْبُدُوْرُ","meaning":"Hilang segala cahaya"},
+        {"arabic":"مِثْلَ حُسْنِكَ مَا رَأَيْنَا","meaning":"Indah menawan tak pernah dilihat"},
+        {"arabic":"قَطُّ يَا وَجْهَ السُّرُوْرِ","meaning":"Wajah gembira sepanjang hayat"},
+      ] },
+      { id:"s04", phrases:[
+        {"arabic":"أَنْتَ شَمْسٌ أَنْتَ بَدْرٌ","meaning":"Kaulah matahari, kaulah bulan"},
+        {"arabic":"أَنْتَ نُوْرٌ فَوْقَ نُوْرٍ","meaning":"Kaulah cahaya mengatasi cahaya"},
+        {"arabic":"أَنْتَ إِكْسِيْرٌ وَغَالِي","meaning":"Kaulah rahsia hidup mulia"},
+        {"arabic":"أَنْتَ مِصْبَاحُ الصُّدُوْرِ","meaning":"Kaulah menyuluhi jiwa"},
+      ] },
+      { id:"s05", phrases:[
+        {"arabic":"يَا حَبِيْبِيْ يَا مُحَمَّد","meaning":"Wahai kekasihku, ya Muhammad"},
+        {"arabic":"يَا عَرُوْسَ الْخَافِقَيْنِ","meaning":"Wahai pendamping indah sejagat"},
+        {"arabic":"يَا مُؤَيَّدُ يَا مُمَجَّدُ","meaning":"Wahai Nabi dijulang dipuja"},
+        {"arabic":"يَا إِمَامَ الْقِبْلَتَيْنِ","meaning":"Wahai imam 2 kiblat"},
+      ] },
+      { id:"s06", phrases:[
+        {"arabic":"مَنْ رَأَى وَجْهَكَ يَسْعَد","meaning":"Bahagialah orang memandang wajahmu"},
+        {"arabic":"يَا كَرِيْمَ الْوَالِدَيْنِ","meaning":"Wahai penghulu keturunan mulia"},
+        {"arabic":"حَوْضُكَ الصَّافِى الْمُبَرَّد","meaning":"Kolam airmu sejuk jernih"},
+        {"arabic":"وِرْدُنَا يَوْمَ النُّشُوْرِ","meaning":"Kunjungi kami pada hari akhirat"},
+      ] },
+      { id:"s07", phrases:[
+        {"arabic":"مَا رَأَيْنَا الْعِيسَ حَنَّتْ","meaning":"Sepanjang malam unta berjalan"},
+        {"arabic":"بِالسُّرَى إِلَّا إِلَيْكَ","meaning":"Tiada berhenti rindukanmu"},
+        {"arabic":"وَالْغَمَامَةُ قَدْ أَظَلَّتْ","meaning":"Engkau dipayungi awan putih"},
+        {"arabic":"وَالْمَلَا صَلُّوا عَلَيْكَ","meaning":"Dan Malaikat sama berselawat"},
+      ] },
+      { id:"s08", phrases:[
+        {"arabic":"عَالِمُ السِّرِّ وَأَخْفَى","meaning":"Allah mengetahui rahsia sulit"},
+        {"arabic":"مُسْتَجِيْبُ الدَّعَوَاتِ","meaning":"Dialah menyahut semua seruan"},
+        {"arabic":"رَبِّ إرْحَمْنَا جَمِيْعًا","meaning":"Wahai Tuhan Rahmatilah kami"},
+        {"arabic":"بِجَمِيْعِ الصَّالِحَاتِ","meaning":"Dengan segala amalan soleh"},
+      ] },
+      { id:"s09", phrases:[
+        {"arabic":"وَصَلاَةُ الله عَلَى أَحْمَد","meaning":"Selawat Allah ke atas Muhammad"},
+        {"arabic":"عَدَّ تَحْرِيْرِ السُّطُوْرِ","meaning":"Sebanyak baris kertas ditulis"},
+        {"arabic":"أَحْمَدُ الْهَادِي مُحَمَّد","meaning":"Ahmad Muhammad petunjuk jalan"},
+        {"arabic":"صَاحِبُ الْوَجْهِ الْمُنِيْرِ","meaning":"Empunya wajah berseri menawan"},
+      ] },
+      { id:"s10", phrases:[
+        {"arabic":"صَلَّى اللهُ عَلَى مُحَمَّد","meaning":"Selawat Allah ke atas Muhammad"},
+        {"arabic":"صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ","meaning":"Selawat salam dipohon lagi"},
+        {"arabic":"صَلَّى اللهُ عَلَى مُحَمَّد","meaning":"Selawat Allah ke atas Muhammad"},
+        {"arabic":"صَلَّى اللهُ عَلَيْهِ وَسَلَّمَ","meaning":"Selawat salam dipohon lagi"},
+      ] },
+    ],
+    closing:{"arabic":"اللَّهُمَّ صَلِّ وَسَلِّمْ وَبَارِكْ عَلَيْهِ","meaning":"Wahai Tuhan, selawat dan salam dan keberkatan atasnya"}
+  };
+
   const cards = Array.from(document.querySelectorAll('.zikir-card'));
+  const firstCustomNumber = cards.length + 1;
   const cardById = new Map(cards.map(card => [Number(card.id.replace('zikir-', '')), card]));
   const names = {};
   cards.forEach(card => {
@@ -1735,7 +1842,7 @@ setTheme(getSavedTheme() || 'emerald');
     card.dataset.readingId = String(id);
     card.dataset.builtIn = 'true';
     names[id] = card.querySelector('h2')?.textContent.trim() || `Zikir ${id}`;
-    if (!card.querySelector('.card-complete')) {
+    if (!card.classList.contains('selawat-card') && !card.querySelector('.card-complete')) {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'card-complete';
@@ -1770,7 +1877,7 @@ setTheme(getSavedTheme() || 'emerald');
   let formBaseline = { ...addDraft };
 
   function isBuiltIn(id) {
-    return /^([1-9]|1\d|20)$/.test(String(id));
+    return /^([1-9]|1\d|2[01])$/.test(String(id));
   }
 
   function userReading(id) {
@@ -1883,7 +1990,7 @@ setTheme(getSavedTheme() || 'emerald');
     document.querySelectorAll('.custom-card').forEach(card => card.remove());
     cards.splice(0, cards.length, ...cards.filter(card => card.dataset.builtIn === 'true'));
     Object.keys(names).filter(id => id.startsWith('u-')).forEach(id => delete names[id]);
-    customReadings.forEach((item, index) => renderCustomReading(item, 21 + index));
+    customReadings.forEach((item, index) => renderCustomReading(item, firstCustomNumber + index));
     buildChecklist('morning'); buildChecklist('evening'); buildChecklist('allday');
     renderBubbles('home-allday-bubbles', routineIds('allday'));
     updateProgressUI();
@@ -2011,7 +2118,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   function updateEntryNumber() {
-    document.getElementById('edit-number').textContent = `Entry ${21 + customReadings.length}`;
+    document.getElementById('edit-number').textContent = `Entry ${firstCustomNumber + customReadings.length}`;
   }
 
   function formValues() {
@@ -2074,7 +2181,7 @@ setTheme(getSavedTheme() || 'emerald');
     formBaseline = { name:item.name, arabic:item.arabic, meaning:item.meaning, reference:item.reference };
     setFormValues(editDrafts.get(id) || formBaseline);
     document.getElementById('edit-title').textContent = 'Edit Bacaan';
-    document.getElementById('edit-number').textContent = `Entry ${21 + customReadings.findIndex(reading => reading.id === id)}`;
+    document.getElementById('edit-number').textContent = `Entry ${firstCustomNumber + customReadings.findIndex(reading => reading.id === id)}`;
     document.getElementById('save-reading').textContent = 'Simpan Perubahan';
     document.getElementById('delete-area').hidden = false;
     document.getElementById('delete-confirm').hidden = true;
@@ -2311,6 +2418,89 @@ setTheme(getSavedTheme() || 'emerald');
 
   function storageFailureMessage() {
     return storageRollbackFailed ? 'Simpanan gagal dan pemulihan mungkin tidak lengkap. Muat semula aplikasi sebelum mencuba lagi.' : 'Simpanan gagal. Data asal dikekalkan.';
+  }
+
+  // Stanza completion is independent of daily routine completion and never resets by date.
+  const selawatStorageKey = 'uwa-selawat-21-stanzas-v1';
+  function readSelawatDone() {
+    try {
+      const raw = localStorage.getItem(selawatStorageKey);
+      const ids = raw === null ? [] : JSON.parse(raw);
+      const validIds = new Set(selawatReading.stanzas.map(stanza => stanza.id));
+      if (!Array.isArray(ids) || ids.some(id => !validIds.has(id)) || new Set(ids).size !== ids.length) throw new Error('Invalid stanza state');
+      return { ids, error:false };
+    } catch { return { ids:[], error:true }; }
+  }
+
+  function syncSelawatDone(ids) {
+    document.querySelectorAll('#selawat-stanzas .selawat-stanza').forEach(stanza => {
+      const checked = ids.includes(stanza.dataset.stanzaId);
+      stanza.classList.toggle('is-complete', checked);
+      stanza.querySelector('input').checked = checked;
+      stanza.querySelector('.selawat-check span').textContent = checked ? 'Ditandakan selesai' : 'Tandakan selesai';
+    });
+  }
+
+  function renderSelawat() {
+    const root = document.getElementById('selawat-stanzas');
+    const status = document.getElementById('selawat-status');
+    const card = document.getElementById(`zikir-${selawatReading.id}`);
+    card.dataset.tags = selawatReading.tags.join(' ');
+    card.querySelector('h2').textContent = selawatReading.title;
+    function addPhrase(parent, phrase) {
+      const pair = addTextElement(parent, 'div', 'selawat-phrase', '');
+      const arabic = addTextElement(pair, 'p', 'selawat-arabic', phrase.arabic);
+      arabic.lang = 'ar'; arabic.dir = 'rtl';
+      const meaning = addTextElement(pair, 'p', 'selawat-meaning', phrase.meaning);
+      meaning.lang = 'ms';
+    }
+    selawatReading.stanzas.forEach((stanza, index) => {
+      const unit = addTextElement(root, 'section', 'selawat-stanza', '');
+      unit.dataset.stanzaId = stanza.id;
+      unit.setAttribute('aria-label', `Rangkap ${index + 1}`);
+      const control = addTextElement(unit, 'label', 'selawat-check', '');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.setAttribute('aria-label', `Tandakan rangkap ${index + 1} Selawat Maulidur Rasul selesai`);
+      control.appendChild(checkbox);
+      addTextElement(control, 'span', '', 'Tandakan selesai');
+      const phrases = addTextElement(unit, 'div', 'selawat-phrases', '');
+      stanza.phrases.forEach(phrase => addPhrase(phrases, phrase));
+      checkbox.addEventListener('change', () => {
+        const before = readSelawatDone();
+        if (before.error) {
+          syncSelawatDone(before.ids);
+          status.textContent = 'Tanda Selawat tidak dapat dibaca. Data asal dikekalkan.';
+          return;
+        }
+        const ids = checkbox.checked ? [...new Set([...before.ids, stanza.id])] : before.ids.filter(id => id !== stanza.id);
+        if (!applyStorageTransaction([[selawatStorageKey, JSON.stringify(ids)]])) {
+          syncSelawatDone(before.ids);
+          status.textContent = storageFailureMessage();
+          return;
+        }
+        syncSelawatDone(ids);
+        status.textContent = checkbox.checked ? 'Rangkap ditandakan selesai.' : 'Tanda rangkap dibuang.';
+      });
+    });
+    addPhrase(document.getElementById('selawat-closing'), selawatReading.closing);
+    const saved = readSelawatDone();
+    syncSelawatDone(saved.ids);
+    if (saved.error) status.textContent = 'Tanda Selawat tidak dapat dibaca. Data asal dikekalkan.';
+    document.getElementById('reset-selawat').addEventListener('click', () => {
+      const before = readSelawatDone();
+      if (before.error) { status.textContent = 'Tanda Selawat tidak dapat dibaca. Data asal dikekalkan.'; return; }
+      if (!before.ids.length || !confirm('Kosongkan semua tanda Selawat Maulidur Rasul?')) return;
+      if (!applyStorageTransaction([[selawatStorageKey, '[]']])) { status.textContent = storageFailureMessage(); return; }
+      syncSelawatDone([]);
+      status.textContent = 'Semua tanda Selawat dikosongkan.';
+    });
+    window.addEventListener('storage', event => {
+      if (event.key !== selawatStorageKey && event.key !== null) return;
+      const saved = readSelawatDone();
+      syncSelawatDone(saved.ids);
+      status.textContent = saved.error ? 'Tanda Selawat tidak dapat dibaca. Data asal dikekalkan.' : '';
+    });
   }
 
   const corruptDailyKeys = new Set();
@@ -2953,14 +3143,16 @@ setTheme(getSavedTheme() || 'emerald');
     button.addEventListener('click', () => {
       const root = document.getElementById('need-results');
       root.innerHTML = '';
-      (needGroups[button.dataset.need] || []).forEach(id => {
+      const taggedIds = cards.filter(card => (card.dataset.tags || '').split(/\s+/).includes(button.dataset.need)).map(card => card.dataset.readingId);
+      const matches = [...new Set([...(needGroups[button.dataset.need] || []).map(String), ...taggedIds])];
+      matches.forEach(id => {
         const result = document.createElement('button');
         result.type = 'button';
         result.className = 'need-result';
         result.textContent = names[id];
         result.addEventListener('click', () => {
           switchView('reference', { scrollTop:false });
-          setTimeout(() => scrollToZikir(id), 20);
+          setTimeout(() => scrollToReading(id), 20);
         });
         root.appendChild(result);
       });
@@ -2989,7 +3181,8 @@ setTheme(getSavedTheme() || 'emerald');
   customReadings = loadedCustom.items;
   customStorageError = loadedCustom.error;
   setupBuiltInActions();
-  customReadings.forEach((item, index) => renderCustomReading(item, 21 + index));
+  renderSelawat();
+  customReadings.forEach((item, index) => renderCustomReading(item, firstCustomNumber + index));
   if (customStorageError) appFeedback.textContent = 'Data bacaan tersimpan tidak dapat dibaca. Data asal tidak diubah.';
   buildChecklist('morning');
   buildChecklist('evening');
