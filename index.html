@@ -584,7 +584,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .routine-summary-grid {
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:12px;
 }
 .routine-summary {
@@ -621,15 +621,12 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   transition:width .2s ease;
 }
 .routine-summary button,
-.start-routine,
 .need-chip,
-.bubble-link,
 .checklist-name,
 .card-complete {
   font:inherit;
 }
-.routine-summary button,
-.start-routine {
+.routine-summary button {
   min-height:44px;
   border:1px solid var(--primary);
   background:var(--primary);
@@ -640,45 +637,6 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
   font-weight:800;
   cursor:pointer;
 }
-
-.quick-allday {
-  padding:18px;
-}
-.quick-allday-head {
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:center;
-  margin-bottom:12px;
-}
-.quick-allday h2 { margin:0; color:var(--primary); }
-.quick-allday p { margin:3px 0 0; color:var(--muted); font-size:.86rem; }
-
-.bubble-cloud {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-items:center;
-  gap:9px 7px;
-  padding:8px 2px 4px;
-}
-.bubble-link {
-  min-height:44px;
-  border:1px solid var(--line);
-  background:var(--surface-2);
-  color:var(--primary);
-  text-decoration:none;
-  border-radius:999px;
-  padding:9px 13px;
-  font-size:.83rem;
-  font-weight:800;
-  cursor:pointer;
-  transition:transform .15s ease, background .15s ease;
-}
-.bubble-link:nth-child(3n+1) { transform:translateY(-3px) rotate(-1deg); }
-.bubble-link:nth-child(3n+2) { transform:translateY(3px) rotate(1deg); }
-.bubble-link:hover,
-.bubble-link:focus-visible { background:var(--surface); transform:scale(1.03); }
 
 .need-panel { padding:18px; }
 .need-panel > p { color:var(--muted); margin:4px 0 13px; font-size:.88rem; }
@@ -701,6 +659,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .need-chip:hover,
 .need-chip:focus-visible { border-color:var(--primary-2); }
+.need-symbol { font-family:"UWA Naskh Arabic",serif; font-size:1.2em; }
 .need-results {
   display:flex;
   flex-wrap:wrap;
@@ -1077,18 +1036,14 @@ body[data-current-view="reference"] #allday-view { display:none; }
           <div class="progress-track"><div class="progress-fill" id="evening-home-progress"></div></div>
           <button type="button" data-open-routine="evening">Mulakan / Sambung</button>
         </div>
-      </div>
-    </div>
-
-    <div class="today-card quick-allday">
-      <div class="quick-allday-head">
-        <div>
-          <h2>♾️ Sepanjang Hari</h2>
-          <p>Bacaan yang boleh dirujuk dan diamalkan bila-bila masa.</p>
+        <div class="routine-summary">
+          <div class="routine-icon">♾️</div>
+          <h3>Sepanjang Hari</h3>
+          <div class="routine-count" id="allday-home-count">0 / 6 selesai</div>
+          <div class="progress-track"><div class="progress-fill" id="allday-home-progress"></div></div>
+          <button type="button" data-open-routine="allday">Mulakan / Sambung</button>
         </div>
-        <button class="start-routine" type="button" data-open-routine="allday">Lihat semua</button>
       </div>
-      <div class="bubble-cloud" id="home-allday-bubbles"></div>
     </div>
 
     <div class="need-panel">
@@ -1101,7 +1056,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
         <button type="button" class="need-chip" data-need="forgiveness">🤲 Keampunan</button>
         <button type="button" class="need-chip" data-need="tawakkul">🕊️ Tawakal</button>
         <button type="button" class="need-chip" data-need="gratitude">🌿 Syukur & Ibadah</button>
-        <button type="button" class="need-chip" data-need="nabi-muhammad">Nabi Muhammad</button>
+        <button type="button" class="need-chip" data-need="nabi-muhammad"><span class="need-symbol" lang="ar" aria-hidden="true">ﷺ</span> Nabi Muhammad</button>
       </div>
       <div class="need-results" id="need-results"></div>
     </div>
@@ -2015,7 +1970,6 @@ setTheme(getSavedTheme() || 'emerald');
     Object.keys(names).filter(id => id.startsWith('u-')).forEach(id => delete names[id]);
     customReadings.forEach((item, index) => renderCustomReading(item, firstCustomNumber + index));
     buildChecklist('morning'); buildChecklist('evening'); buildChecklist('allday');
-    renderBubbles('home-allday-bubbles', routineIds('allday'));
     updateProgressUI();
   }
 
@@ -2123,7 +2077,6 @@ setTheme(getSavedTheme() || 'emerald');
         lastRemoval = null;
       }
       ['morning','evening','allday'].forEach(buildChecklist);
-      renderBubbles('home-allday-bubbles', routineIds('allday'));
       updateProgressUI();
       const labels = selected.map(type => destinations.find(item => item[0] === type)[1]);
       appFeedback.textContent = `Ditambah ke ${labels.length > 1 ? `${labels.slice(0, -1).join(', ')} dan ${labels[labels.length - 1]}` : labels[0]}.`;
@@ -2641,7 +2594,6 @@ setTheme(getSavedTheme() || 'emerald');
       orderIndex:order.ids.indexOf(id), wasChecked:daily.ids.includes(id), dailyKey:daily.key
     };
     buildChecklist(type);
-    renderBubbles('home-allday-bubbles', routineIds('allday'));
     updateProgressUI();
     document.getElementById(`${type}-sort-status`).textContent = `${name} dikeluarkan daripada ${routineLabels[type]}.`;
     const undoButton = document.querySelector(`[data-undo="${type}"]`);
@@ -2683,7 +2635,6 @@ setTheme(getSavedTheme() || 'emerald');
     lastRemoval = null;
     document.querySelector(`[data-undo="${type}"]`).hidden = true;
     buildChecklist(type);
-    renderBubbles('home-allday-bubbles', routineIds('allday'));
     updateProgressUI();
     sortMessage(type, `${removal.name} dikembalikan ke ${routineLabels[type]}.`);
   }
@@ -2983,7 +2934,7 @@ setTheme(getSavedTheme() || 'emerald');
       removeZone(type).hidden = !enabled;
       button.textContent = enabled ? 'Selesai' : 'Susun';
       button.setAttribute('aria-pressed', String(enabled));
-      sortMessage(type, enabled ? 'Mod Susun. Tahan pemegang enam titik untuk seret, atau gunakan papan kekunci.' : 'Mod Susun ditutup.');
+      sortMessage(type, enabled ? 'Mod Susun. Tahan pemegang enam titik untuk seret, atau gunakan papan kekunci.' : '');
     });
   });
 
@@ -3071,23 +3022,6 @@ setTheme(getSavedTheme() || 'emerald');
     if (!saveDone(type, done)) sortMessage(type, 'Status checklist tidak dapat disimpan. Data asal tidak diubah.');
     updateProgressUI();
   });
-
-  function renderBubbles(targetId, ids) {
-    const root = document.getElementById(targetId);
-    if (!root) return;
-    root.innerHTML = '';
-    ids.forEach(id => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'bubble-link';
-      button.textContent = names[id];
-      button.addEventListener('click', () => {
-        switchView('allday');
-        setTimeout(() => scrollToReading(id), 20);
-      });
-      root.appendChild(button);
-    });
-  }
 
   function showCards(ids) {
     const allowed = ids ? new Set(ids) : null;
@@ -3209,7 +3143,6 @@ setTheme(getSavedTheme() || 'emerald');
   buildChecklist('morning');
   buildChecklist('evening');
   buildChecklist('allday');
-  renderBubbles('home-allday-bubbles', routineIds('allday'));
   updateProgressUI();
 
   if (location.hash === '#kandungan' || /^#zikir-\d+$/.test(location.hash) || /^#bacaan-u-[a-z0-9-]+$/.test(location.hash)) {

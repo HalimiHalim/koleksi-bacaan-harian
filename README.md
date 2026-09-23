@@ -47,7 +47,11 @@ To test offline mode, load the app once through `localhost`, wait for the servic
 
 ## Refreshing Old Caches
 
-If an installed app still shows an older build, open it once while online and reload. If needed, clear the site's browser storage/service worker cache from the browser developer tools, then open the app again.
+If an installed app still shows an older build, open it while online, allow the update to download, then reload or close and reopen it. The service worker replaces older app caches automatically. Do not clear site data or localStorage to update the app: these hold saved checklists, ordering, custom readings, edits and preferences. Cache Storage updates leave these saved values intact.
+
+## Vercel Toolbar
+
+The repository does not include a Vercel Toolbar script or package. If the toolbar appears in a Vercel session, manage it through the project's Settings → General → Vercel Toolbar → Production → Off, or use Disable for Session in the toolbar menu. See [Vercel's toolbar visibility guide](https://vercel.com/docs/vercel-toolbar/managing-toolbar). No CSS or DOM workaround is applied to the app.
 
 ## Deployment
 
