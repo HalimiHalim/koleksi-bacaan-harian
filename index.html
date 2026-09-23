@@ -862,6 +862,26 @@ body[data-current-view="edit"] main { display:none; }
   .selawat-arabic { font-size:clamp(1.9rem,3vw,2.3rem); }
   .selawat-meaning { font-size:.9rem; }
 }
+@media (max-width:600px) {
+  .selawat-card { padding-left:8px; padding-right:8px; }
+  .selawat-stanza { padding-left:8px; padding-right:8px; }
+  .selawat-phrases { gap:14px 4px; }
+  .selawat-arabic {
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:normal;
+    font-size:clamp(1rem,calc(2.82vw + .44rem),1.2rem);
+    line-height:1.8;
+  }
+  .selawat-meaning {
+    white-space:nowrap;
+    overflow-wrap:normal;
+    word-break:normal;
+    font-size:clamp(.54rem,calc(2.91vw - .04rem),.74rem);
+    line-height:1.35;
+  }
+  .selawat-meaning.is-long { font-size:clamp(.385rem,calc(2.84vw - .18rem),.62rem); }
+}
 
 .card-complete {
   display:none;
@@ -2455,6 +2475,7 @@ setTheme(getSavedTheme() || 'emerald');
       arabic.lang = 'ar'; arabic.dir = 'rtl';
       const meaning = addTextElement(pair, 'p', 'selawat-meaning', phrase.meaning);
       meaning.lang = 'ms';
+      if ([...phrase.meaning].length >= 28) meaning.classList.add('is-long');
     }
     selawatReading.stanzas.forEach((stanza, index) => {
       const unit = addTextElement(root, 'section', 'selawat-stanza', '');

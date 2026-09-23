@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v12-selawat-two-column";
+const CACHE_NAME = "uwa-bacaan-harian-v13-selawat-single-line";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
