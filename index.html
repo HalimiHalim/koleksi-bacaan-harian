@@ -469,6 +469,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .nav-icon { line-height:1; }
 .nav-short { display:none; }
+.app-nav .nav-full, .app-nav .nav-short { text-align:center; }
 .app-nav button[aria-current="page"] {
   background:var(--primary);
   color:var(--on-primary);
@@ -938,6 +939,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   }
   .nav-full { display:none; }
   .nav-short { display:inline; }
+  .app-nav .nav-short { white-space:normal; overflow-wrap:normal; }
   .offline-pill {
     bottom:calc(78px + env(safe-area-inset-bottom));
   }
@@ -994,10 +996,10 @@ body[data-current-view="reference"] #allday-view { display:none; }
 
   <nav class="app-nav" aria-label="Navigasi bacaan harian">
     <button type="button" data-app-view="home" aria-label="Home" aria-current="page"><span class="nav-icon" aria-hidden="true">🏠</span><span class="nav-full">Home</span><span class="nav-short">Home</span></button>
-    <button type="button" data-app-view="morning" aria-label="Pagi"><span class="nav-icon" aria-hidden="true">☀️</span><span class="nav-full">Pagi</span><span class="nav-short">Pagi</span></button>
-    <button type="button" data-app-view="evening" aria-label="Petang"><span class="nav-icon" aria-hidden="true">🌙</span><span class="nav-full">Petang</span><span class="nav-short">Petang</span></button>
-    <button type="button" data-app-view="allday" aria-label="Sepanjang Hari"><span class="nav-icon" aria-hidden="true">∞</span><span class="nav-full">Sepanjang Hari</span><span class="nav-short">Harian</span></button>
-    <button type="button" data-app-view="reference" aria-label="Kandungan"><span class="nav-icon" aria-hidden="true">☰</span><span class="nav-full">Kandungan</span><span class="nav-short">Isi</span></button>
+    <button type="button" data-app-view="morning" aria-label="Zikir"><span class="nav-icon" aria-hidden="true">📿</span><span class="nav-full">Zikir</span><span class="nav-short">Zikir</span></button>
+    <button type="button" data-app-view="evening" aria-label="Himpunan Doa"><span class="nav-icon" aria-hidden="true">🤲</span><span class="nav-full">Himpunan Doa</span><span class="nav-short">Himpunan Doa</span></button>
+    <button type="button" data-app-view="allday" aria-label="Quran"><span class="nav-icon" aria-hidden="true">📖</span><span class="nav-full">Quran</span><span class="nav-short">Quran</span></button>
+    <button type="button" data-app-view="reference" aria-label="Isi"><span class="nav-icon" aria-hidden="true">☰</span><span class="nav-full">Isi</span><span class="nav-short">Isi</span></button>
   </nav>
   <button type="button" class="install-app-button" id="install-app-button">Install App</button>
   <div class="offline-pill" id="offline-pill" role="status">Offline</div>
@@ -1065,7 +1067,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   <section class="routine-panel daily-view" id="morning-view" hidden>
     <div class="routine-head">
       <div>
-        <h2>☀️ Rutin Pagi</h2>
+        <h2>📿 Zikir Harian</h2>
         <p>Checklist harian. Progress disimpan untuk hari semasa.</p>
       </div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="morning" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="morning-count-big">0/12</span>selesai</div></div>
@@ -1079,8 +1081,8 @@ body[data-current-view="reference"] #allday-view { display:none; }
   <section class="routine-panel daily-view" id="evening-view" hidden>
     <div class="routine-head">
       <div>
-        <h2>🌙 Rutin Petang</h2>
-        <p>Checklist harian. Progress pagi dan petang disimpan berasingan.</p>
+        <h2>🤲 Himpunan Doa</h2>
+        <p>Checklist doa harian. Progress disimpan untuk hari semasa.</p>
       </div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="evening" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="evening-count-big">0/12</span>selesai</div></div>
     </div>
@@ -1091,7 +1093,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   </section>
 
   <section class="routine-panel daily-view" id="allday-view" hidden>
-    <div class="routine-head"><div><h2>♾️ Sepanjang Hari</h2><p>Checklist harian untuk bacaan sepanjang hari.</p></div>
+    <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
@@ -2601,7 +2603,7 @@ setTheme(getSavedTheme() || 'emerald');
     document.getElementById(`${type}-sort-status`).textContent = message;
   }
 
-  const routineLabels = { morning:'Pagi', evening:'Petang', allday:'Sepanjang Hari' };
+  const routineLabels = { morning:'Zikir', evening:'Himpunan Doa', allday:'Quran' };
   let lastRemoval = null;
 
   function removeZone(type) { return document.querySelector(`[data-remove="${type}"]`); }
