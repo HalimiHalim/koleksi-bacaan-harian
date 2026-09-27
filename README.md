@@ -10,6 +10,8 @@ The app shell and surah index are cached on installation; individual surahs and 
 
 On phones, opening a surah enters a focused full-width reading screen with a back button to the surah list. Page View advances right-to-left: the next page control is on the left and the previous page control is on the right. The reader leaves the existing Quran hub and daily checklist layout unchanged.
 
+Pages with fewer than 100 Arabic words use a compact page frame and natural word spacing. Page data replaces upstream font-only sajdah placeholders and decodes escaped Arabic characters; `tools/verify_quran_data.py` rejects raw placeholders and non-Arabic text in page words.
+
 Run `python3 tools/verify_quran_data.py` to check chapter, ayah, page and marker integrity against the bundled Tanzil source. Pass the official QuranEnc `malay_basumayyah.sqlite` file as an optional argument to verify every Malay translation byte for byte.
 
 ## Structure

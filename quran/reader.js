@@ -12,7 +12,7 @@
   let requestId = 0;
   let versePages = null;
   const arabicDigits = (number) => String(number).replace(/\d/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
-  const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json`;
+  const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json${folder === 'pages' ? '?v=19' : ''}`;
 
   try {
     const saved = JSON.parse(localStorage.getItem(stateKey));
@@ -174,6 +174,9 @@
       $('quran-reader-arabic-title').textContent = pageSurahs.map(number => chapter(number)?.[2]).filter(Boolean).join(' · ');
       $('quran-reader-meta').textContent = `Halaman ${page} · ${names.join(' · ')}`;
       const fragment = document.createDocumentFragment();
+      // The few pages with under 100 words should not stretch like a dense page.
+      const wordCount = data.lines.flat().filter(([kind]) => kind === 'word').length;
+      sheet.classList.toggle('is-compact', wordCount < 100);
       for (const items of data.lines) {
         const line = document.createElement('div'); line.className = 'quran-page-line';
         const type = items[0]?.[0];
@@ -192,9 +195,11 @@
             const digit = document.createElement('span'); digit.textContent = arabicDigits(ayahNumber);
             marker.append(digit); line.append(marker);
           } else {
-            const span = document.createElement('span'); span.className = kind === 'quarter' ? 'quran-page-quarter' : 'quran-page-word';
+            const span = document.createElement('span');
+            span.className = kind === 'quarter' ? 'quran-page-quarter' : kind === 'sajdah' ? 'quran-page-sajdah' : 'quran-page-word';
             span.textContent = kind === 'quarter' ? '۞' : word;
             if (kind === 'quarter') span.setAttribute('aria-label', 'Tanda suku hizb');
+            if (kind === 'sajdah') span.setAttribute('aria-label', 'Tanda sujud tilawah');
             line.append(span);
           }
         }

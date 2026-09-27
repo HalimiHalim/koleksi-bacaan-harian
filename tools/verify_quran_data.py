@@ -7,9 +7,14 @@ The optional SQLite file is the publisher's malay_basumayyah database.
 import json
 import sqlite3
 import sys
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1] / 'quran'
+SAJDAH_KEYS = {
+    '7:206', '13:15', '16:50', '17:109', '19:58', '22:18', '22:77',
+    '25:60', '27:26', '32:15', '38:24', '41:38', '53:62', '84:21', '96:19',
+}
 
 
 def read_json(path):
@@ -48,15 +53,23 @@ def verify(translation_db=None):
 
     endings = {}
     page_surahs = {}
-    kinds = {'word', 'end', 'quarter', 'surah_header', 'bismillah'}
+    sajdah_keys = set()
+    kinds = {'word', 'end', 'quarter', 'surah_header', 'bismillah', 'sajdah'}
     for page in range(1, 605):
         data = read_json(ROOT / 'pages' / f'{page:03}.json')
         assert data['page'] == page and data['lines']
         page_surahs[page] = set()
         for line in data['lines']:
             assert line
-            for kind, _, key, _ in line:
+            for kind, text, key, _ in line:
                 assert kind in kinds
+                if kind in ('word', 'bismillah'):
+                    assert not any(char.isascii() and char.isalnum() for char in text), (page, key, text)
+                    assert '&' not in text and '#' not in text, (page, key, text)
+                    assert all('ARABIC' in unicodedata.name(char, '') or char in (' ', '\u200c', '\u200d') for char in text), (page, key, text)
+                if kind == 'sajdah':
+                    assert text == '۩' and key in SAJDAH_KEYS and key not in sajdah_keys
+                    sajdah_keys.add(key)
                 if kind != 'end':
                     continue
                 assert key in original and key not in endings
@@ -66,6 +79,7 @@ def verify(translation_db=None):
     assert set(endings) == set(original) == set(verse_pages)
     assert set(verse_pages.values()) == set(range(1, 605))
     assert page_surahs[604] == {112, 113, 114}
+    assert sajdah_keys == SAJDAH_KEYS
 
     if translation_db:
         connection = sqlite3.connect(translation_db)
@@ -75,7 +89,7 @@ def verify(translation_db=None):
         assert published == translations, 'Bundled Malay text differs from the supplied QuranEnc database'
         connection.close()
 
-    print('PASS: 114 surahs, 6,236 source-identical Arabic verses, 6,236 translations, 604 pages, one end marker per ayah')
+    print('PASS: 114 surahs, 6,236 source-identical Arabic verses, 6,236 translations, 604 pages, one end marker per ayah, 15 sajdah signs, no raw placeholders or entities')
     if translation_db:
         print('PASS: all 6,236 Malay translations match QuranEnc SQLite verbatim')
 

@@ -68,6 +68,10 @@ body.quran-explore[data-current-view="allday"] main { display:none; }
 .quran-verse-marker::before { content:""; position:absolute; inset:-2px; border:1px dotted var(--verse-marker-ornament); border-radius:inherit; pointer-events:none; }
 .quran-verse-marker span { position:relative; font-size:var(--verse-marker-digit-size); font-weight:700; line-height:1; }
 .quran-page-quarter { color:var(--primary-2); }
+.quran-page-sajdah { color:var(--primary-2); }
+.quran-mushaf-page.is-compact { min-height:0; justify-content:flex-start; }
+.quran-mushaf-page.is-compact .quran-page-line { justify-content:center; gap:.28em; min-height:1.55em; line-height:1.55; }
+.quran-mushaf-page.is-compact .quran-page-folio { margin-top:12px; }
 .quran-page-folio { margin-top:8px; text-align:center; color:var(--muted); font-family:inherit; font-size:.8rem; }
 #allday-view button:focus-visible,#allday-view input:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
 @media (max-width:700px) { .quran-surah-list { grid-template-columns:1fr; } }
