@@ -11,9 +11,9 @@
 - Browser tests: real Chromium at 428, 390, 320 and desktop 1280 CSS px. Pages 1, 2, 303, 416, 535, 598, 602 and 604 opened; page 416 and 598 show `۩`, page 535 shows decoded Arabic; short pages are compact, all 3 surahs appear on 604, sampled lines and document have no horizontal overflow after the 320px repair. Emerald and Midnight inspected. RTL page navigation and disabled 1/604 edges, List View, Malay translation toggle, bookmark and resume checked. No app console errors.
 - Cache test: same-origin V18 fixture first visited and cached old page 535, then files overlaid with V19. First online reload loaded `reader.css?v=19`, `reader.js?v=19` and corrected `pages/535.json?v=19`; reading position persisted. After stopping the server, offline reload reopened corrected page 535 with no console errors. Legacy checklist trial/delete regressions passed. JavaScript and Python syntax and `git diff --check` passed.
 - Production: `main` fast-forwarded from `5ab2973` to `796b4f7` and pushed normally to the verified `HalimiHalim/koleksi-bacaan-harian` origin. `git ls-remote` confirmed the exact remote hash; Vercel Deployments showed Production Ready for `796b4f7`. Live `index.html`, service worker, reader CSS/JS, and pages 416/535/604 matched local bytes. Live Chromium at 428px opened page 535, showed corrected Arabic, no overflow and no console errors.
-- Checkpoint commits: `70c48c8` baseline; `ab9a746` supplied patch; `796b4f7` narrow-screen repair and test record. This final release record is a separate documentation-only commit.
+- Checkpoint commits: `70c48c8` baseline; `ab9a746` supplied patch; `796b4f7` narrow-screen repair and test record; `6858819` production verification record.
 - Manual check remaining: physical iPhone Safari on pages 416, 535, 1 and 604 for font shaping and perceived spacing. The original QCF4 upstream snapshot was not available locally; every changed token was compared to the bundled prepatch baseline.
-- Exact next action: commit and push this documentation-only release record, verify remote hash and Vercel Ready for that commit, then leave `main` clean.
+- Exact next action: optional physical iPhone Safari check of font shaping and perceived spacing on pages 416, 535, 1 and 604. No further release work is pending.
 
 | Milestone | Status |
 | --- | --- |
