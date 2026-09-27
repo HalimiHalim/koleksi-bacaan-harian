@@ -1,6 +1,6 @@
 {
-  "name": "Himpunan Amalan Khazanah – Trial",
-  "short_name": "Khazanah Trial",
+  "name": "Himpunan Amalan Khazanah",
+  "short_name": "Khazanah",
   "description": "Himpunan Bacaan dan Panduan Islam",
   "start_url": "./",
   "scope": "./",

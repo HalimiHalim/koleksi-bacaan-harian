@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v15-navigation-renovation-trial";
+const CACHE_NAME = "uwa-bacaan-harian-v16-v2-mark-2";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
