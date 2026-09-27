@@ -8,6 +8,8 @@ The existing Quran navigation opens **Amalan Saya** (the existing daily checklis
 
 The app shell and surah index are cached on installation; individual surahs and pages are cached as they are opened, so previously visited readings work offline. Open a new surah or page online at least once before relying on it offline. The page layout uses the bundled Noto Naskh Arabic font; line boundaries match the Madinah metadata, while printed glyph widths may differ. See [Quran sources and rights](quran/SOURCES.md) and the reproducible [data build script](tools/build_quran_data.py).
 
+On phones, opening a surah enters a focused full-width reading screen with a back button to the surah list. Page View advances right-to-left: the next page control is on the left and the previous page control is on the right. The reader leaves the existing Quran hub and daily checklist layout unchanged.
+
 Run `python3 tools/verify_quran_data.py` to check chapter, ayah, page and marker integrity against the bundled Tanzil source. Pass the official QuranEnc `malay_basumayyah.sqlite` file as an optional argument to verify every Malay translation byte for byte.
 
 ## Structure

@@ -20,8 +20,11 @@ body.quran-explore[data-current-view="allday"] main { display:none; }
 .quran-continue { display:block; padding:13px 16px; margin-bottom:14px; }
 .quran-continue small { display:block; color:var(--muted); }
 .quran-credit { margin:20px 0 0; color:var(--muted); font-size:.74rem; font-weight:500; }
-.quran-back { min-height:42px; padding:0; border:0; background:none; color:var(--primary); font:inherit; font-weight:800; cursor:pointer; }
-.quran-reader-head { display:flex; justify-content:space-between; align-items:center; gap:12px; margin:12px 0 18px; }
+.quran-reader-topbar { display:flex; align-items:center; gap:15px; margin:0 0 16px; }
+.quran-back { display:inline-flex; align-items:center; gap:5px; min-height:44px; padding:0; border:0; background:none; color:var(--primary); font:inherit; font-weight:800; cursor:pointer; }
+.quran-back > span:first-child { font-size:1.7rem; font-weight:400; line-height:1; }
+.quran-reader-head { display:flex; flex:1; justify-content:space-between; align-items:center; gap:12px; min-width:0; }
+.quran-reader-topbar-spacer { display:none; }
 .quran-reader-head h2 { font-size:1.55rem; }
 .quran-eyebrow { color:var(--muted); font-size:.78rem; letter-spacing:.04em; text-transform:uppercase; }
 .quran-mode { max-width:450px; margin-bottom:12px; }
@@ -69,3 +72,39 @@ body.quran-explore[data-current-view="allday"] main { display:none; }
 #allday-view button:focus-visible,#allday-view input:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
 @media (max-width:700px) { .quran-surah-list { grid-template-columns:1fr; } }
 @media (max-width:420px) { .quran-mushaf-page { padding:12px; } .quran-page-controls button { padding:5px 6px; font-size:.73rem; } }
+@media (max-width:620px) {
+  /* Reading is its own phone screen. Library and daily checklist retain the app layout. */
+  body.quran-reading[data-current-view="allday"] .hero,
+  body.quran-reading[data-current-view="allday"] .app-nav,
+  body.quran-reading[data-current-view="allday"] .install-app-button { display:none !important; }
+  body.quran-reading[data-current-view="allday"] .shell { width:100%; padding:0; }
+  body.quran-reading[data-current-view="allday"] #allday-view {
+    width:100%; min-height:100dvh; margin:0; padding:0; border:0; border-radius:0; box-shadow:none;
+  }
+  body.quran-reading[data-current-view="allday"] #quran-reader { padding-bottom:calc(18px + env(safe-area-inset-bottom)); }
+  .quran-reader-topbar {
+    position:sticky; top:0; z-index:30; justify-content:space-between; gap:8px;
+    min-height:64px; margin:0; padding:calc(8px + env(safe-area-inset-top)) 12px 8px;
+    background:var(--surface); border-bottom:1px solid var(--line);
+  }
+  .quran-back { flex:none; justify-content:center; width:44px; height:44px; border:1px solid var(--line); border-radius:50%; background:var(--surface-2); }
+  .quran-back-label { display:none; }
+  .quran-reader-topbar-spacer { display:block; flex:none; width:44px; }
+  .quran-reader-head { justify-content:center; overflow:hidden; text-align:center; }
+  .quran-reader-head > div { min-width:0; }
+  .quran-reader-head h2 { overflow:hidden; margin:0; font-size:1.05rem; text-overflow:ellipsis; white-space:nowrap; }
+  .quran-reader-head .quran-eyebrow,.quran-reader-head [lang="ar"] { display:none; }
+  .quran-mode { max-width:none; margin:10px 12px 8px; }
+  #quran-reader-status { margin:0 12px; }
+  #quran-list-panel { padding:0 14px; }
+  #quran-list-panel .quran-mode-hint { margin-top:6px; }
+  #quran-page-panel > .quran-mode-hint { display:none; }
+  .quran-page-controls { margin:8px 0; padding:0 8px; }
+  .quran-page-controls button { min-height:44px; padding:7px 9px; font-size:.8rem; }
+  .quran-page-controls-bottom { margin-top:10px; }
+  .quran-mushaf-page {
+    display:flex; flex-direction:column; justify-content:space-between;
+    width:calc(100% - 12px); min-height:max(460px,calc(100dvh - 220px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+    margin:0 6px; padding:10px 9px; overflow-x:auto;
+  }
+}

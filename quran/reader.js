@@ -37,6 +37,7 @@
     $('quran-tab-routine').setAttribute('aria-pressed', String(area === 'routine'));
     $('quran-tab-library').setAttribute('aria-pressed', String(area !== 'routine'));
     document.body.classList.toggle('quran-explore', area !== 'routine');
+    document.body.classList.toggle('quran-reading', area === 'reader');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   function renderContinue() {

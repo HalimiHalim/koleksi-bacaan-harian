@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v17-v2-mark-3";
+const CACHE_NAME = "uwa-bacaan-harian-v18-v2-mark-3-reader";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
