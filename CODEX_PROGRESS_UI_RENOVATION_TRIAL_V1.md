@@ -2,16 +2,16 @@
 
 - Base commit: `2c9a9c2209bd697afd78e440a23a3232a29efb98`
 - Current branch: `codex/navigation-renovation-trial-v1`
-- Last verified checkpoint: audit complete; checkpoint commit pending
-- Current milestone: 0 — Stable baseline and storage audit
+- Last verified checkpoint: `1935bff6320d6a9a80b47d45d6b2967c15dcefe3`
+- Current milestone: 1 — Trial-state adapter and classification
 - Milestone status: VERIFIED
-- Intended change: audit the stable app and record read-only legacy/trial fixtures before code changes.
-- Files changed: this progress file only
+- Intended change: implement separate trial keys, one-time initialization, conservative classification, and storage validation.
+- Files changed: progress file, index.html
 - Storage keys audited: `uwa-theme`, `uwa-arabic-edits`, `uwa-custom-readings-v1`, `uwa-deleted-reading-ids-v1`, `uwa-selawat-21-stanzas-v1`, `uwa-ios-install-help-dismissed`, `uwa-routine-members-{morning,evening,allday}-v1`, `uwa-routine-order-{morning,evening,allday}-v1`, `uwa-daily-YYYY-MM-DD-{morning,evening,allday}`. No IndexedDB usage.
-- Tests completed: local `main` and `origin/main` equal base; main working tree clean; service worker shell/cache audit; built-in classification review; fixture definitions.
+- Tests completed: baseline checks, inline JavaScript syntax, diff whitespace, VM fixture verifying deduplicated union, custom classification, unknown ID preservation, idempotent reload, legacy data unchanged.
 - Tests pending: initialization, persistence, rollback, responsive, offline, Preview/production verification.
 - Classification mapping: Doa IDs 1,7,8,9,13,15,16,18,19,20; Quran IDs 4,15,17. Zikir is the legacy ordered union. Custom `u-*` readings are classified from explicit saved fields at first initialization.
-- Exact next action: commit milestone 0; then implement separate trial storage and idempotent initialization.
+- Exact next action: commit milestone 1, then renovate visible navigation and checklist pages.
 - Anything pushed: no.
 - Preview deployment status: not started.
 
@@ -19,8 +19,8 @@
 
 | Milestone | Status | Checkpoint |
 | --- | --- | --- |
-| 0 Baseline and audit | VERIFIED | pending |
-| 1 Trial state and classification | NOT_STARTED | pending |
+| 0 Baseline and audit | VERIFIED | `1935bff` |
+| 1 Trial state and classification | VERIFIED | pending |
 | 2 Navigation and checklists | NOT_STARTED | pending |
 | 3 Home and Add to | NOT_STARTED | pending |
 | 4 QA | NOT_STARTED | pending |
