@@ -2346,7 +2346,7 @@ setTheme(getSavedTheme() || 'emerald');
   const trialPrefix = 'uwa-navigation-renovation-trial-v1';
   const trialMarkerKey = `${trialPrefix}-initialized`;
   const collectionTypes = ['morning', 'evening', 'allday'];
-  const doaBuiltInIds = ['1', '7', '8', '9', '13', '15', '16', '18', '19', '20'];
+  const doaBuiltInIds = ['1', '8', '9', '13', '15', '16', '18', '19', '20'];
   const quranBuiltInIds = ['4', '15', '17'];
 
   function storageKey(type) { return `${trialPrefix}-daily-${localDayKey()}-${type}`; }
@@ -2387,7 +2387,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   function classifiesCustomDoa(item) {
-    return /\b(?:doa|du[a’']|munajat|memohon|permohonan|perlindungan)\b/i.test(item.name) ||
+    return /\b(?:doa|du[a’']|munajat|memohon|permohonan)\b/i.test(`${item.name} ${item.reference}`) ||
       /(?:\bya allah\b|\bo allah\b|اللَّهُمَّ|اللهم|أَعُوذُ|اعوذ)/i.test(`${item.arabic} ${item.meaning}`);
   }
 
