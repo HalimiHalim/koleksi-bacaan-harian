@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v16-v2-mark-2";
+const CACHE_NAME = "uwa-bacaan-harian-v17-v2-mark-3";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -6,6 +6,9 @@ const APP_SHELL = [
   INDEX_URL,
   "./manifest.webmanifest",
   "./fonts/NotoNaskhArabic-wght.ttf",
+  "./quran/reader.css",
+  "./quran/reader.js",
+  "./quran/chapters.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"

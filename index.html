@@ -966,6 +966,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 }
 
 </style>
+<link rel="stylesheet" href="./quran/reader.css">
 </head>
 <body>
 <div class="shell">
@@ -1081,12 +1082,40 @@ body[data-current-view="reference"] #allday-view { display:none; }
   </section>
 
   <section class="routine-panel daily-view" id="allday-view" hidden>
+    <div class="quran-tabs" role="group" aria-label="Bahagian Quran">
+      <button type="button" id="quran-tab-routine" aria-pressed="true">Amalan Saya</button>
+      <button type="button" id="quran-tab-library" aria-pressed="false">114 Surah</button>
+    </div>
+    <div id="quran-routine">
     <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
     <div class="checklist" id="allday-checklist"></div>
     <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
+    </div>
+    <div id="quran-library" hidden>
+      <div class="quran-section-title"><div><h2>Al-Quran</h2><p>114 surah · 6,236 ayat · 604 halaman</p></div></div>
+      <button type="button" id="quran-continue" class="quran-continue" hidden></button>
+      <label class="quran-search-label" for="quran-search">Cari surah</label>
+      <input id="quran-search" class="quran-search" type="search" placeholder="Nama atau nombor surah" autocomplete="off">
+      <p class="app-feedback" id="quran-library-status" role="status" aria-live="polite"></p>
+      <div id="quran-surah-list" class="quran-surah-list"></div>
+      <p class="quran-credit">Teks Arab: <a href="https://tanzil.net/docs/tanzil_project" target="_blank" rel="noopener noreferrer">Tanzil Project</a> · Terjemahan Melayu: <a href="https://quranenc.com/ms/home" target="_blank" rel="noopener noreferrer">QuranEnc / Basumayyah</a>. Susun atur halaman: <a href="https://github.com/MohamadHajjRabee/quran-qcf4" target="_blank" rel="noopener noreferrer">QCF4</a>.</p>
+    </div>
+    <div id="quran-reader" hidden>
+      <button type="button" id="quran-back" class="quran-back">← Semua surah</button>
+      <div class="quran-reader-head"><div><span class="quran-eyebrow" id="quran-reader-meta"></span><h2 id="quran-reader-title"></h2></div><span lang="ar" dir="rtl" id="quran-reader-arabic-title"></span></div>
+      <div class="quran-mode" role="group" aria-label="Mod bacaan"><button type="button" id="quran-list-mode" aria-pressed="true">List View</button><button type="button" id="quran-page-mode" aria-pressed="false">Page View</button></div>
+      <p id="quran-reader-status" class="app-feedback" role="status" aria-live="polite"></p>
+      <div id="quran-list-panel"><p class="quran-mode-hint">Teks Arab dan terjemahan Melayu · ketik ayat untuk simpan tempat bacaan.</p><button type="button" id="quran-translation-toggle" class="quran-translation-toggle" aria-pressed="true">Terjemahan Melayu ✓</button><div id="quran-verse-list"></div></div>
+      <div id="quran-page-panel" hidden>
+        <p class="quran-mode-hint">Halaman mushaf Madinah · teks Arab sahaja</p>
+        <div class="quran-page-controls"><button type="button" id="quran-prev-page">← Sebelumnya</button><span id="quran-page-counter"></span><button type="button" id="quran-next-page">Seterusnya →</button></div>
+        <div id="quran-mushaf-page" class="quran-mushaf-page" lang="ar" dir="rtl"></div>
+        <div class="quran-page-controls quran-page-controls-bottom"><button type="button" id="quran-prev-page-bottom">← Sebelumnya</button><span id="quran-page-counter-bottom"></span><button type="button" id="quran-next-page-bottom">Seterusnya →</button></div>
+      </div>
+    </div>
   </section>
 
   <section class="toc" id="kandungan">
@@ -3340,5 +3369,6 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
+<script src="./quran/reader.js"></script>
 </body>
 </html>

@@ -2,6 +2,14 @@
 
 Himpunan Bacaan dan Panduan Islam — a lightweight offline-installable PWA.
 
+## V2 Mark 3 · Quran reader
+
+The existing Quran navigation opens **Amalan Saya** (the existing daily checklist) and **114 Surah**. Select a surah for Arabic text and Malay translation in List View. Page View follows the 604 Madinah page boundaries and line groups, displaying Arabic only, with small verse numbers inside independently themed circular markers. Search, bookmarks, and the last reading place are saved locally under `uwa-quran-reader-v1`, separate from the existing checklist data.
+
+The app shell and surah index are cached on installation; individual surahs and pages are cached as they are opened, so previously visited readings work offline. Open a new surah or page online at least once before relying on it offline. The page layout uses the bundled Noto Naskh Arabic font; line boundaries match the Madinah metadata, while printed glyph widths may differ. See [Quran sources and rights](quran/SOURCES.md) and the reproducible [data build script](tools/build_quran_data.py).
+
+Run `python3 tools/verify_quran_data.py` to check chapter, ayah, page and marker integrity against the bundled Tanzil source. Pass the official QuranEnc `malay_basumayyah.sqlite` file as an optional argument to verify every Malay translation byte for byte.
+
 ## Structure
 
 ```text
@@ -9,6 +17,8 @@ index.html
 manifest.webmanifest
 service-worker.js
 icons/
+quran/
+tools/
 source/
 ```
 
