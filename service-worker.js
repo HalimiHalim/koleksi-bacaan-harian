@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v14-home-progress";
+const CACHE_NAME = "uwa-bacaan-harian-v15-navigation-renovation-trial";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -47,12 +47,12 @@ async function networkFirstIndex(request) {
 }
 
 async function cacheFirstAsset(request) {
-  const cachedResponse = await caches.match(request);
+  const cache = await caches.open(CACHE_NAME);
+  const cachedResponse = await cache.match(request);
   if (cachedResponse) return cachedResponse;
 
   const networkResponse = await fetch(request);
   if (networkResponse && networkResponse.ok) {
-    const cache = await caches.open(CACHE_NAME);
     await cache.put(request, networkResponse.clone());
   }
   return networkResponse;
@@ -60,7 +60,8 @@ async function cacheFirstAsset(request) {
 
 self.addEventListener("fetch", (event) => {
   const requestUrl = new URL(event.request.url);
-  if (requestUrl.origin !== self.location.origin || event.request.method !== "GET") {
+  const scopeUrl = new URL(self.registration.scope);
+  if (requestUrl.origin !== scopeUrl.origin || !requestUrl.pathname.startsWith(scopeUrl.pathname) || event.request.method !== "GET") {
     return;
   }
 

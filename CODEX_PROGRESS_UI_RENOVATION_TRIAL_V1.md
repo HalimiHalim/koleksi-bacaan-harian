@@ -2,16 +2,16 @@
 
 - Base commit: `2c9a9c2209bd697afd78e440a23a3232a29efb98`
 - Current branch: `codex/navigation-renovation-trial-v1`
-- Last verified checkpoint: `9d48bf767ca88120a7be4791a3d13b2889d12ef3`
-- Current milestone: 3 — Home and Add to integration
+- Last verified checkpoint: `acbe83bfba1e4ed089cb9d957dbd49e5af92a265`
+- Current milestone: 4 — Responsive, persistence and offline QA
 - Milestone status: VERIFIED
-- Intended change: show a single Zikir Home card and route Isi additions and custom deletion cleanup through trial collections.
-- Files changed: progress file, index.html
+- Intended change: mark trial identity, version the scoped service-worker cache, and test reload, rollover, custom content, themes, layouts and offline reopen.
+- Files changed: progress file, index.html, manifest.webmanifest, service-worker.js
 - Storage keys audited: `uwa-theme`, `uwa-arabic-edits`, `uwa-custom-readings-v1`, `uwa-deleted-reading-ids-v1`, `uwa-selawat-21-stanzas-v1`, `uwa-ios-install-help-dismissed`, `uwa-routine-members-{morning,evening,allday}-v1`, `uwa-routine-order-{morning,evening,allday}-v1`, `uwa-daily-YYYY-MM-DD-{morning,evening,allday}`. No IndexedDB usage.
-- Tests completed: baseline and VM fixture checks; syntax/diff checks; browser reorder/remove/Undo; Home single Zikir card and immediate progress; unchanged need panel; Add to Doa appends unchecked and updates its count.
-- Tests pending: initialization, persistence, rollback, responsive, offline, Preview/production verification.
+- Tests completed: baseline and VM fixture checks; syntax/diff checks; browser reorder/remove/Undo; Home immediate progress; Add to unchecked; custom creation and three memberships; VM transactional deletion with injected write failure and rollback; same-day independence and next-day reset; 375/390/428/768/1280px widths without overflow or nav overlap; mobile navigation >=64px and tablet/desktop >=44px; theme reload persistence; fresh offline tab with trial shell and Arabic font; no browser console errors; 21 original cards and need panel byte-for-byte unchanged.
+- Tests pending: final diff/clean-tree review, Preview deployment, production URL verification.
 - Classification mapping: Doa IDs 1,7,8,9,13,15,16,18,19,20; Quran IDs 4,15,17. Zikir is the legacy ordered union. Custom `u-*` readings are classified from explicit saved fields at first initialization.
-- Exact next action: commit milestone 3, then run persistence, custom-reading, responsive, service-worker and offline QA.
+- Exact next action: commit milestone 4, then review final diff and prepare Preview branch.
 - Anything pushed: no.
 - Preview deployment status: not started.
 
@@ -22,8 +22,8 @@
 | 0 Baseline and audit | VERIFIED | `1935bff` |
 | 1 Trial state and classification | VERIFIED | `4160af4` |
 | 2 Navigation and checklists | VERIFIED | `9d48bf7` |
-| 3 Home and Add to | VERIFIED | pending |
-| 4 QA | NOT_STARTED | pending |
+| 3 Home and Add to | VERIFIED | `acbe83b` |
+| 4 QA | VERIFIED | pending |
 | 5 Preview preparation | NOT_STARTED | pending |
 
 ## Audit detail
