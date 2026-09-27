@@ -7,6 +7,7 @@
 <meta name="application-name" content="Himpunan Amalan Khazanah">
 <meta name="description" content="Himpunan Bacaan dan Panduan Islam">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Himpunan Amalan Khazanah">
@@ -453,6 +454,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .app-nav button {
   display:flex;
+  min-height:44px;
   align-items:center;
   justify-content:center;
   gap:5px;
@@ -469,6 +471,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .nav-icon { line-height:1; }
 .nav-short { display:none; }
+.app-nav .nav-full, .app-nav .nav-short { text-align:center; }
 .app-nav button[aria-current="page"] {
   background:var(--primary);
   color:var(--on-primary);
@@ -584,7 +587,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .routine-summary-grid {
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:1fr;
   gap:12px;
 }
 .routine-summary {
@@ -938,6 +941,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   }
   .nav-full { display:none; }
   .nav-short { display:inline; }
+  .app-nav .nav-short { white-space:normal; overflow-wrap:normal; }
   .offline-pill {
     bottom:calc(78px + env(safe-area-inset-bottom));
   }
@@ -994,10 +998,10 @@ body[data-current-view="reference"] #allday-view { display:none; }
 
   <nav class="app-nav" aria-label="Navigasi bacaan harian">
     <button type="button" data-app-view="home" aria-label="Home" aria-current="page"><span class="nav-icon" aria-hidden="true">🏠</span><span class="nav-full">Home</span><span class="nav-short">Home</span></button>
-    <button type="button" data-app-view="morning" aria-label="Pagi"><span class="nav-icon" aria-hidden="true">☀️</span><span class="nav-full">Pagi</span><span class="nav-short">Pagi</span></button>
-    <button type="button" data-app-view="evening" aria-label="Petang"><span class="nav-icon" aria-hidden="true">🌙</span><span class="nav-full">Petang</span><span class="nav-short">Petang</span></button>
-    <button type="button" data-app-view="allday" aria-label="Sepanjang Hari"><span class="nav-icon" aria-hidden="true">∞</span><span class="nav-full">Sepanjang Hari</span><span class="nav-short">Harian</span></button>
-    <button type="button" data-app-view="reference" aria-label="Kandungan"><span class="nav-icon" aria-hidden="true">☰</span><span class="nav-full">Kandungan</span><span class="nav-short">Isi</span></button>
+    <button type="button" data-app-view="morning" aria-label="Zikir"><span class="nav-icon" aria-hidden="true">📿</span><span class="nav-full">Zikir</span><span class="nav-short">Zikir</span></button>
+    <button type="button" data-app-view="evening" aria-label="Himpunan Doa"><span class="nav-icon" aria-hidden="true">🤲</span><span class="nav-full">Himpunan Doa</span><span class="nav-short">Himpunan Doa</span></button>
+    <button type="button" data-app-view="allday" aria-label="Quran"><span class="nav-icon" aria-hidden="true">📖</span><span class="nav-full">Quran</span><span class="nav-short">Quran</span></button>
+    <button type="button" data-app-view="reference" aria-label="Isi"><span class="nav-icon" aria-hidden="true">☰</span><span class="nav-full">Isi</span><span class="nav-short">Isi</span></button>
   </nav>
   <button type="button" class="install-app-button" id="install-app-button">Install App</button>
   <div class="offline-pill" id="offline-pill" role="status">Offline</div>
@@ -1018,30 +1022,16 @@ body[data-current-view="reference"] #allday-view { display:none; }
       <div class="today-title">
         <div>
           <h2>Hari Ini</h2>
-          <p>Pilih rutin mengikut waktu atau sambung bacaan yang belum selesai.</p>
+          <p>Sambung bacaan Zikir Harian yang belum selesai.</p>
         </div>
       </div>
       <div class="routine-summary-grid">
         <div class="routine-summary">
-          <div class="routine-icon">☀️</div>
-          <h3>Rutin Pagi</h3>
+          <div class="routine-icon">📿</div>
+          <h3>Zikir Harian</h3>
           <div class="routine-count" id="morning-home-count">0 / 12 selesai</div>
           <div class="progress-track"><div class="progress-fill" id="morning-home-progress"></div></div>
           <button type="button" data-open-routine="morning">Mulakan / Sambung</button>
-        </div>
-        <div class="routine-summary">
-          <div class="routine-icon">🌙</div>
-          <h3>Rutin Petang</h3>
-          <div class="routine-count" id="evening-home-count">0 / 12 selesai</div>
-          <div class="progress-track"><div class="progress-fill" id="evening-home-progress"></div></div>
-          <button type="button" data-open-routine="evening">Mulakan / Sambung</button>
-        </div>
-        <div class="routine-summary">
-          <div class="routine-icon">♾️</div>
-          <h3>Sepanjang Hari</h3>
-          <div class="routine-count" id="allday-home-count">0 / 6 selesai</div>
-          <div class="progress-track"><div class="progress-fill" id="allday-home-progress"></div></div>
-          <button type="button" data-open-routine="allday">Mulakan / Sambung</button>
         </div>
       </div>
     </div>
@@ -1065,7 +1055,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   <section class="routine-panel daily-view" id="morning-view" hidden>
     <div class="routine-head">
       <div>
-        <h2>☀️ Rutin Pagi</h2>
+        <h2>📿 Zikir Harian</h2>
         <p>Checklist harian. Progress disimpan untuk hari semasa.</p>
       </div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="morning" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="morning-count-big">0/12</span>selesai</div></div>
@@ -1079,8 +1069,8 @@ body[data-current-view="reference"] #allday-view { display:none; }
   <section class="routine-panel daily-view" id="evening-view" hidden>
     <div class="routine-head">
       <div>
-        <h2>🌙 Rutin Petang</h2>
-        <p>Checklist harian. Progress pagi dan petang disimpan berasingan.</p>
+        <h2>🤲 Himpunan Doa</h2>
+        <p>Checklist doa harian. Progress disimpan untuk hari semasa.</p>
       </div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="evening" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="evening-count-big">0/12</span>selesai</div></div>
     </div>
@@ -1091,7 +1081,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
   </section>
 
   <section class="routine-panel daily-view" id="allday-view" hidden>
-    <div class="routine-head"><div><h2>♾️ Sepanjang Hari</h2><p>Checklist harian untuk bacaan sepanjang hari.</p></div>
+    <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
@@ -1974,7 +1964,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   let activePicker = null;
-  const destinations = [['morning','Pagi'], ['evening','Petang'], ['allday','Sepanjang Hari']];
+  const destinations = [['morning','Zikir'], ['evening','Himpunan Doa'], ['allday','Quran']];
 
   function createActionCell(id, name, builtIn) {
     const cell = document.createElement('td');
@@ -2062,7 +2052,11 @@ setTheme(getSavedTheme() || 'emerald');
         const membership = readMembers(type);
         if (membership.error) { message.textContent = 'Data rutin tidak dapat dibaca. Data asal tidak diubah.'; return; }
         if (membership.ids.includes(String(id))) continue;
+        let daily;
+        try { daily = dailySnapshot(type); }
+        catch { message.textContent = 'Data checklist tidak dapat dibaca. Data asal tidak diubah.'; return; }
         changes.push([memberKey(type), JSON.stringify([...membership.ids, String(id)])]);
+        if (daily.ids.includes(String(id))) changes.push([daily.key, JSON.stringify(daily.ids.filter(value => value !== String(id)))]);
       }
       if (!changes.length) { message.textContent = 'Semua destinasi dipilih sudah mempunyai bacaan ini.'; return; }
       save.disabled = true;
@@ -2253,7 +2247,7 @@ setTheme(getSavedTheme() || 'emerald');
   document.getElementById('delete-reading').addEventListener('click', () => {
     const item = userReading(editingId);
     if (!item || isBuiltIn(editingId)) { editError.textContent = 'Bacaan asal dikunci dan tidak boleh dipadam.'; return; }
-    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Pagi, Petang dan Sepanjang Hari. Tindakan ini tidak boleh dibuat asal.`;
+    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Zikir, Himpunan Doa dan Quran. Tindakan ini tidak boleh dibuat asal.`;
     deleteConfirm.hidden = false;
     document.getElementById('delete-cancel').focus();
   });
@@ -2282,18 +2276,33 @@ setTheme(getSavedTheme() || 'emerald');
     for (const [type] of destinations) {
       const membership = readMembers(type);
       const order = readOrder(type, membership.ids);
-      if (membership.error || order.error) {
+      const legacy = readLegacyRoutine(type);
+      if (membership.error || order.error || legacy.error) {
         editError.textContent = 'Data rutin tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
       }
       if (membership.ids.includes(id)) changes.push([memberKey(type), JSON.stringify(membership.ids.filter(value => value !== id))]);
       if (order.raw !== null && order.ids.includes(id)) changes.push([orderKey(type), JSON.stringify(order.ids.filter(value => value !== id))]);
+      try {
+        const legacyMembersRaw = localStorage.getItem(legacyMemberKey(type));
+        if (legacyMembersRaw !== null) {
+          const ids = JSON.parse(legacyMembersRaw).map(String);
+          if (ids.includes(id)) changes.push([legacyMemberKey(type), JSON.stringify(ids.filter(value => value !== id))]);
+        }
+        const legacyOrderRaw = localStorage.getItem(legacyOrderKey(type));
+        if (legacyOrderRaw !== null) {
+          const ids = JSON.parse(legacyOrderRaw).map(String);
+          if (ids.includes(id)) changes.push([legacyOrderKey(type), JSON.stringify(ids.filter(value => value !== id))]);
+        }
+      } catch {
+        editError.textContent = 'Data rutin asal tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
+      }
     }
     try {
       for (let index = 0; index < localStorage.length; index++) {
         const key = localStorage.key(index);
-        if (!/^uwa-daily-\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
+        if (!/^(?:uwa-daily-|uwa-navigation-renovation-trial-v1-daily-)\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
         const parsed = JSON.parse(localStorage.getItem(key));
-        if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+        if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
         if (parsed.some(value => String(value) === id)) changes.push([key, JSON.stringify(parsed.filter(value => String(value) !== id))]);
       }
     } catch {
@@ -2323,12 +2332,18 @@ setTheme(getSavedTheme() || 'emerald');
     return `${y}-${m}-${d}`;
   }
 
-  function storageKey(type) {
-    return `uwa-daily-${localDayKey()}-${type}`;
-  }
+  const trialPrefix = 'uwa-navigation-renovation-trial-v1';
+  const trialMarkerKey = `${trialPrefix}-initialized`;
+  const collectionTypes = ['morning', 'evening', 'allday'];
+  const doaBuiltInIds = ['1', '8', '9', '13', '15', '16', '18', '19', '20'];
+  const quranBuiltInIds = ['4', '15', '17'];
 
-  function memberKey(type) { return `uwa-routine-members-${type}-v1`; }
-  function orderKey(type) { return `uwa-routine-order-${type}-v1`; }
+  function storageKey(type) { return `${trialPrefix}-daily-${localDayKey()}-${type}`; }
+  function memberKey(type) { return `${trialPrefix}-members-${type}`; }
+  function orderKey(type) { return `${trialPrefix}-order-${type}`; }
+  function legacyStorageKey(type) { return `uwa-daily-${localDayKey()}-${type}`; }
+  function legacyMemberKey(type) { return `uwa-routine-members-${type}-v1`; }
+  function legacyOrderKey(type) { return `uwa-routine-order-${type}-v1`; }
   function baseIds(type) {
     return (type === 'morning' ? morningRoutine.map(item => item[0]) :
       type === 'evening' ? eveningRoutine.map(item => item[0]) : allDayIds).map(String);
@@ -2338,18 +2353,79 @@ setTheme(getSavedTheme() || 'emerald');
       (typeof id === 'string' && (isBuiltIn(id) || /^u-[a-z0-9-]+$/.test(id)));
   }
 
+  // An unavailable custom reading must stay in saved trial arrays for a later recovery.
+  function validTrialId(id) {
+    return (typeof id === 'string' && /^[a-z0-9_-]+$/i.test(id)) ||
+      (typeof id === 'number' && Number.isSafeInteger(id) && id > 0);
+  }
+
+  function readLegacyRoutine(type) {
+    try {
+      const membershipRaw = localStorage.getItem(legacyMemberKey(type));
+      const members = membershipRaw === null ? baseIds(type) : JSON.parse(membershipRaw);
+      if (!Array.isArray(members) || !members.every(validTrialId)) throw new Error('Invalid legacy members');
+      const memberIds = members.map(String);
+      if (new Set(memberIds).size !== memberIds.length) throw new Error('Duplicate legacy members');
+      const orderRaw = localStorage.getItem(legacyOrderKey(type));
+      const order = orderRaw === null ? memberIds : JSON.parse(orderRaw);
+      if (!Array.isArray(order) || !order.every(validTrialId)) throw new Error('Invalid legacy order');
+      const orderIds = order.map(String);
+      if (new Set(orderIds).size !== orderIds.length || !orderIds.every(id => memberIds.includes(id))) throw new Error('Invalid legacy order');
+      return { ids:[...orderIds, ...memberIds.filter(id => !orderIds.includes(id))], error:false };
+    } catch { return { ids:[], error:true }; }
+  }
+
+  function classifiesCustomDoa(item) {
+    return /\b(?:doa|du[a’']|munajat|memohon|permohonan)\b/i.test(`${item.name} ${item.reference}`) ||
+      /(?:\bya allah\b|\bo allah\b|اللَّهُمَّ|اللهم|أَعُوذُ|اعوذ)/i.test(`${item.arabic} ${item.meaning}`);
+  }
+
+  function classifiesCustomQuran(item) {
+    return /\b(?:surah|surat|sūrah|quran|qur['’]?an|al-qur['’]?an)\b/i.test(`${item.name} ${item.reference}`) ||
+      /\b(?:ayat|verse)\s+\d+\b/i.test(item.reference);
+  }
+
+  function initializeTrialState() {
+    try {
+      if (localStorage.getItem(trialMarkerKey) !== null) return true;
+      const trialKeys = collectionTypes.flatMap(type => [memberKey(type), orderKey(type), storageKey(type)]);
+      if (trialKeys.some(key => localStorage.getItem(key) !== null)) return false;
+      const legacy = collectionTypes.map(readLegacyRoutine);
+      if (legacy.some(result => result.error)) return false;
+      const zikirIds = [...new Set(legacy.flatMap(result => result.ids))];
+      const doaIds = [...doaBuiltInIds, ...customReadings.filter(classifiesCustomDoa).map(item => item.id)];
+      const quranIds = [...quranBuiltInIds, ...customReadings.filter(classifiesCustomQuran).map(item => item.id)];
+      const memberships = [zikirIds, [...new Set(doaIds)], [...new Set(quranIds)]];
+      const legacyDone = new Set();
+      for (const type of collectionTypes) {
+        const raw = localStorage.getItem(legacyStorageKey(type));
+        if (raw === null) continue;
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed) || !parsed.every(validTrialId)) return false;
+        parsed.forEach(id => legacyDone.add(String(id)));
+      }
+      const changes = [];
+      collectionTypes.forEach((type, index) => {
+        changes.push([memberKey(type), JSON.stringify(memberships[index])]);
+        changes.push([orderKey(type), JSON.stringify(memberships[index])]);
+        changes.push([storageKey(type), JSON.stringify(index === 0 ? zikirIds.filter(id => legacyDone.has(id)) : [])]);
+      });
+      changes.push([trialMarkerKey, JSON.stringify({ schema:1 })]);
+      return applyStorageTransaction(changes);
+    } catch { return false; }
+  }
+
   function readMembers(type) {
-    const base = baseIds(type);
     try {
       const raw = localStorage.getItem(memberKey(type));
-      if (raw === null) return { ids:base, error:false, raw:null };
+      if (raw === null) return { ids:[], error:true, raw:null };
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid membership');
+      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid membership');
       const ids = parsed.map(String);
-      if (new Set(ids).size !== ids.length || !ids.every(id => isBuiltIn(id) || userReading(id))) throw new Error('Unknown membership');
+      if (new Set(ids).size !== ids.length) throw new Error('Duplicate membership');
       return { ids, error:false, raw };
     } catch {
-      return { ids:base, error:true, raw:null };
+      return { ids:[], error:true, raw:null };
     }
   }
 
@@ -2358,7 +2434,7 @@ setTheme(getSavedTheme() || 'emerald');
       const raw = localStorage.getItem(orderKey(type));
       if (raw === null) return { ids:[...members], error:false, raw:null };
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid order');
+      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid order');
       const ids = parsed.map(String);
       if (new Set(ids).size !== ids.length || !ids.every(id => members.includes(id))) throw new Error('Unknown order');
       return { ids:[...ids, ...members.filter(id => !ids.includes(id))], error:false, raw };
@@ -2484,7 +2560,7 @@ setTheme(getSavedTheme() || 'emerald');
     const key = storageKey(type);
     try {
       const parsed = JSON.parse(localStorage.getItem(key) || '[]');
-      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
       return new Set(parsed.map(String));
     } catch {
       corruptDailyKeys.add(key);
@@ -2505,19 +2581,22 @@ setTheme(getSavedTheme() || 'emerald');
   function routineFor(type) {
     const membership = readMembers(type);
     const order = readOrder(type, membership.ids);
-    const base = type === 'morning' ? morningRoutine : type === 'evening' ? eveningRoutine : allDayIds.map(id => [id, '×1']);
-    const repeats = new Map(base.map(([id, repeat]) => [String(id), repeat]));
-    return order.ids.map(id => [id, repeats.get(id) || '×1']);
+    const base = [...morningRoutine, ...eveningRoutine, ...allDayIds.map(id => [id, '×1'])];
+    const repeats = new Map();
+    base.forEach(([id, repeat]) => { if (!repeats.has(String(id))) repeats.set(String(id), repeat); });
+    return order.ids.filter(id => names[id]).map(id => [id, type === 'morning' ? (repeats.get(id) || '×1') : '×1']);
   }
 
   function saveRoutineOrder(type, ids) {
     const membership = readMembers(type);
     const order = readOrder(type, membership.ids);
-    if (membership.error || order.error || ids.length !== membership.ids.length ||
-        new Set(ids).size !== ids.length || !ids.every(id => membership.ids.includes(id))) return false;
+    const visible = order.ids.filter(id => names[id]);
+    if (membership.error || order.error || ids.length !== visible.length ||
+        new Set(ids).size !== ids.length || !ids.every(id => visible.includes(id))) return false;
     try {
       const key = orderKey(type);
-      const value = JSON.stringify(ids);
+      let next = 0;
+      const value = JSON.stringify(order.ids.map(id => names[id] ? ids[next++] : id));
       localStorage.setItem(key, value);
       return localStorage.getItem(key) === value;
     } catch {
@@ -2531,7 +2610,7 @@ setTheme(getSavedTheme() || 'emerald');
     document.getElementById(`${type}-sort-status`).textContent = message;
   }
 
-  const routineLabels = { morning:'Pagi', evening:'Petang', allday:'Sepanjang Hari' };
+  const routineLabels = { morning:'Zikir', evening:'Himpunan Doa', allday:'Quran' };
   let lastRemoval = null;
 
   function removeZone(type) { return document.querySelector(`[data-remove="${type}"]`); }
@@ -2560,7 +2639,7 @@ setTheme(getSavedTheme() || 'emerald');
     if (corruptDailyKeys.has(key)) throw new Error('Invalid daily data');
     const raw = localStorage.getItem(key);
     const parsed = raw === null ? [] : JSON.parse(raw);
-    if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+    if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
     return { key, ids:parsed.map(String) };
   }
 
@@ -2612,7 +2691,7 @@ setTheme(getSavedTheme() || 'emerald');
       if (membership.error || order.error || membership.ids.includes(removal.id)) throw new Error('Invalid routine data');
       const raw = localStorage.getItem(removal.dailyKey);
       const parsed = raw === null ? [] : JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
       daily = parsed.map(String);
     } catch {
       document.getElementById(`${type}-sort-status`).textContent = 'Undo gagal. Data checklist tidak dapat dibaca.';
@@ -3136,6 +3215,9 @@ setTheme(getSavedTheme() || 'emerald');
   const loadedCustom = loadCustomReadings();
   customReadings = loadedCustom.items;
   customStorageError = loadedCustom.error;
+  if (!customStorageError && !initializeTrialState()) {
+    appFeedback.textContent = 'Data checklist atau rutin asal tidak dapat dibaca. Tiada data diubah.';
+  }
   setupBuiltInActions();
   renderSelawat();
   customReadings.forEach((item, index) => renderCustomReading(item, firstCustomNumber + index));
