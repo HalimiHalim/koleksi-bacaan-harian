@@ -76,6 +76,7 @@ body.quran-explore[data-current-view="allday"] main { display:none; }
   /* Reading is its own phone screen. Library and daily checklist retain the app layout. */
   body.quran-reading[data-current-view="allday"] .hero,
   body.quran-reading[data-current-view="allday"] .app-nav,
+  body.quran-reading[data-current-view="allday"] footer,
   body.quran-reading[data-current-view="allday"] .install-app-button { display:none !important; }
   body.quran-reading[data-current-view="allday"] .shell { width:100%; padding:0; }
   body.quran-reading[data-current-view="allday"] #allday-view {
