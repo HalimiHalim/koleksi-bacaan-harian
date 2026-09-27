@@ -585,7 +585,7 @@ footer { text-align:center; color:var(--muted); font-size:.8rem; padding:18px 0 
 }
 .routine-summary-grid {
   display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-columns:1fr;
   gap:12px;
 }
 .routine-summary {
@@ -1020,30 +1020,16 @@ body[data-current-view="reference"] #allday-view { display:none; }
       <div class="today-title">
         <div>
           <h2>Hari Ini</h2>
-          <p>Pilih rutin mengikut waktu atau sambung bacaan yang belum selesai.</p>
+          <p>Sambung bacaan Zikir Harian yang belum selesai.</p>
         </div>
       </div>
       <div class="routine-summary-grid">
         <div class="routine-summary">
-          <div class="routine-icon">☀️</div>
-          <h3>Rutin Pagi</h3>
+          <div class="routine-icon">📿</div>
+          <h3>Zikir Harian</h3>
           <div class="routine-count" id="morning-home-count">0 / 12 selesai</div>
           <div class="progress-track"><div class="progress-fill" id="morning-home-progress"></div></div>
           <button type="button" data-open-routine="morning">Mulakan / Sambung</button>
-        </div>
-        <div class="routine-summary">
-          <div class="routine-icon">🌙</div>
-          <h3>Rutin Petang</h3>
-          <div class="routine-count" id="evening-home-count">0 / 12 selesai</div>
-          <div class="progress-track"><div class="progress-fill" id="evening-home-progress"></div></div>
-          <button type="button" data-open-routine="evening">Mulakan / Sambung</button>
-        </div>
-        <div class="routine-summary">
-          <div class="routine-icon">♾️</div>
-          <h3>Sepanjang Hari</h3>
-          <div class="routine-count" id="allday-home-count">0 / 6 selesai</div>
-          <div class="progress-track"><div class="progress-fill" id="allday-home-progress"></div></div>
-          <button type="button" data-open-routine="allday">Mulakan / Sambung</button>
         </div>
       </div>
     </div>
@@ -1976,7 +1962,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   let activePicker = null;
-  const destinations = [['morning','Pagi'], ['evening','Petang'], ['allday','Sepanjang Hari']];
+  const destinations = [['morning','Zikir'], ['evening','Himpunan Doa'], ['allday','Quran']];
 
   function createActionCell(id, name, builtIn) {
     const cell = document.createElement('td');
@@ -2064,7 +2050,11 @@ setTheme(getSavedTheme() || 'emerald');
         const membership = readMembers(type);
         if (membership.error) { message.textContent = 'Data rutin tidak dapat dibaca. Data asal tidak diubah.'; return; }
         if (membership.ids.includes(String(id))) continue;
+        let daily;
+        try { daily = dailySnapshot(type); }
+        catch { message.textContent = 'Data checklist tidak dapat dibaca. Data asal tidak diubah.'; return; }
         changes.push([memberKey(type), JSON.stringify([...membership.ids, String(id)])]);
+        if (daily.ids.includes(String(id))) changes.push([daily.key, JSON.stringify(daily.ids.filter(value => value !== String(id)))]);
       }
       if (!changes.length) { message.textContent = 'Semua destinasi dipilih sudah mempunyai bacaan ini.'; return; }
       save.disabled = true;
@@ -2255,7 +2245,7 @@ setTheme(getSavedTheme() || 'emerald');
   document.getElementById('delete-reading').addEventListener('click', () => {
     const item = userReading(editingId);
     if (!item || isBuiltIn(editingId)) { editError.textContent = 'Bacaan asal dikunci dan tidak boleh dipadam.'; return; }
-    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Pagi, Petang dan Sepanjang Hari. Tindakan ini tidak boleh dibuat asal.`;
+    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Zikir, Himpunan Doa dan Quran. Tindakan ini tidak boleh dibuat asal.`;
     deleteConfirm.hidden = false;
     document.getElementById('delete-cancel').focus();
   });
@@ -2284,18 +2274,33 @@ setTheme(getSavedTheme() || 'emerald');
     for (const [type] of destinations) {
       const membership = readMembers(type);
       const order = readOrder(type, membership.ids);
-      if (membership.error || order.error) {
+      const legacy = readLegacyRoutine(type);
+      if (membership.error || order.error || legacy.error) {
         editError.textContent = 'Data rutin tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
       }
       if (membership.ids.includes(id)) changes.push([memberKey(type), JSON.stringify(membership.ids.filter(value => value !== id))]);
       if (order.raw !== null && order.ids.includes(id)) changes.push([orderKey(type), JSON.stringify(order.ids.filter(value => value !== id))]);
+      try {
+        const legacyMembersRaw = localStorage.getItem(legacyMemberKey(type));
+        if (legacyMembersRaw !== null) {
+          const ids = JSON.parse(legacyMembersRaw).map(String);
+          if (ids.includes(id)) changes.push([legacyMemberKey(type), JSON.stringify(ids.filter(value => value !== id))]);
+        }
+        const legacyOrderRaw = localStorage.getItem(legacyOrderKey(type));
+        if (legacyOrderRaw !== null) {
+          const ids = JSON.parse(legacyOrderRaw).map(String);
+          if (ids.includes(id)) changes.push([legacyOrderKey(type), JSON.stringify(ids.filter(value => value !== id))]);
+        }
+      } catch {
+        editError.textContent = 'Data rutin asal tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
+      }
     }
     try {
       for (let index = 0; index < localStorage.length; index++) {
         const key = localStorage.key(index);
-        if (!/^uwa-daily-\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
+        if (!/^(?:uwa-daily-|uwa-navigation-renovation-trial-v1-daily-)\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
         const parsed = JSON.parse(localStorage.getItem(key));
-        if (!Array.isArray(parsed) || !parsed.every(validReadingId)) throw new Error('Invalid daily data');
+        if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
         if (parsed.some(value => String(value) === id)) changes.push([key, JSON.stringify(parsed.filter(value => String(value) !== id))]);
       }
     } catch {

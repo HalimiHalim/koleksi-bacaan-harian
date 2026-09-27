@@ -2,16 +2,16 @@
 
 - Base commit: `2c9a9c2209bd697afd78e440a23a3232a29efb98`
 - Current branch: `codex/navigation-renovation-trial-v1`
-- Last verified checkpoint: `4160af400aede612370dd0c4b1ee3693c04426d9`
-- Current milestone: 2 — Navigation and checklist pages
+- Last verified checkpoint: `9d48bf767ca88120a7be4791a3d13b2889d12ef3`
+- Current milestone: 3 — Home and Add to integration
 - Milestone status: VERIFIED
-- Intended change: rename visible navigation/pages and bind the existing reorder, removal and Undo UI to the three trial checklists.
+- Intended change: show a single Zikir Home card and route Isi additions and custom deletion cleanup through trial collections.
 - Files changed: progress file, index.html
 - Storage keys audited: `uwa-theme`, `uwa-arabic-edits`, `uwa-custom-readings-v1`, `uwa-deleted-reading-ids-v1`, `uwa-selawat-21-stanzas-v1`, `uwa-ios-install-help-dismissed`, `uwa-routine-members-{morning,evening,allday}-v1`, `uwa-routine-order-{morning,evening,allday}-v1`, `uwa-daily-YYYY-MM-DD-{morning,evening,allday}`. No IndexedDB usage.
-- Tests completed: baseline and VM fixture checks; inline JavaScript syntax; diff whitespace; browser Zikir progress, keyboard reorder, independent Doa/Quran status, Doa remove and Undo.
+- Tests completed: baseline and VM fixture checks; syntax/diff checks; browser reorder/remove/Undo; Home single Zikir card and immediate progress; unchanged need panel; Add to Doa appends unchecked and updates its count.
 - Tests pending: initialization, persistence, rollback, responsive, offline, Preview/production verification.
 - Classification mapping: Doa IDs 1,7,8,9,13,15,16,18,19,20; Quran IDs 4,15,17. Zikir is the legacy ordered union. Custom `u-*` readings are classified from explicit saved fields at first initialization.
-- Exact next action: commit milestone 2, then replace Home summaries and route Isi Add to through trial membership.
+- Exact next action: commit milestone 3, then run persistence, custom-reading, responsive, service-worker and offline QA.
 - Anything pushed: no.
 - Preview deployment status: not started.
 
@@ -21,8 +21,8 @@
 | --- | --- | --- |
 | 0 Baseline and audit | VERIFIED | `1935bff` |
 | 1 Trial state and classification | VERIFIED | `4160af4` |
-| 2 Navigation and checklists | VERIFIED | pending |
-| 3 Home and Add to | NOT_STARTED | pending |
+| 2 Navigation and checklists | VERIFIED | `9d48bf7` |
+| 3 Home and Add to | VERIFIED | pending |
 | 4 QA | NOT_STARTED | pending |
 | 5 Preview preparation | NOT_STARTED | pending |
 
