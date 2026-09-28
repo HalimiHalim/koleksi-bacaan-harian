@@ -12,7 +12,7 @@
   let requestId = 0;
   let versePages = null;
   const arabicDigits = (number) => String(number).replace(/\d/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
-  const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json${folder === 'pages' ? '?v=19' : ''}`;
+  const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json${folder === 'pages' ? '?v=20' : ''}`;
 
   try {
     const saved = JSON.parse(localStorage.getItem(stateKey));
@@ -113,6 +113,13 @@
       const data = await getJson(path('surah', number));
       if (token !== requestId) return;
       const fragment = document.createDocumentFragment();
+      if (number !== 1 && number !== 9) {
+        const first = data.verses[0][1].split(' ');
+        const basmala = document.createElement('p');
+        basmala.className = 'quran-list-bismillah'; basmala.lang = 'ar'; basmala.dir = 'rtl';
+        basmala.textContent = first.slice(0, 4).join(' ');
+        fragment.append(basmala);
+      }
       for (const [ayah, arabic, translation] of data.verses) {
         const article = document.createElement('article'); article.className = 'quran-verse'; article.id = `quran-ayah-${ayah}`; article.dataset.ayah = ayah;
         const head = document.createElement('div'); head.className = 'quran-verse-head';
@@ -121,7 +128,8 @@
         bookmark.setAttribute('aria-pressed', String(state.bookmarks.includes(bookmark.dataset.bookmark)));
         bookmark.textContent = state.bookmarks.includes(bookmark.dataset.bookmark) ? '★ Disimpan' : '☆ Simpan';
         head.append(ref, bookmark);
-        const ar = document.createElement('p'); ar.className = 'quran-verse-arabic'; ar.lang = 'ar'; ar.dir = 'rtl'; ar.textContent = arabic;
+        const ar = document.createElement('p'); ar.className = 'quran-verse-arabic'; ar.lang = 'ar'; ar.dir = 'rtl';
+        ar.textContent = ayah === 1 && number !== 1 && number !== 9 ? arabic.split(' ').slice(4).join(' ') : arabic;
         const ms = document.createElement('p'); ms.className = 'quran-verse-translation'; ms.lang = 'ms'; ms.textContent = translation;
         article.append(head, ar, ms); fragment.append(article);
       }
@@ -141,11 +149,12 @@
     const lines = [...sheet.querySelectorAll('.quran-page-line')];
     const verseLines = lines.filter(line => !line.classList.contains('quran-page-heading') && !line.classList.contains('quran-page-bismillah'));
     let size = 28;
-    do {
+    // Full Uthmani marks can make dense lines wider on 320px phones.
+    while (true) {
       for (const line of verseLines) line.style.fontSize = `${size}px`;
-      if (verseLines.every(line => line.scrollWidth <= line.clientWidth + 1)) break;
-      size -= 1;
-    } while (size >= 13);
+      if (verseLines.every(line => line.scrollWidth <= line.clientWidth + 1) || size <= 11) break;
+      size -= 0.5;
+    }
     for (const line of lines.filter(item => !verseLines.includes(item))) {
       let headingSize = Math.min(24, size + 2);
       do {
@@ -158,9 +167,9 @@
   async function renderPage(token = ++requestId, preferredAyah = null) {
     const sheet = $('quran-mushaf-page');
     sheet.replaceChildren();
-    $('quran-page-counter').textContent = $('quran-page-counter-bottom').textContent = `${page} / 604`;
-    for (const id of ['quran-prev-page', 'quran-prev-page-bottom']) $(id).disabled = page === 1;
-    for (const id of ['quran-next-page', 'quran-next-page-bottom']) $(id).disabled = page === 604;
+    $('quran-page-counter-bottom').textContent = `${page} / 604`;
+    $('quran-prev-page-bottom').disabled = page === 1;
+    $('quran-next-page-bottom').disabled = page === 604;
     setStatus(`Memuatkan halaman ${page}…`);
     try {
       const data = await getJson(path('pages', page));
@@ -241,7 +250,7 @@
     $('quran-translation-toggle').setAttribute('aria-pressed', String(!hidden));
     $('quran-translation-toggle').textContent = hidden ? 'Terjemahan Melayu' : 'Terjemahan Melayu ✓';
   });
-  for (const id of ['quran-prev-page', 'quran-prev-page-bottom', 'quran-next-page', 'quran-next-page-bottom']) {
+  for (const id of ['quran-prev-page-bottom', 'quran-next-page-bottom']) {
     $(id).addEventListener('click', () => {
       page = Math.max(1, Math.min(604, page + (id.includes('prev') ? -1 : 1)));
       renderPage();

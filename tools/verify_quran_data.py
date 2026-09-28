@@ -8,7 +8,9 @@ import json
 import sqlite3
 import sys
 import unicodedata
+from collections import defaultdict
 from pathlib import Path
+from build_quran_data import page_verse_tokens
 
 ROOT = Path(__file__).resolve().parents[1] / 'quran'
 SAJDAH_KEYS = {
@@ -54,6 +56,8 @@ def verify(translation_db=None):
     endings = {}
     page_surahs = {}
     sajdah_keys = set()
+    page_words = defaultdict(list)
+    basmalas = {}
     kinds = {'word', 'end', 'quarter', 'surah_header', 'bismillah', 'sajdah'}
     for page in range(1, 605):
         data = read_json(ROOT / 'pages' / f'{page:03}.json')
@@ -70,6 +74,12 @@ def verify(translation_db=None):
                 if kind == 'sajdah':
                     assert text == '۩' and key in SAJDAH_KEYS and key not in sajdah_keys
                     sajdah_keys.add(key)
+                if kind == 'word':
+                    page_words[key].append(text)
+                if kind == 'bismillah':
+                    assert key == '' and 2 <= _ <= 114 and _ != 9
+                    assert _ not in basmalas
+                    basmalas[_] = text
                 if kind != 'end':
                     continue
                 assert key in original and key not in endings
@@ -80,6 +90,16 @@ def verify(translation_db=None):
     assert set(verse_pages.values()) == set(range(1, 605))
     assert page_surahs[604] == {112, 113, 114}
     assert sajdah_keys == SAJDAH_KEYS
+    assert set(page_words) == set(original)
+    for key, source in original.items():
+        surah, ayah = map(int, key.split(':'))
+        assert page_words[key] == page_verse_tokens(source, surah, ayah), key
+        if ayah == 1 and surah not in (1, 9):
+            assert basmalas[surah] == ' '.join(source.split()[:4]), key
+    assert set(basmalas) == set(range(2, 115)) - {9}
+    assert sum(text.count('ٓ') for words in page_words.values() for text in words) == sum(
+        source.count('ٓ') for source in original.values()
+    )
 
     if translation_db:
         connection = sqlite3.connect(translation_db)
@@ -89,7 +109,7 @@ def verify(translation_db=None):
         assert published == translations, 'Bundled Malay text differs from the supplied QuranEnc database'
         connection.close()
 
-    print('PASS: 114 surahs, 6,236 source-identical Arabic verses, 6,236 translations, 604 pages, one end marker per ayah, 15 sajdah signs, no raw placeholders or entities')
+    print('PASS: 114 surahs, 6,236 source-aligned page verses, 111 separate basmalas, all source madd marks, 604 pages, 15 sajdah signs')
     if translation_db:
         print('PASS: all 6,236 Malay translations match QuranEnc SQLite verbatim')
 
