@@ -3,7 +3,7 @@
 Release scope: **Uthmani + Simple Arabic**. IndoPak deferred due to unresolved dataset-specific redistribution licensing. No IndoPak files, implementation code, runtime fetch or UI option included. The identity adapter and separate rendering paths can support a licensed future script without rewriting Uthmani/Simple; no V2.5.1 work started.
 
 1. **V2.4.2 baseline HEAD:** c3daddc788c3ee4f054885ed5eeb40eaacf115fc; protected implementation a6b7faedba9d66ee9852879dac14a533705b36e6.
-2. **V2.5 commit:** pending release commit; all local quality gates passed.
+2. **V2.5 implementation commit:** 63ffe4e885eb5de8bf1240d79fcfe73c8573552a (local); release gate whitespace-policy correction pending.
 3. **Files changed:** index.html, service-worker.js, quran/reader.js/CSS, quran/SOURCES.md; added Simple raw snapshot + 114 chapter JSON + alignment report; builder/browser verifier/validation report; progress/source-audit/final-report documents. Existing Quran, translation, font, Tajweed assets and verifiers unchanged.
 4. **Script sources:** existing Tanzil Uthmani v1.1; new direct publisher [Tanzil Simple download](https://tanzil.net/download/) on 2026-09-30. Exact request/options/hash in quran/SOURCES.md.
 5. **Licenses:** Tanzil CC BY 3.0 with publisher verbatim/attribution/link/full-notice conditions. Complete notice retained in raw source and all 114 derived files. Existing in-app Tanzil attribution retained. Existing font SIL OFL 1.1; QCF layout MIT and CPF annotation CC BY 4.0 unchanged.
@@ -24,13 +24,15 @@ Release scope: **Uthmani + Simple Arabic**. IndoPak deferred due to unresolved d
 20. **Performance/data:** Simple raw 1,353,105 bytes + runtime chunks 1,508,826 + audit alignment report 67,743 = 2,929,674 added data bytes. Only runtime chunks load on demand; no Simple requests during default Uthmani startup. Largest chunk 107,302 bytes; Page 1 requires 1,836-byte chapter. Reader JS +8,499 bytes uncompressed, font +0. Five-run local medians: initial navigation 125→136ms; default Page 1 DOM 54→54 nodes; heap ~3.96→3.98MB. Script render switch median 5.8ms cold / 15.6ms warm (RAF-scheduled local sample); UI interaction measurements 53–69ms. Simple maximum page DOM 166, Uthmani OFF 253 / ON 378.
 21. **PWA/offline:** fresh install default, V2.4.2→V2.5 cache upgrade, single current cache, Simple offline Page/List reload/reopen, Uthmani return and restored colours all passed on previously visited assets.
 22. **Console:** zero errors in full sweeps, List/switching, fresh/upgrade/offline and reopen tests. Production pending.
-23. **Local HEAD:** c3daddc788c3ee4f054885ed5eeb40eaacf115fc before release commit.
+23. **Local HEAD:** 63ffe4e885eb5de8bf1240d79fcfe73c8573552a before release record correction.
 24. **origin/main:** same fetched baseline before release push.
 25. **Vercel:** existing project; baseline reports deployment success; V2.5 deployment pending.
 26. **Production URL:** https://koleksi-bacaan-harian.vercel.app/ (existing project, no new Vercel project).
-27. **Working tree:** fully locally validated V2.5 changes, pending release commit.
+27. **Working tree:** source whitespace-policy and release record correction pending commit.
 28. **Progress ledger:** CODEX_PROGRESS_V2.5.md records milestones 0–19 VERIFIED; milestone 20 IN PROGRESS.
 29. **Deferred option:** IndoPak due insufficiently confirmed redistribution license; no temporary approximation or disabled card. Simple Tajweed unsupported for V2.5; compact text selector used without previews.
 30. **Limitations:** Simple whole verses are assigned to existing end-marker pages, so printed word/line pagination is not promised; offline requires prior online visit for applicable lazy assets; physical iPhone Safari unavailable for testing. All responsive tests used Chrome at 320/390/1280. No next-version work started.
 
 Validation detail: tools/v2.5-validation-report.json and quran/scripts/script-alignment-report.json. Screenshot evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.5. Reproduce data checks with `python3 tools/build_quran_scripts.py --verify`, existing Quran and Tajweed verifiers. Full browser sweep: serve checkout on port 8815, run `node tools/verify_quran_scripts_browser.cjs` with Playwright available via NODE_PATH; QURAN_QA_URL/QURAN_QA_OUTPUT can override server/artifact directory.
+
+Raw source whitespace: publisher copyright notice contains seven trailing spaces. Source is retained byte-for-byte as required; `.gitattributes` scopes the blank-at-EOL exemption to that immutable snapshot only. No implementation whitespace checks are disabled.

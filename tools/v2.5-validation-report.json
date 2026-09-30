@@ -360,5 +360,6 @@
   "securityLicense": "PASS no new remote runtime requests, secrets, tracking, scans or font files; raw and all 114 derived chunks preserve publisher notice",
   "visualEvidence": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5",
   "responsiveVisuals": "48 representative page screenshots and 6 settings screenshots captured; six overview sheets inspected plus full-size mobile/desktop samples",
-  "uthmaniScreenshotRegression": "PASS 24 same-driver paired captures at 320/390/1280: pixel-identical to V2.4.2"
+  "uthmaniScreenshotRegression": "PASS 24 same-driver paired captures at 320/390/1280: pixel-identical to V2.4.2",
+  "sourceWhitespace": "Publisher raw copyright notice trailing spaces preserved verbatim; exact-file .gitattributes blank-at-EOL exception. Full baseline-to-release diff --check passes; generated/code whitespace checks unchanged."
 }

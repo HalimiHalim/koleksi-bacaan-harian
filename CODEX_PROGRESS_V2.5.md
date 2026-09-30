@@ -48,7 +48,7 @@ Date: 2026-09-30 (Asia/Kuala_Lumpur).
 | 17 | Security/license | VERIFIED | No new APIs/keys/tracking/scans/fonts; CC BY 3.0 publisher terms, source notice in raw and every chunk. |
 | 18 | Final quality gate | VERIFIED | Syntax (reader/SW/browser tool/four inline scripts), all verifiers, responsive/interaction/offline/console/diff/source review pass. |
 | 19 | Fallback decision | VERIFIED | User-approved Uthmani + Simple; IndoPak deferred due unresolved dataset redistribution licensing. |
-| 20 | Git/deployment | IN PROGRESS | Local quality gate complete; commit/push/deployment/production smoke pending. |
+| 20 | Git/deployment | IN PROGRESS | Local quality gate complete; Implementation commit 63ffe4e885eb5de8bf1240d79fcfe73c8573552a exists locally; push/deployment/smoke pending. |
 
 ## Validations and artifacts
 - Machine report: tools/v2.5-validation-report.json. Immutable data/alignment report: quran/scripts/script-alignment-report.json.
@@ -63,5 +63,9 @@ Date: 2026-09-30 (Asia/Kuala_Lumpur).
 - No authoritative Uthmani assets, fonts, QCF data, translations, Tajweed annotations/mapper/palette, unrelated Home/Zikir/Doa/Selawat or existing verifiers changed.
 - Limitations: offline requires visiting applicable Quran assets online first; Simple page layout is whole-verse flow on existing page identities, not printed-word pagination; no Simple Tajweed; no IndoPak; physical iPhone Safari unavailable, browser tests used desktop Chrome at 320/390/1280. Optional previews omitted to keep compact settings.
 - Last VERIFIED milestone: 19 (all 0–19 VERIFIED). First incomplete milestone: 20.
-- Commit: pending. Push: pending. Deployment: existing V2.4.2 until verified release push. Working tree contains fully locally validated V2.5 changes.
+- Implementation commit: 63ffe4e885eb5de8bf1240d79fcfe73c8573552a (local only). Push: pending. Deployment: existing V2.4.2. Scoped source whitespace policy/release record correction pending commit.
 - Resume: inspect branch/status, read this whole ledger, compare actual files/evidence; preserve valid work, resume first incomplete milestone; rerun only evidence that cannot be proven. Never reset/discard or commit/push/deploy unverified work.
+
+## Resume during release gate
+- User continuation: inspected branch/status, full ledger and actual log. Implementation commit 63ffe4e exists and worktree initially clean; ledger's precommit wording was stale. All browser/data artifacts remain present and app assets unchanged since verified tests. Resume milestone 20 only.
+- Staged diff --check flagged seven trailing spaces in the publisher's original copyright notice; the shell command continued to the local commit. No push occurred. Preserve immutable source bytes and scope `.gitattributes` blank-at-EOL exemption only to that pinned raw snapshot; retain whitespace checks for every implementation/generated file. This corrects the release gate without changing Quran/source notice.
