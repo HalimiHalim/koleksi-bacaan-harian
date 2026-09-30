@@ -361,5 +361,56 @@
   "visualEvidence": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5",
   "responsiveVisuals": "48 representative page screenshots and 6 settings screenshots captured; six overview sheets inspected plus full-size mobile/desktop samples",
   "uthmaniScreenshotRegression": "PASS 24 same-driver paired captures at 320/390/1280: pixel-identical to V2.4.2",
-  "sourceWhitespace": "Publisher raw copyright notice trailing spaces preserved verbatim; exact-file .gitattributes blank-at-EOL exception. Full baseline-to-release diff --check passes; generated/code whitespace checks unchanged."
+  "sourceWhitespace": "Publisher raw copyright notice trailing spaces preserved verbatim; exact-file .gitattributes blank-at-EOL exception. Full baseline-to-release diff --check passes; generated/code whitespace checks unchanged.",
+  "production": {
+    "assetsChecked": 123,
+    "results": [
+      {
+        "width": 320,
+        "settings": true,
+        "list": true,
+        "page": true,
+        "positionPreserved": true,
+        "navigation": true,
+        "tajweedRestores": true,
+        "persistence": true,
+        "offline": false,
+        "reopen": false,
+        "overflow": 0,
+        "errors": 0
+      },
+      {
+        "width": 390,
+        "settings": true,
+        "list": true,
+        "page": true,
+        "positionPreserved": true,
+        "navigation": true,
+        "tajweedRestores": true,
+        "persistence": true,
+        "offline": true,
+        "reopen": true,
+        "overflow": 0,
+        "errors": 0
+      },
+      {
+        "width": 1280,
+        "settings": true,
+        "list": true,
+        "page": true,
+        "positionPreserved": true,
+        "navigation": true,
+        "tajweedRestores": true,
+        "persistence": true,
+        "offline": false,
+        "reopen": false,
+        "overflow": 0,
+        "errors": 0
+      }
+    ],
+    "applicationReleaseCommit": "3d5f39b369b14b2dcffb396f6ffcd1b9e697766b",
+    "deployment": "H5tKZNw3HTEntoD7iWg5Zq2evGaE",
+    "environment": "Production",
+    "status": "success: Deployment has completed"
+  }
 }
