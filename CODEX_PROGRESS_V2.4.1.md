@@ -30,7 +30,7 @@
 | 9 | Persistence | VERIFIED | Browser test: change mode/ON in popup → close → reload → Continue restores Page and ON; state restored at 320, 390, 1280. |
 | 10 | PWA/cache and offline | VERIFIED | Cache bumped to `uwa-bacaan-harian-v241-quran-settings`; CSS/JS URLs `?v=241`. Fresh install ON persisted offline. A staged same-origin V2.4→V2.4.1 upgrade removed old cache, loaded new popup/assets, restored Page+ON, and reloaded offline with colours and zero errors. Eight shell assets exist. |
 | 11 | Final quality gate | VERIFIED | Reader/SW and all four inline scripts pass `node --check`; Quran and Tajweed verifiers, shell assets, `git diff --check`, responsive browser screenshots, 604-page ON/OFF sweeps, List↔Page and next/prev navigation, fresh offline and upgrade fixture pass. No data/annotation files changed; zero browser console/page errors. |
-| 12 | Commit, push, deploy, production smoke | PENDING | |
+| 12 | Commit, push, deploy, production smoke | VERIFIED | Implementation commit `2b24720639613991b303f71774ffe5fd257b69dc` fast-forward pushed to existing `origin/main`. Vercel Production deployment `FqsbsQyAwuamdboFiw5G6bVDdbv1` completed successfully. Production URL `https://koleksi-bacaan-harian.vercel.app/`. Live index/SW/CSS/JS/page 001/annotation 001 matched local hashes. Browser smoke at 320/390/1280 verified settings, Page+ON persistence, 32px font, no overflow, next-page navigation, and zero console errors; 390px production offline reload passed. This record-only closeout commit changes no app assets. |
 
 ## Decisions and status
 
@@ -40,4 +40,4 @@
 - Files changed so far: `index.html`, `quran/reader.css`, `quran/reader.js`, `service-worker.js`, this ledger.
 - Responsive findings: popup width is bounded at 330px and fits 320/390/1280. Dense page 303 is about 2596px high at 320 and 2063px at 390; vertical growth is intentional. Page 597 has no overflow at 320. The 44px gear and close controls remain tappable. No Quran audio/player bar exists in this release, so there is no audio overlap to correct.
 - Known limitations: physical iPhone Safari was not available for testing; Chromium at 320/390 CSS px and desktop was used. The inherited 804 skipped Tajweed ranges remain plain.
-- Commit/push/deploy: not started; production remains V2.4.
+- Commit/push/deploy: V2.4.1 implementation `2b24720639613991b303f71774ffe5fd257b69dc` pushed to `origin/main`; existing Vercel project Production status success. Final record commit is ledger-only; inspect `git log -1` for final HEAD. Application assets at production were verified byte-for-byte and in a live browser.
