@@ -636,5 +636,247 @@
         }
       ]
     }
+  ],
+  "listRenderingBodyUnchanged": true,
+  "implementationCommit": "bc7da495a7908598e3d0400e85718af389671f3b",
+  "production": "https://koleksi-bacaan-harian.vercel.app/",
+  "productionDeploymentStatus": "success / Deployment has completed / Production",
+  "productionDeploymentId": 6761367560,
+  "production-interactions": [
+    {
+      "width": 320,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 80.671875,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 1280,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    }
+  ],
+  "production-offline": {
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "upgrade": false,
+    "cache": [
+      "uwa-bacaan-harian-v251-quran-classic"
+    ],
+    "offline": [
+      "List Uthmani",
+      "Page Uthmani Tajweed",
+      "Classic OFF/ON",
+      "Simple Page"
+    ],
+    "reopenClassic": true,
+    "settingsAndBookmarksPreserved": true,
+    "errors": []
+  },
+  "production-pages": [
+    {
+      "width": 320,
+      "page": 420,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "32px"
+    },
+    {
+      "width": 320,
+      "page": 420,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "14.5px"
+    },
+    {
+      "width": 320,
+      "page": 537,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "32px"
+    },
+    {
+      "width": 320,
+      "page": 537,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "14px"
+    },
+    {
+      "width": 390,
+      "page": 420,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "32px"
+    },
+    {
+      "width": 390,
+      "page": 420,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "17.5px"
+    },
+    {
+      "width": 390,
+      "page": 537,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "32px"
+    },
+    {
+      "width": 390,
+      "page": 537,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "17px"
+    },
+    {
+      "width": 1280,
+      "page": 420,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "32px"
+    },
+    {
+      "width": 1280,
+      "page": 420,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 93,
+      "font": "28px"
+    },
+    {
+      "width": 1280,
+      "page": 537,
+      "mode": "page",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "32px"
+    },
+    {
+      "width": 1280,
+      "page": 537,
+      "mode": "classic",
+      "overflow": 0,
+      "doc": 0,
+      "colors": 121,
+      "font": "28px"
+    }
+  ],
+  "production-assets": [
+    {
+      "file": "index.html",
+      "sha256": "c4b50e4aaa448cd3beea65709cfe2189e0e1b2dee61b8c708d22700615e1415c",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "service-worker.js",
+      "sha256": "71a96292c7fd46c30433e1a167c7ed2bf3081baf2a3039380d90443977b992eb",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/reader.js",
+      "sha256": "790e672de39f4de5a42bc230193e230c2984dda92274b0f0ca6ad89474c694f5",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/reader.css",
+      "sha256": "5b669f63e7b4c2610ef430275efd95593fa109d61d8a6d1d02c69e446a99b22a",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/pages/420.json",
+      "sha256": "ca2122b9659e74fd0dbee77fc1bf158269c8c38fb4fa74d58a9d9bfdf511e639",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/pages/537.json",
+      "sha256": "ac9bee8afed297ba7cb41289a73d2a733c4f3b1271a5503bbb03f0c01fb6e9ae",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/tajweed/pages/420.json",
+      "sha256": "7d8a70d2ae8cd264decc4ff302241c3b0ca2fdba5e84a152e34d04934994c926",
+      "productionEqualsLocal": true
+    },
+    {
+      "file": "quran/scripts/simple/surah/033.json",
+      "sha256": "e55d9e92b22b0dc4c94fb685a904cf84f58858e346eaed2fc1621657b962d47d",
+      "productionEqualsLocal": true
+    }
+  ],
+  "production-marker-equivalence": [
+    {
+      "page": 420,
+      "width": 320,
+      "productionPixelIdenticalToV25": true
+    },
+    {
+      "page": 537,
+      "width": 320,
+      "productionPixelIdenticalToV25": true
+    },
+    {
+      "page": 420,
+      "width": 390,
+      "productionPixelIdenticalToV25": true
+    },
+    {
+      "page": 537,
+      "width": 390,
+      "productionPixelIdenticalToV25": true
+    }
   ]
 }

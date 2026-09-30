@@ -36,12 +36,12 @@ Date: 2026-09-30 (Asia/Kuala_Lumpur).
 | 13 | Quran data regression | VERIFIED |
 | 14 | PWA/offline | VERIFIED |
 | 15 | Final quality gate | VERIFIED |
-| 16 | Git/deployment | IN PROGRESS |
+| 16 | Git/deployment | VERIFIED |
 
 ## Work / release status
 - Changed: index.html, quran/reader.js, quran/reader.css, service-worker.js, new Classic browser verifier, validation report and this ledger. No Quran data, Tajweed annotations, font or license changes.
-- Milestones 0–15 VERIFIED. First incomplete milestone: 16 (Git/deployment). No implementation commit/push/deploy yet.
-- Last verified milestone: 15. Marker decision: **Deferred to avoid Page View wrapping regression.**
+- Milestones 0–16 VERIFIED. First incomplete milestone: none. Implementation committed/pushed/deployed; production smoke passed. Final production results recorded in this documentation closeout.
+- Last verified milestone: 16. Marker decision: **Deferred to avoid Page View wrapping regression.**
 - On interruption preserve all work; inspect branch/status and read this complete ledger, compare actual state, resume first incomplete milestone only. Never reset/discard/overwrite valid work or commit/push/deploy unverified changes.
 
 ## Classic implementation checkpoint
@@ -68,3 +68,11 @@ Date: 2026-09-30 (Asia/Kuala_Lumpur).
 - Tajweed verifier passed: 59,253 exact mapped annotations; existing 804 skipped ranges and 273 conflicting graphemes remain plain and unchanged. Script verifier passed both scripts, exact immutable Simple, 112 intro basmalahs and 604 mappings.
 - Safari safety: exact historical simple flex/fitter restored only in Classic, modern inline RTL preserved. Physical iPhone/Safari was unavailable; Chrome phone-size validation is not a physical Safari claim.
 - Evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.5.1 (JSON reports, before/after and historical/current screenshots). No remaining implementation quality gate.
+
+## Production closeout — VERIFIED
+- Implementation commit bc7da495a7908598e3d0400e85718af389671f3b pushed to existing main; local HEAD/origin main confirmed equal before documentation closeout. Vercel GitHub status success, description Deployment has completed, Production deployment 6761367560 success. Existing production URL https://koleksi-bacaan-harian.vercel.app/.
+- Live interactions passed 320/390/1280: settings, List/Page/Classic, Simple Classic disabled, exact position fallback/restoration, Page 32px, Tajweed Page/Classic, persistence, invalid saved state and zero console/errors. One initial switch wait timed out; diagnostic repeat passed with no failed requests or console errors.
+- Production offline passed: List, Uthmani Page Tajweed, Classic OFF/ON, cached Simple Page, settings/bookmarks retained, offline new-tab reopening Classic. Cache is only uwa-bacaan-harian-v251-quran-classic.
+- Production pages 420/537 × Page/Classic × 320/390/1280 passed overflow/font/Tajweed checks and screenshots. Production index/SW/reader JS/CSS plus representative datasets are byte-identical to local.
+- Modern marker regression: unchanged, local before/after pixels identical; live Page captures at 420/537 also compared against baseline phone captures. No physical iPhone root cause established. **Deferred to avoid Page View wrapping regression.**
+- All implementation and required production gates complete. Release complete; this final documentation commit carries the verified closeout. Resolve its own hash with git HEAD/origin main; preserve this verified state. No V2.6 work.
