@@ -4,12 +4,12 @@
 
 - Working repository: `/Users/halimi_hanim/.codex/worktrees/v2-4-tajweed/Islamic App` (isolated managed worktree).
 - Branch: `codex/v2-4-tajweed`.
-- Current HEAD and V2.3 protected baseline: `f178539e51dc2d869f33ce4ffcc1ca0e3658032c`. The local remote-tracking ref initially showed `1e69741`; a fresh `git ls-remote` and fetch found three newer V20 commits, and this isolated branch was fast-forwarded before implementation.
-- Fresh `origin/main`: `f178539e51dc2d869f33ce4ffcc1ca0e3658032c`.
+- V2.3 protected baseline: `f178539e51dc2d869f33ce4ffcc1ca0e3658032c`. The local remote-tracking ref initially showed `1e69741`; a fresh `git ls-remote` and fetch found three newer V20 commits, and this isolated branch was fast-forwarded before implementation.
+- Implementation HEAD at production verification: `900edfd8f50b41337efd723a5ea86dfbb9738a56`. `origin/main` and `git ls-remote` matched this hash. This ledger is being updated in a follow-up record-only commit; inspect `git log -1` for the final record HEAD.
 - This worktree was clean before this ledger. Original user checkout at `.../My Drive/AI Workspace/Islamic App` is on `main` at `5b6ea69`, 19 commits behind `origin/main`, with pre-existing edits to `index.html`, `service-worker.js`, and untracked `fonts/`. Preserve it.
-- Production URL: `https://koleksi-bacaan-harian.vercel.app/`. It returns HTTP 200 and V20 assets; the live V20 `reader.js` SHA-256 matches local V20. Prior V20 progress record documents Ready and production QA.
+- Production URL: `https://koleksi-bacaan-harian.vercel.app/`. V2.4 deployment for `900edfd` is Production `success`/Ready (`https://vercel.com/halimi-dashboard/koleksi-bacaan-harian/CTZfEiuz2FwpwR2R4WAphdcLCKDb`). The live V24 index, service worker, reader CSS/JS, Quran pages 001/535 and Tajweed pages 001/535/604 matched local files byte-for-byte. Live browser smoke passed.
 - Files changed in this worktree: `CODEX_PROGRESS_V2.4.md`, `index.html`, `quran/SOURCES.md`, `quran/reader.css`, `quran/reader.js`, `service-worker.js`, `quran/tajweed/` (generated page annotations, report, documentation), `tools/build_tajweed_annotations.py`, and `tools/tajweed-source/` (pinned upstream snapshots). No existing Quran text, page JSON, surah JSON, navigation or unrelated module file has been edited.
-- Commit: none for V2.4. Push: none. Deployment: none. Production smoke test: PENDING.
+- Commit: `900edfd8f50b41337efd723a5ea86dfbb9738a56` (implementation). Push to existing `origin/main`: VERIFIED. Vercel Production deployment: success. Production smoke test: VERIFIED. A ledger-only closeout commit will follow; it changes no application asset.
 
 ## Baseline architecture and checks
 
@@ -18,7 +18,7 @@
 - Page rendering and Quran state: `quran/reader.js`. Page styles: `quran/reader.css`. Reader state uses `localStorage` key `uwa-quran-reader-v1` for last position and bookmarks. Page lines are rendered as word spans plus separate end, sajdah, quarter, heading and basmalah elements.
 - Service worker: `service-worker.js`, cache `uwa-bacaan-harian-v20-v2-mark-3-madd`, network-first navigation and cache-first assets. Existing source/data checks: `tools/verify_quran_data.py`.
 - V20 maps the complete authoritative Tanzil Uthmani v1.1 text onto QCF page positions; intro basmalahs are separate. `python3 tools/verify_quran_data.py` passes 114 surahs, 6,236 verses, 111 separate basmalahs, all source madd marks, 604 pages and 15 sajdah signs.
-- Current milestone: **13 — git and deployment IN PROGRESS**. First incomplete milestone: 13.
+- Current milestone: **13 — git and deployment VERIFIED**. First incomplete milestone: none.
 
 ## Milestones
 
@@ -37,7 +37,7 @@
 | 10 | PWA, offline and cache | VERIFIED | V24 service worker caches new shell assets and on-demand annotation pages. Offline ON reload succeeded; V20→V24 upgrade fixture deleted old cache, loaded ON online/offline with no errors. Hash mismatch displays plain original text. |
 | 11 | Security, privacy and license | VERIFIED | No keys/secrets found in changed code/data scan; no analytics, accounts or remote runtime API. CC BY 4.0/Tanzil credits in Quran library and repository documentation. Text inserted with `textContent`; colour class comes from a fixed allowlist. |
 | 12 | Final quality gate | VERIFIED | `node --check` reader/SW and all four inline scripts; existing Quran verifier; annotation generator `--verify`; 604 generated files and nine SW shell assets present; `git diff --check`; browser, offline, upgrade and responsive checks pass. |
-| 13 | Git and deployment | IN PROGRESS | Review final diff, commit, push to existing origin/main, verify Vercel Ready and live smoke. |
+| 13 | Git and deployment | VERIFIED | Implementation `900edfd` committed from clean staged V2.4 diff, pushed by fast-forward to `origin/main`, remote hash confirmed; Vercel Production success and live browser/asset smoke pass. Ledger-only closeout record pending commit/push. |
 
 ## Dataset and alignment findings
 
@@ -51,6 +51,7 @@
 - Full ON-mode page sweep: all 604 pages at 320px and 390px (1,208 renders), every page word compared exactly with V2.3 JSON, zero overflow and zero page errors. Pages 27, 177 and 254 (the three changed-word-boundary verses) also passed targeted OFF/ON tests at 320, 390 and 1280px. A mismatched annotation file was deliberately supplied on page 2; the reader showed exact plain page text with an availability message.
 - Local PWA test: one-page ON assets cached and reopened offline with preference retained. Separate V20 fixture upgraded to V24; V20 cache removed, V24 loaded and worked online then offline, no page errors. Ten local page-535 toggle pairs at 390px averaged 122 ms OFF and 125 ms ON; these are headless Chromium timings including browser-action overhead.
 - Light colours were darkened after inspecting pages 1, 535 and 597 and calculating contrast against the existing page surfaces: Madd `#4F86C6 → #3A6FA9`, Ghunnah `#4E9F78 → #347B59`, Ikhfa `#8B72B8 → #70559C`, Idgham `#C85C8E → #A74373`, Iqlab `#D99545 → #98611F`, Qalqalah `#C95B5B → #A93F3F`, Silent `#92969D → #686D75`. All are at least 4.8:1 against Warm Sepia. Midnight has a separate lighter mapping.
+- Production smoke: actual HTTPS site at 320, 390 and 1280 CSS px loaded Page View with default OFF; ON coloured source-identical Arabic, persisted through reload, and page 1→2 navigation worked. Font loaded, no overflow or browser console/page errors. The 390px page 2 screenshot was visually inspected. Live file hashes matched local for nine representative application/data files. Production service worker cached page 1 and its Tajweed asset; a forced offline reload kept ON and showed colours with no console errors. The V20→V24 upgrade was tested in a local same-origin fixture.
 
 ## Known issues
 
