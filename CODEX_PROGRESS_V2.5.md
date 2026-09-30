@@ -48,7 +48,7 @@ Date: 2026-09-30 (Asia/Kuala_Lumpur).
 | 17 | Security/license | VERIFIED | No new APIs/keys/tracking/scans/fonts; CC BY 3.0 publisher terms, source notice in raw and every chunk. |
 | 18 | Final quality gate | VERIFIED | Syntax (reader/SW/browser tool/four inline scripts), all verifiers, responsive/interaction/offline/console/diff/source review pass. |
 | 19 | Fallback decision | VERIFIED | User-approved Uthmani + Simple; IndoPak deferred due unresolved dataset redistribution licensing. |
-| 20 | Git/deployment | IN PROGRESS | Local quality gate complete; Implementation commit 63ffe4e885eb5de8bf1240d79fcfe73c8573552a exists locally; push/deployment/smoke pending. |
+| 20 | Git/deployment | VERIFIED | Implementation 63ffe4e + source-policy correction 3d5f39b pushed to origin/main; Production success, 123 deployed hashes and 320/390/1280 smoke plus 390 offline/reopen passed. Closing validation record 7749249 also pushed and Vercel completed successfully. |
 
 ## Validations and artifacts
 - Machine report: tools/v2.5-validation-report.json. Immutable data/alignment report: quran/scripts/script-alignment-report.json.
