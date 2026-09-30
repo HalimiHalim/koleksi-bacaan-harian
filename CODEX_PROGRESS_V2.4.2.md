@@ -25,7 +25,7 @@
 | 8 | Quran and Tajweed regression | VERIFIED | Quran verifier: 114 surahs, 6,236 verses, 604 pages, 111 separate basmalahs, all madd marks, 15 sajdah signs. Tajweed verifier: 59,253 mapped, 804 skipped, 273 conflicts plain. Data, annotations, mapper, palette, font family and settings markup unchanged. List↔Page, page next/prev and reader back/reopen passed. |
 | 9 | PWA/offline and upgrade | VERIFIED | Cache `uwa-bacaan-harian-v242-quran-flow`, reader URLs `?v=242`. Eight shell assets exist. Fresh offline ON reload passed. Staged V2.4.1→V2.4.2 upgrade removed old cache, restored Page+ON, loaded flow, then reloaded offline with colours and no errors. |
 | 10 | Final quality gate | VERIFIED | Reader/SW and four inline scripts syntax, both verifiers, 2,416-render sweep, responsive screenshots at 320/390/1280, navigation, cache upgrade, fresh offline, shell assets, `git diff --check`, data/annotation diff audit and browser console checks pass. |
-| 11 | Commit/deploy/production smoke | PENDING | |
+| 11 | Commit/deploy/production smoke | VERIFIED | Implementation commit `a6b7faedba9d66ee9852879dac14a533705b36e6` fast-forward pushed to existing `origin/main`. Vercel Production deployment `HZ494uBRAeGe1G47wpykBaj7iAD4` completed successfully at `https://koleksi-bacaan-harian.vercel.app/`. Live index/SW/CSS/JS/page 001/page 534/annotation 001/annotation 534 match local SHA-256 hashes. Production browser at 320/390/1280 verified gear, Page/ON persistence, ON/OFF, 32px RTL right-aligned flow, page 534 text, no overflow or errors, and page navigation. 390px production offline page 534 with Tajweed ON passed. This closeout record changes no app assets. |
 
 ## Decisions and status
 
@@ -35,4 +35,4 @@
 - Files changed so far: `quran/reader.js`, `quran/reader.css`, `index.html`, `service-worker.js`, this ledger. No data/annotation files changed.
 - Visual findings: continuous right-aligned wrapping uses page width substantially better; no orphan medallion after pairing. Vertical growth remains acceptable. All 604 pages at both phone widths passed OFF/ON. Page 534 and Ar-Rahman page 531 screenshots inspected; page 597 and 604 retain clear structural boundaries.
 - Known limitation: physical iPhone Safari was the source of the report but is not available in this automated run. The new layout deliberately uses standard inline/block RTL behavior to reduce engine-specific risk.
-- Commit/push/deploy: not started. Preserve the V2.4.1 production baseline until verification is complete.
+- Commit/push/deploy: V2.4.2 implementation `a6b7faedba9d66ee9852879dac14a533705b36e6` pushed to `origin/main`; existing Vercel project Production status success. Final ledger-only record commit changes no app assets; inspect `git log -1` for the final HEAD. Production screenshot evidence: `/private/tmp/v242-production-page534-{320,390}.png`.
