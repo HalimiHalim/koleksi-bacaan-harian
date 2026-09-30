@@ -17,7 +17,7 @@
   let surah = 0;
   let mode = 'list';
   let page = 1;
-  let state = { last: null, bookmarks: [], mode: 'list', script: 'uthmani' };
+  let state = { last: null, bookmarks: [], mode: 'list', script: 'uthmani', uthmaniMode: 'list' };
   let requestId = 0;
   let versePages = null;
   let tajweedOn = false;
@@ -29,8 +29,13 @@
     if (saved && typeof saved === 'object') {
       state.last = saved.last && Number.isInteger(saved.last.surah) ? saved.last : null;
       state.bookmarks = Array.isArray(saved.bookmarks) ? saved.bookmarks.filter(key => /^\d{1,3}:\d{1,3}$/.test(key)) : [];
-      state.mode = ['list', 'page'].includes(saved.mode) ? saved.mode : state.last?.mode === 'page' ? 'page' : 'list';
+      state.mode = ['list', 'page', 'classic'].includes(saved.mode) ? saved.mode : ['page', 'classic'].includes(state.last?.mode) ? state.last.mode : 'list';
       state.script = saved.script === 'simple' ? 'simple' : 'uthmani';
+      state.uthmaniMode = ['list', 'page', 'classic'].includes(saved.uthmaniMode) ? saved.uthmaniMode : state.mode;
+      if (state.script === 'simple') {
+        if (state.mode === 'classic') state.mode = 'page';
+        if (state.last?.mode === 'classic') state.last.mode = 'page';
+      }
     }
   } catch (error) {}
   try { tajweedOn = localStorage.getItem(tajweedKey) === 'on'; } catch (error) {}
@@ -41,6 +46,8 @@
     $('quran-tajweed-off').disabled = unsupported;
     $('quran-tajweed-on').disabled = unsupported;
     $('quran-tajweed-note').hidden = !unsupported;
+    $('quran-classic-mode').disabled = unsupported;
+    $('quran-classic-note').hidden = !unsupported;
     for (const script of ['uthmani', 'simple']) {
       $(`quran-script-${script}`).setAttribute('aria-pressed', String(state.script === script));
     }
@@ -103,7 +110,7 @@
     const lead = document.createElement('strong');
     lead.textContent = `Sambung bacaan · ${chapter(last.surah)[1]}`;
     const sub = document.createElement('small');
-    sub.textContent = last.mode === 'page' ? `Halaman ${last.page || chapter(last.surah)[4]}` : `Ayat ${last.ayah || 1}`;
+    sub.textContent = ['page', 'classic'].includes(last.mode) ? `Halaman ${last.page || chapter(last.surah)[4]}` : `Ayat ${last.ayah || 1}`;
     button.append(lead, sub);
   }
   function renderChapters(query = '') {
@@ -142,13 +149,16 @@
     save(); renderContinue();
   }
   function setMode(next) {
-    mode = next;
-    state.mode = next;
+    mode = next === 'classic' && state.script !== 'uthmani' ? 'page' : next;
+    state.mode = mode;
+    if (state.script === 'uthmani') state.uthmaniMode = mode;
     save();
     $('quran-list-mode').setAttribute('aria-pressed', String(mode === 'list'));
     $('quran-page-mode').setAttribute('aria-pressed', String(mode === 'page'));
+    $('quran-classic-mode').setAttribute('aria-pressed', String(mode === 'classic'));
     $('quran-list-panel').hidden = mode !== 'list';
     $('quran-page-panel').hidden = mode !== 'page';
+    $('quran-classic-panel').hidden = mode !== 'classic';
   }
   async function openSurah(number, resume = false, requestedMode = null) {
     if (!chapter(number)) return;
@@ -161,9 +171,10 @@
     $('quran-reader-meta').textContent = `Surah ${number} · ${item[3]} ayat · ${item[6] === 'makkah' ? 'Makkiyyah' : 'Madaniyyah'}`;
     page = resume && last?.surah === number && Number.isInteger(last.page) ? Math.max(1, Math.min(604, last.page)) : item[4];
     setMode(requestedMode || state.mode);
-    $('quran-verse-list').replaceChildren(); $('quran-mushaf-page').replaceChildren();
+    $('quran-verse-list').replaceChildren(); $('quran-mushaf-page').replaceChildren(); $('quran-classic-page').replaceChildren();
     showArea('reader');
     setStatus('Memuatkan ayat…');
+    if (mode === 'classic') { await renderClassicPage(token, resume ? last?.ayah : null); return; }
     if (mode === 'page') { await renderPage(token, resume ? last?.ayah : null); return; }
     try {
       const data = await selectedChapter(number);
@@ -331,6 +342,97 @@
       updateLast(currentAyah);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
   }
+  function fitClassicLines() {
+    if (mode !== 'classic' || $('quran-classic-panel').hidden) return;
+    const sheet = $('quran-classic-page');
+    const lines = [...sheet.querySelectorAll('.quran-classic-line')];
+    const verseLines = lines.filter(line => !line.classList.contains('quran-page-heading') && !line.classList.contains('quran-page-bismillah'));
+    let size = 28;
+    // Full Uthmani marks can make dense lines wider on 320px phones.
+    while (true) {
+      for (const line of verseLines) line.style.fontSize = `${size}px`;
+      if (verseLines.every(line => line.scrollWidth <= line.clientWidth + 1) || size <= 11) break;
+      size -= 0.5;
+    }
+    for (const line of lines.filter(item => !verseLines.includes(item))) {
+      let headingSize = Math.min(24, size + 2);
+      do {
+        line.style.fontSize = `${headingSize}px`;
+        if (line.scrollWidth <= line.clientWidth + 1) break;
+        headingSize -= 1;
+      } while (headingSize >= 13);
+    }
+  }
+  async function renderClassicPage(token = ++requestId, preferredAyah = null) {
+    if (state.script !== 'uthmani') return;
+    const sheet = $('quran-classic-page');
+    sheet.replaceChildren();
+    $('quran-classic-counter-bottom').textContent = `${page} / 604`;
+    $('quran-prev-classic-bottom').disabled = page === 1;
+    $('quran-next-classic-bottom').disabled = page === 604;
+    setStatus(`Memuatkan halaman ${page}…`);
+    try {
+      const requestedPage = page;
+      const annotationPromise = tajweedOn
+        ? getJson(`./quran/tajweed/pages/${String(requestedPage).padStart(3, '0')}.json?v=24`).catch(() => null)
+        : Promise.resolve(null);
+      const data = await getJson(path('pages', requestedPage));
+      const annotation = await annotationPromise;
+      const tajweedTokens = tajweedOn ? await verifiedTajweed(data, annotation).catch(() => null) : null;
+      if (token !== requestId || mode !== 'classic') return;
+      const verseKeys = data.lines.flatMap(line => line.map(([, , key]) => key).filter(key => /^\d+:\d+$/.test(key)));
+      const pageSurahs = [...new Set(verseKeys.map(key => Number(key.split(':')[0])))];
+      if (!pageSurahs.length) throw new Error('Page has no verses');
+      if (!pageSurahs.includes(surah)) surah = pageSurahs[0];
+      const names = pageSurahs.map(number => chapter(number)?.[1]).filter(Boolean);
+      $('quran-reader-title').textContent = pageSurahs.length === 1 ? names[0] : `Halaman ${page}`;
+      $('quran-reader-arabic-title').textContent = pageSurahs.map(number => chapter(number)?.[2]).filter(Boolean).join(' · ');
+      $('quran-reader-meta').textContent = `Halaman ${page} · ${names.join(' · ')}`;
+      const fragment = document.createDocumentFragment();
+      // The few pages with under 100 words should not stretch like a dense page.
+      const wordCount = data.lines.flat().filter(([kind]) => kind === 'word').length;
+      sheet.classList.toggle('is-compact', wordCount < 100);
+      for (const [lineIndex, items] of data.lines.entries()) {
+        const line = document.createElement('div'); line.className = 'quran-classic-line';
+        const type = items[0]?.[0];
+        if (type === 'surah_header') line.classList.add('quran-page-heading');
+        if (type === 'bismillah') line.classList.add('quran-page-bismillah');
+        for (const [itemIndex, [kind, word, verseKey, suraNumber]] of items.entries()) {
+          if (kind === 'surah_header') {
+            const heading = document.createElement('span');
+            heading.textContent = `سُورَةُ ${chapter(suraNumber)?.[2] || word}`;
+            line.append(heading);
+          } else if (kind === 'end') {
+            const marker = document.createElement('span'); marker.className = 'quran-verse-marker';
+            marker.setAttribute('aria-label', `Akhir ayat ${verseKey}`);
+            const ayahNumber = Number(verseKey.split(':')[1]);
+            if (ayahNumber >= 100) marker.classList.add('three-digit');
+            const digit = document.createElement('span'); digit.textContent = arabicDigits(ayahNumber);
+            marker.append(digit); line.append(marker);
+          } else {
+            const span = document.createElement('span');
+            span.className = kind === 'quarter' ? 'quran-page-quarter' : kind === 'sajdah' ? 'quran-page-sajdah' : 'quran-page-word';
+            const segments = tajweedTokens?.get(`${lineIndex}:${itemIndex}`);
+            if (segments && (kind === 'word' || kind === 'bismillah')) appendTajweed(span, word, segments);
+            else span.textContent = kind === 'quarter' ? '۞' : word;
+            if (kind === 'quarter') span.setAttribute('aria-label', 'Tanda suku hizb');
+            if (kind === 'sajdah') span.setAttribute('aria-label', 'Tanda sujud tilawah');
+            line.append(span);
+          }
+        }
+        fragment.append(line);
+      }
+      const folio = document.createElement('div'); folio.className = 'quran-page-folio'; folio.textContent = arabicDigits(page);
+      fragment.append(folio); sheet.replaceChildren(fragment);
+      const firstKey = verseKeys.find(key => key.startsWith(`${surah}:`));
+      const savedKey = `${surah}:${preferredAyah}`;
+      const currentAyah = preferredAyah && verseKeys.includes(savedKey) ? preferredAyah : Number(firstKey.split(':')[1]);
+      setStatus(tajweedOn && !tajweedTokens ? 'Warna Tajweed tidak tersedia untuk halaman ini; teks asal dipaparkan.' : '');
+      updateLast(currentAyah);
+      requestAnimationFrame(fitClassicLines);
+      document.fonts?.ready.then(fitClassicLines);
+    } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
+  }
   async function renderSimplePage(token, preferredAyah) {
     const sheet = $('quran-mushaf-page');
     sheet.replaceChildren();
@@ -422,8 +524,11 @@
         await Promise.all(numbers.map(simpleChapter));
       }
       if (token !== requestId) return;
-      state.script = next; save(); updateTajweedButtons();
-      if (mode === 'page') await renderPage(token, ayah);
+      const nextMode = next === 'simple' && mode === 'classic' ? 'page'
+        : next === 'uthmani' && mode === 'page' && state.uthmaniMode === 'classic' ? 'classic' : mode;
+      state.script = next; setMode(nextMode); updateTajweedButtons();
+      if (mode === 'classic') await renderClassicPage(token, ayah);
+      else if (mode === 'page') await renderPage(token, ayah);
       else if (!$('quran-verse-list').querySelector('.quran-verse')) await openSurah(surah, true, 'list');
       else {
         const first = listData.verses[0][1].split(' ');
@@ -443,16 +548,20 @@
     }
   }
   async function switchMode(next) {
-    if (!surah || next === mode) return;
+    if (!surah || next === mode || (next === 'classic' && state.script !== 'uthmani')) return;
+    const previousMode = mode;
     const token = ++requestId; setMode(next);
     window.scrollTo(0, 0);
-    if (next === 'page') {
+    if (next === 'page' || next === 'classic') {
+      if (previousMode === 'list') {
       try {
         versePages ||= await getJson('./quran/verse-pages.json');
         page = versePages[`${surah}:${state.last?.ayah || 1}`] || chapter(surah)[4];
       } catch (error) { page = chapter(surah)[4]; }
-      if (token !== requestId || mode !== 'page') return;
-      await renderPage(token, state.last?.ayah);
+      }
+      if (token !== requestId || mode !== next) return;
+      if (next === 'classic') await renderClassicPage(token, state.last?.ayah);
+      else await renderPage(token, state.last?.ayah);
     } else { await openSurah(surah, true, 'list'); }
   }
 
@@ -484,6 +593,7 @@
   });
   $('quran-list-mode').addEventListener('click', () => switchMode('list'));
   $('quran-page-mode').addEventListener('click', () => switchMode('page'));
+  $('quran-classic-mode').addEventListener('click', () => switchMode('classic'));
   for (const script of ['uthmani', 'simple']) {
     $(`quran-script-${script}`).addEventListener('click', () => switchScript(script));
   }
@@ -494,6 +604,7 @@
       try { localStorage.setItem(tajweedKey, enabled ? 'on' : 'off'); } catch (error) {}
       updateTajweedButtons();
       if (mode === 'page' && !$('quran-page-panel').hidden) renderPage();
+      else if (mode === 'classic' && !$('quran-classic-panel').hidden) renderClassicPage();
     });
   }
   $('quran-translation-toggle').addEventListener('click', () => {
@@ -507,6 +618,13 @@
       renderPage();
     });
   }
+  for (const id of ['quran-prev-classic-bottom', 'quran-next-classic-bottom']) {
+    $(id).addEventListener('click', () => {
+      page = Math.max(1, Math.min(604, page + (id.includes('prev') ? -1 : 1)));
+      renderClassicPage();
+    });
+  }
+  new ResizeObserver(() => { if (mode === 'classic' && !$('quran-classic-panel').hidden) fitClassicLines(); }).observe(root);
   $('quran-verse-list').addEventListener('click', event => {
     const bookmark = event.target.closest('[data-bookmark]');
     if (bookmark) {

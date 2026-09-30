@@ -149,3 +149,18 @@ html[data-theme="midnight"] .quran-mushaf-page {
     margin:0 6px; padding:10px 9px;
   }
 }
+
+/* Classic: recovered V2.4 QCF-line layout. Separate DOM from modern Page. */
+.quran-classic-line { display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:baseline; gap:.12em; width:100%; min-height:1.95em; white-space:nowrap; font-size:28px; line-height:1.95; }
+.quran-classic-line.quran-page-heading,.quran-classic-line.quran-page-bismillah { justify-content:center; }
+.quran-classic-line > .quran-page-word { flex:none; }
+.quran-classic-line > .quran-verse-marker { flex:none; align-self:baseline; }
+.quran-classic-page.is-compact { justify-content:flex-start; }
+.quran-classic-page.is-compact .quran-classic-line { justify-content:center; gap:.28em; min-height:1.55em; line-height:1.55; }
+.quran-mode button:disabled { opacity:.45; cursor:default; }
+@media (max-width:360px) { .quran-classic-line,.quran-classic-page.is-compact .quran-classic-line { gap:.07em; } }
+@media (max-width:620px) {
+  #quran-classic-panel > .quran-mode-hint { display:none; }
+  .quran-classic-page { display:flex; flex-direction:column; justify-content:space-between; overflow-x:auto; }
+  .quran-classic-page.is-compact { justify-content:flex-start; }
+}

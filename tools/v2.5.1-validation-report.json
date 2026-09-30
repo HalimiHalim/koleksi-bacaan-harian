@@ -1,0 +1,640 @@
+{
+  "release": "V2.5.1",
+  "baseline": "2e2730d859bdd7eeee898bf2310d91c1c3b2599b",
+  "historicalImplementation": "900edfd8f50b41337efd723a5ea86dfbb9738a56",
+  "historicalFinalBefore241": "dfe8256ecb2d09702b176f7508ccdf545b31647f",
+  "markerDecision": "Deferred to avoid Page View wrapping regression.",
+  "physicalSafariTested": false,
+  "modernRenders": 5436,
+  "classicRenders": 3624,
+  "quranVerifier": "PASS",
+  "tajweedVerifier": "PASS",
+  "scriptVerifier": "PASS",
+  "jsSyntax": "PASS",
+  "diffCheck": "PASS",
+  "allpages": [
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 2469
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 1893
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 858
+    }
+  ],
+  "classic-allpages": [
+    {
+      "width": 320,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 11.5,
+      "maxFont": 22.5,
+      "maxHeight": 624
+    },
+    {
+      "width": 320,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 11.5,
+      "maxFont": 22.5,
+      "maxHeight": 624
+    },
+    {
+      "width": 390,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 14,
+      "maxFont": 26,
+      "maxHeight": 738
+    },
+    {
+      "width": 390,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 14,
+      "maxFont": 26,
+      "maxHeight": 738
+    },
+    {
+      "width": 1280,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1280,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    }
+  ],
+  "interactions": [
+    {
+      "width": 320,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 80.671875,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 1280,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    }
+  ],
+  "historical-equivalence": [
+    {
+      "width": 320,
+      "page": 1,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 2,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 303,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 420,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 531,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 534,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 535,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 537,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 597,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 320,
+      "page": 604,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 1,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 2,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 303,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 420,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 531,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 534,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 535,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 537,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 597,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 390,
+      "page": 604,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 1,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 2,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 303,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 420,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 531,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 534,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 535,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 537,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 597,
+      "exactHistoricalGeometry": true
+    },
+    {
+      "width": 1280,
+      "page": 604,
+      "exactHistoricalGeometry": true
+    }
+  ],
+  "modern-equivalence": [
+    {
+      "width": 320,
+      "page": 1,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 2,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 303,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 420,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 531,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 534,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 535,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 537,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 597,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 320,
+      "page": 604,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 1,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 2,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 303,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 420,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 531,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 534,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 535,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 537,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 597,
+      "exactTextGeometryAndPalette": true
+    },
+    {
+      "width": 390,
+      "page": 604,
+      "exactTextGeometryAndPalette": true
+    }
+  ],
+  "source-and-pixel-audit": {
+    "renderPage": true,
+    "renderSimplePage": true,
+    "verifiedTajweed": true,
+    "appendTajweed": true,
+    "modernPixelIdenticalCases": 20,
+    "inlineScriptsSyntaxChecked": 4,
+    "sourceDataFontLicenseChanges": 0
+  },
+  "upgrade-offline": {
+    "url": "http://127.0.0.1:8820/",
+    "upgrade": true,
+    "cache": [
+      "uwa-bacaan-harian-v251-quran-classic"
+    ],
+    "offline": [
+      "List Uthmani",
+      "Page Uthmani Tajweed",
+      "Classic OFF/ON",
+      "Simple Page"
+    ],
+    "reopenClassic": true,
+    "settingsAndBookmarksPreserved": true,
+    "errors": []
+  },
+  "fresh-offline": {
+    "url": "http://127.0.0.1:8819/",
+    "upgrade": false,
+    "cache": [
+      "uwa-bacaan-harian-v251-quran-classic"
+    ],
+    "offline": [
+      "List Uthmani",
+      "Page Uthmani Tajweed",
+      "Classic OFF/ON",
+      "Simple Page"
+    ],
+    "reopenClassic": true,
+    "settingsAndBookmarksPreserved": true,
+    "errors": []
+  },
+  "marker-baseline": [
+    {
+      "width": 320,
+      "pages": 604,
+      "worstClearance": 1.5418741703033447,
+      "cases": [
+        {
+          "page": 420,
+          "frame": [
+            12,
+            308
+          ],
+          "closest": {
+            "class": "quran-page-word",
+            "text": "\u0625\u0650\u0644\u064e\u064a\u0652\u0646\u064e\u0627\u06d6",
+            "left": 260.625,
+            "right": 304.00000381469727,
+            "clearance": 3.9999961853027344,
+            "width": 43.375,
+            "margin": [
+              "0px",
+              "0px"
+            ],
+            "whiteSpace": "nowrap",
+            "parentClass": "quran-page-flow"
+          },
+          "violations": [],
+          "overflow": 0
+        },
+        {
+          "page": 537,
+          "frame": [
+            12,
+            308
+          ],
+          "closest": {
+            "class": "quran-page-word",
+            "text": "\u0625\u0650\u0646\u0651\u064e\u0647\u064f\u06e5",
+            "left": 266.546875,
+            "right": 304.00000381469727,
+            "clearance": 3.9999961853027344,
+            "width": 37.453125,
+            "margin": [
+              "0px",
+              "0px"
+            ],
+            "whiteSpace": "nowrap",
+            "parentClass": "quran-page-flow"
+          },
+          "violations": [],
+          "overflow": 0
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "pages": 604,
+      "worstClearance": 2.4324991703033447,
+      "cases": [
+        {
+          "page": 420,
+          "frame": [
+            12,
+            378
+          ],
+          "closest": {
+            "class": "quran-page-word",
+            "text": "\u0625\u0650\u0644\u064e\u064a\u0652\u0643\u064e",
+            "left": 324.515625,
+            "right": 374.00000381469727,
+            "clearance": 3.9999961853027344,
+            "width": 49.484375,
+            "margin": [
+              "0px",
+              "0px"
+            ],
+            "whiteSpace": "nowrap",
+            "parentClass": "quran-page-flow"
+          },
+          "violations": [],
+          "overflow": 0
+        },
+        {
+          "page": 537,
+          "frame": [
+            12,
+            378
+          ],
+          "closest": {
+            "class": "quran-page-word",
+            "text": "\u0625\u0650\u0646\u0651\u064e\u0647\u064f\u06e5",
+            "left": 336.546875,
+            "right": 374.00000381469727,
+            "clearance": 3.9999961853027344,
+            "width": 37.453125,
+            "margin": [
+              "0px",
+              "0px"
+            ],
+            "whiteSpace": "nowrap",
+            "parentClass": "quran-page-flow"
+          },
+          "violations": [],
+          "overflow": 0
+        }
+      ]
+    }
+  ]
+}
