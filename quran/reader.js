@@ -4,6 +4,15 @@
   const root = $('allday-view');
   if (!root) return;
   const stateKey = 'uwa-quran-reader-v1';
+  const tajweedKey = 'uwa-quran-tajweed-v1';
+  const tajweedClasses = {
+    ghunnah:'ghunnah', hamzat_wasl:'silent', lam_shamsiyyah:'silent', silent:'silent',
+    idghaam_ghunnah:'idgham', idghaam_no_ghunnah:'idgham',
+    idghaam_mutajanisayn:'idgham', idghaam_mutaqaribayn:'idgham', idghaam_shafawi:'idgham',
+    ikhfa:'ikhfa', ikhfa_shafawi:'ikhfa', iqlab:'iqlab', qalqalah:'qalqalah',
+    madd_2:'madd', madd_246:'madd', madd_6:'madd',
+    madd_munfasil:'madd', madd_muttasil:'madd'
+  };
   let chapters = [];
   let surah = 0;
   let mode = 'list';
@@ -11,6 +20,7 @@
   let state = { last: null, bookmarks: [] };
   let requestId = 0;
   let versePages = null;
+  let tajweedOn = false;
   const arabicDigits = (number) => String(number).replace(/\d/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
   const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json${folder === 'pages' ? '?v=20' : ''}`;
 
@@ -21,6 +31,12 @@
       state.bookmarks = Array.isArray(saved.bookmarks) ? saved.bookmarks.filter(key => /^\d{1,3}:\d{1,3}$/.test(key)) : [];
     }
   } catch (error) {}
+  try { tajweedOn = localStorage.getItem(tajweedKey) === 'on'; } catch (error) {}
+  function updateTajweedButtons() {
+    $('quran-tajweed-off').setAttribute('aria-pressed', String(!tajweedOn));
+    $('quran-tajweed-on').setAttribute('aria-pressed', String(tajweedOn));
+  }
+  updateTajweedButtons();
   function save() { try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (error) {} }
   function setStatus(message, target = 'quran-reader-status') { $(target).textContent = message; }
   async function getJson(url) {
@@ -164,6 +180,44 @@
       } while (headingSize >= 13);
     }
   }
+  async function verifiedTajweed(data, annotation) {
+    if (!annotation || annotation.page !== data.page || !Array.isArray(annotation.tokens) ||
+        !/^[a-f0-9]{64}$/.test(annotation.textHash) || !globalThis.crypto?.subtle) return null;
+    const material = data.lines.flat().map(([kind, text, key]) => `${kind}\u0001${text}\u0001${key}`).join('\u0000');
+    const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(material));
+    const actual = Array.from(new Uint8Array(hash), byte => byte.toString(16).padStart(2, '0')).join('');
+    if (actual !== annotation.textHash) return null;
+    const tokens = new Map();
+    for (const [line, item, segments] of annotation.tokens) {
+      const token = data.lines[line]?.[item];
+      if (!token || !['word', 'bismillah'].includes(token[0]) || !Array.isArray(segments)) return null;
+      const length = Array.from(token[1]).length;
+      let previous = 0;
+      for (const [start, end, rule] of segments) {
+        if (!Number.isInteger(start) || !Number.isInteger(end) || start < previous ||
+            end <= start || end > length || !Object.prototype.hasOwnProperty.call(tajweedClasses, rule)) return null;
+        previous = end;
+      }
+      const key = `${line}:${item}`;
+      if (tokens.has(key)) return null;
+      tokens.set(key, segments);
+    }
+    return tokens;
+  }
+  function appendTajweed(span, word, segments) {
+    const characters = Array.from(word);
+    let previous = 0;
+    for (const [start, end, rule] of segments) {
+      if (start > previous) span.append(document.createTextNode(characters.slice(previous, start).join('')));
+      const colour = document.createElement('span');
+      colour.className = `tajweed-${tajweedClasses[rule]}`;
+      colour.textContent = characters.slice(start, end).join('');
+      span.append(colour);
+      previous = end;
+    }
+    if (previous < characters.length) span.append(document.createTextNode(characters.slice(previous).join('')));
+    if (span.textContent !== word) span.textContent = word;
+  }
   async function renderPage(token = ++requestId, preferredAyah = null) {
     const sheet = $('quran-mushaf-page');
     sheet.replaceChildren();
@@ -172,7 +226,13 @@
     $('quran-next-page-bottom').disabled = page === 604;
     setStatus(`Memuatkan halaman ${page}…`);
     try {
-      const data = await getJson(path('pages', page));
+      const requestedPage = page;
+      const annotationPromise = tajweedOn
+        ? getJson(`./quran/tajweed/pages/${String(requestedPage).padStart(3, '0')}.json?v=24`).catch(() => null)
+        : Promise.resolve(null);
+      const data = await getJson(path('pages', requestedPage));
+      const annotation = await annotationPromise;
+      const tajweedTokens = tajweedOn ? await verifiedTajweed(data, annotation).catch(() => null) : null;
       if (token !== requestId || mode !== 'page') return;
       const verseKeys = data.lines.flatMap(line => line.map(([, , key]) => key).filter(key => /^\d+:\d+$/.test(key)));
       const pageSurahs = [...new Set(verseKeys.map(key => Number(key.split(':')[0])))];
@@ -186,12 +246,12 @@
       // The few pages with under 100 words should not stretch like a dense page.
       const wordCount = data.lines.flat().filter(([kind]) => kind === 'word').length;
       sheet.classList.toggle('is-compact', wordCount < 100);
-      for (const items of data.lines) {
+      for (const [lineIndex, items] of data.lines.entries()) {
         const line = document.createElement('div'); line.className = 'quran-page-line';
         const type = items[0]?.[0];
         if (type === 'surah_header') line.classList.add('quran-page-heading');
         if (type === 'bismillah') line.classList.add('quran-page-bismillah');
-        for (const [kind, word, verseKey, suraNumber] of items) {
+        for (const [itemIndex, [kind, word, verseKey, suraNumber]] of items.entries()) {
           if (kind === 'surah_header') {
             const heading = document.createElement('span');
             heading.textContent = `سُورَةُ ${chapter(suraNumber)?.[2] || word}`;
@@ -206,7 +266,9 @@
           } else {
             const span = document.createElement('span');
             span.className = kind === 'quarter' ? 'quran-page-quarter' : kind === 'sajdah' ? 'quran-page-sajdah' : 'quran-page-word';
-            span.textContent = kind === 'quarter' ? '۞' : word;
+            const segments = tajweedTokens?.get(`${lineIndex}:${itemIndex}`);
+            if (segments && (kind === 'word' || kind === 'bismillah')) appendTajweed(span, word, segments);
+            else span.textContent = kind === 'quarter' ? '۞' : word;
             if (kind === 'quarter') span.setAttribute('aria-label', 'Tanda suku hizb');
             if (kind === 'sajdah') span.setAttribute('aria-label', 'Tanda sujud tilawah');
             line.append(span);
@@ -219,7 +281,8 @@
       const firstKey = verseKeys.find(key => key.startsWith(`${surah}:`));
       const savedKey = `${surah}:${preferredAyah}`;
       const currentAyah = preferredAyah && verseKeys.includes(savedKey) ? preferredAyah : Number(firstKey.split(':')[1]);
-      setStatus(''); updateLast(currentAyah);
+      setStatus(tajweedOn && !tajweedTokens ? 'Warna Tajweed tidak tersedia untuk halaman ini; teks asal dipaparkan.' : '');
+      updateLast(currentAyah);
       requestAnimationFrame(fitPageLines);
       document.fonts?.ready.then(fitPageLines);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
@@ -245,6 +308,15 @@
   $('quran-continue').addEventListener('click', () => { if (state.last) openSurah(state.last.surah, true); });
   $('quran-list-mode').addEventListener('click', () => switchMode('list'));
   $('quran-page-mode').addEventListener('click', () => switchMode('page'));
+  for (const [id, enabled] of [['quran-tajweed-off', false], ['quran-tajweed-on', true]]) {
+    $(id).addEventListener('click', () => {
+      if (tajweedOn === enabled) return;
+      tajweedOn = enabled;
+      try { localStorage.setItem(tajweedKey, enabled ? 'on' : 'off'); } catch (error) {}
+      updateTajweedButtons();
+      if (mode === 'page' && !$('quran-page-panel').hidden) renderPage();
+    });
+  }
   $('quran-translation-toggle').addEventListener('click', () => {
     const hidden = $('quran-list-panel').classList.toggle('quran-hide-translation');
     $('quran-translation-toggle').setAttribute('aria-pressed', String(!hidden));
