@@ -93,25 +93,24 @@ html[data-theme="midnight"] .quran-mushaf-page {
 .tajweed-iqlab { color:var(--tajweed-iqlab); }
 .tajweed-qalqalah { color:var(--tajweed-qalqalah); }
 .tajweed-silent { color:var(--tajweed-silent); }
-.quran-page-line { display:flex; flex-wrap:wrap; justify-content:flex-start; align-items:baseline; column-gap:.18em; width:100%; min-height:1.85em; font-size:32px; line-height:1.85; }
-.quran-page-line.quran-page-heading,.quran-page-line.quran-page-bismillah { justify-content:center; }
+.quran-page-flow { direction:rtl; text-align:right; font-size:32px; line-height:1.8; }
+.quran-page-line { direction:rtl; width:100%; font-size:32px; line-height:1.8; text-align:center; }
 .quran-page-heading { margin:0 0 3px; padding:0 8px; border-top:1px solid var(--accent); border-bottom:1px solid var(--accent); color:var(--primary); }
 .quran-page-bismillah { color:var(--primary); }
-.quran-page-word { flex:none; white-space:nowrap; }
-.quran-verse-marker { display:inline-grid; flex:none; place-items:center; align-self:baseline; position:relative; width:var(--verse-marker-size); height:var(--verse-marker-size); margin-inline:var(--verse-marker-gap); border:1px solid var(--verse-marker-ring); border-radius:var(--verse-marker-radius); background:var(--verse-marker-fill); color:var(--verse-marker-text); font-family:"UWA Naskh Arabic",serif; font-size:inherit; line-height:1; vertical-align:middle; }
+.quran-page-word { white-space:nowrap; }
+.quran-verse-end-pair { white-space:nowrap; }
+.quran-verse-marker { display:inline-grid; place-items:center; position:relative; width:var(--verse-marker-size); height:var(--verse-marker-size); margin-inline:var(--verse-marker-gap); border:1px solid var(--verse-marker-ring); border-radius:var(--verse-marker-radius); background:var(--verse-marker-fill); color:var(--verse-marker-text); font-family:"UWA Naskh Arabic",serif; font-size:inherit; line-height:1; vertical-align:middle; }
 .quran-verse-marker.three-digit { width:var(--verse-marker-three-digit-size); height:var(--verse-marker-three-digit-size); }
 .quran-verse-marker::before { content:""; position:absolute; inset:-2px; border:1px dotted var(--verse-marker-ornament); border-radius:inherit; pointer-events:none; }
 .quran-verse-marker span { position:relative; font-size:var(--verse-marker-digit-size); font-weight:700; line-height:1; }
 .quran-page-quarter { color:var(--primary-2); }
 .quran-page-sajdah { color:var(--primary-2); }
-.quran-mushaf-page.is-compact { min-height:0; justify-content:flex-start; }
-.quran-mushaf-page.is-compact .quran-page-line { justify-content:center; column-gap:.28em; min-height:1.7em; line-height:1.7; }
+.quran-mushaf-page.is-compact { min-height:0; }
 .quran-mushaf-page.is-compact .quran-page-folio { margin-top:12px; }
 .quran-page-folio { margin-top:8px; text-align:center; color:var(--muted); font-family:inherit; font-size:.8rem; }
 #allday-view button:focus-visible,#allday-view input:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
 @media (max-width:700px) { .quran-surah-list { grid-template-columns:1fr; } }
 @media (max-width:420px) { .quran-mushaf-page { padding:12px; } .quran-page-controls button { padding:5px 6px; font-size:.73rem; } }
-@media (max-width:360px) { .quran-page-line,.quran-mushaf-page.is-compact .quran-page-line { column-gap:.12em; } }
 @media (max-width:620px) {
   /* Reading is its own phone screen. Library and daily checklist retain the app layout. */
   body.quran-reading[data-current-view="allday"] .hero,
@@ -142,7 +141,7 @@ html[data-theme="midnight"] .quran-mushaf-page {
   .quran-page-controls button { min-height:44px; padding:7px 9px; font-size:.8rem; }
   .quran-page-controls-bottom { margin-top:10px; }
   .quran-mushaf-page {
-    display:flex; flex-direction:column; justify-content:flex-start;
+    display:block;
     width:calc(100% - 12px); min-height:max(460px,calc(100dvh - 220px - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
     margin:0 6px; padding:10px 9px;
   }

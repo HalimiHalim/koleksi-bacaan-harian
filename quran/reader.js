@@ -230,23 +230,35 @@
       // The few pages with under 100 words should not stretch like a dense page.
       const wordCount = data.lines.flat().filter(([kind]) => kind === 'word').length;
       sheet.classList.toggle('is-compact', wordCount < 100);
+      let flow = null;
+      let hasFlowToken = false;
       for (const [lineIndex, items] of data.lines.entries()) {
-        const line = document.createElement('div'); line.className = 'quran-page-line';
         const type = items[0]?.[0];
-        if (type === 'surah_header') line.classList.add('quran-page-heading');
-        if (type === 'bismillah') line.classList.add('quran-page-bismillah');
+        const structural = type === 'surah_header' || type === 'bismillah';
+        let line = null;
+        if (structural) {
+          flow = null;
+          hasFlowToken = false;
+          line = document.createElement('div');
+          line.className = `quran-page-line ${type === 'surah_header' ? 'quran-page-heading' : 'quran-page-bismillah'}`;
+          fragment.append(line);
+        } else if (!flow) {
+          flow = document.createElement('div');
+          flow.className = 'quran-page-flow';
+          fragment.append(flow);
+        }
         for (const [itemIndex, [kind, word, verseKey, suraNumber]] of items.entries()) {
+          let node;
           if (kind === 'surah_header') {
-            const heading = document.createElement('span');
-            heading.textContent = `سُورَةُ ${chapter(suraNumber)?.[2] || word}`;
-            line.append(heading);
+            node = document.createElement('span');
+            node.textContent = `سُورَةُ ${chapter(suraNumber)?.[2] || word}`;
           } else if (kind === 'end') {
             const marker = document.createElement('span'); marker.className = 'quran-verse-marker';
             marker.setAttribute('aria-label', `Akhir ayat ${verseKey}`);
             const ayahNumber = Number(verseKey.split(':')[1]);
             if (ayahNumber >= 100) marker.classList.add('three-digit');
             const digit = document.createElement('span'); digit.textContent = arabicDigits(ayahNumber);
-            marker.append(digit); line.append(marker);
+            marker.append(digit); node = marker;
           } else {
             const span = document.createElement('span');
             span.className = kind === 'quarter' ? 'quran-page-quarter' : kind === 'sajdah' ? 'quran-page-sajdah' : 'quran-page-word';
@@ -255,10 +267,23 @@
             else span.textContent = kind === 'quarter' ? '۞' : word;
             if (kind === 'quarter') span.setAttribute('aria-label', 'Tanda suku hizb');
             if (kind === 'sajdah') span.setAttribute('aria-label', 'Tanda sujud tilawah');
-            line.append(span);
+            node = span;
+          }
+          if (structural) line.append(node);
+          else {
+            const previous = kind === 'end' ? flow.lastElementChild : null;
+            if (previous) {
+              const pair = document.createElement('span');
+              pair.className = 'quran-verse-end-pair';
+              flow.replaceChild(pair, previous);
+              pair.append(previous, document.createTextNode(' '), node);
+            } else {
+              if (hasFlowToken) flow.append(document.createTextNode(' '));
+              flow.append(node);
+            }
+            hasFlowToken = true;
           }
         }
-        fragment.append(line);
       }
       const folio = document.createElement('div'); folio.className = 'quran-page-folio'; folio.textContent = arabicDigits(page);
       fragment.append(folio); sheet.replaceChildren(fragment);
