@@ -966,7 +966,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 }
 
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=242">
+<link rel="stylesheet" href="./quran/reader.css?v=25">
 </head>
 <body>
 <div class="shell">
@@ -1113,7 +1113,9 @@ body[data-current-view="reference"] #allday-view { display:none; }
             <div class="quran-settings-head"><strong>Tetapan Quran</strong><button type="button" id="quran-settings-close" aria-label="Tutup tetapan">×</button></div>
             <p class="quran-settings-section">Paparan · Bacaan</p>
             <div class="quran-settings-row"><span id="quran-mode-label">Mod Bacaan</span><div class="quran-mode" role="group" aria-labelledby="quran-mode-label"><button type="button" id="quran-list-mode" aria-pressed="true">List</button><button type="button" id="quran-page-mode" aria-pressed="false">Page</button></div></div>
+            <div class="quran-settings-row"><span id="quran-script-label">Script Quran</span><div class="quran-mode quran-script-options" role="group" aria-labelledby="quran-script-label"><button type="button" id="quran-script-uthmani" aria-pressed="true">Uthmani</button><button type="button" id="quran-script-simple" aria-pressed="false">Simple Arabic</button></div></div>
             <div class="quran-settings-row"><span id="quran-tajweed-label">Tajweed Colours</span><div class="quran-tajweed-options" role="group" aria-labelledby="quran-tajweed-label"><button type="button" id="quran-tajweed-off" aria-pressed="true">OFF</button><button type="button" id="quran-tajweed-on" aria-pressed="false">ON</button></div></div>
+            <p id="quran-tajweed-note" class="quran-script-note" hidden>Tidak tersedia untuk Simple Arabic.</p>
           </div>
         </div>
       </div>
@@ -3378,6 +3380,6 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/reader.js?v=242"></script>
+<script src="./quran/reader.js?v=25"></script>
 </body>
 </html>

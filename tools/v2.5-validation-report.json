@@ -1,0 +1,364 @@
+{
+  "allPages": [
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 2469
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 1893
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 858
+    }
+  ],
+  "interactions": [
+    {
+      "width": 320,
+      "switchMs": [
+        58,
+        69,
+        56
+      ],
+      "listContext": true,
+      "pageContext": true,
+      "persistence": true,
+      "tajweedRestores": true,
+      "rapidCancellation": true,
+      "listSurahs": 2,
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "switchMs": [
+        59,
+        54,
+        56
+      ],
+      "listContext": true,
+      "pageContext": true,
+      "persistence": true,
+      "tajweedRestores": true,
+      "rapidCancellation": true,
+      "listSurahs": 2,
+      "errors": 0
+    },
+    {
+      "width": 1280,
+      "switchMs": [
+        60,
+        53,
+        56
+      ],
+      "listContext": true,
+      "pageContext": true,
+      "persistence": true,
+      "tajweedRestores": true,
+      "rapidCancellation": true,
+      "listSurahs": 114,
+      "errors": 0
+    }
+  ],
+  "offline": [
+    {
+      "upgrade": false,
+      "freshDefault": true,
+      "offlinePage": true,
+      "offlineList": true,
+      "scriptPersists": true,
+      "tajweedRestores": true,
+      "cacheCount": 1,
+      "errors": 0
+    },
+    {
+      "upgrade": true,
+      "freshDefault": false,
+      "offlinePage": true,
+      "offlineList": true,
+      "scriptPersists": true,
+      "tajweedRestores": true,
+      "cacheCount": 1,
+      "errors": 0
+    }
+  ],
+  "performance": [
+    {
+      "version": "v242",
+      "medianNavigationMs": 125,
+      "medianUthmaniHeapBytes": 3958586,
+      "uthmaniNodes": 54,
+      "medianColdSwitchMs": null,
+      "medianWarmSwitchMs": null,
+      "trials": [
+        {
+          "nav": 208,
+          "uthmani": {
+            "heap": 3893150,
+            "nodes": 54
+          },
+          "simple": null,
+          "latencies": []
+        },
+        {
+          "nav": 156,
+          "uthmani": {
+            "heap": 3966882,
+            "nodes": 54
+          },
+          "simple": null,
+          "latencies": []
+        },
+        {
+          "nav": 116,
+          "uthmani": {
+            "heap": 3958586,
+            "nodes": 54
+          },
+          "simple": null,
+          "latencies": []
+        },
+        {
+          "nav": 115,
+          "uthmani": {
+            "heap": 3966278,
+            "nodes": 54
+          },
+          "simple": null,
+          "latencies": []
+        },
+        {
+          "nav": 125,
+          "uthmani": {
+            "heap": 3946014,
+            "nodes": 54
+          },
+          "simple": null,
+          "latencies": []
+        }
+      ]
+    },
+    {
+      "version": "v25",
+      "medianNavigationMs": 136,
+      "medianUthmaniHeapBytes": 3979652,
+      "uthmaniNodes": 54,
+      "simpleNodes": 32,
+      "medianColdSwitchMs": 5.8,
+      "medianWarmSwitchMs": 15.6,
+      "simpleResources": [
+        {
+          "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+          "bytes": 1836
+        }
+      ],
+      "trials": [
+        {
+          "nav": 136,
+          "uthmani": {
+            "heap": 3979652,
+            "nodes": 54
+          },
+          "simple": {
+            "heap": 3691131,
+            "nodes": 32,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+                "bytes": 1836
+              }
+            ]
+          },
+          "latencies": [
+            19.1,
+            15.2,
+            14.8
+          ]
+        },
+        {
+          "nav": 140,
+          "uthmani": {
+            "heap": 3959292,
+            "nodes": 54
+          },
+          "simple": {
+            "heap": 3650983,
+            "nodes": 32,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+                "bytes": 1836
+              }
+            ]
+          },
+          "latencies": [
+            4.5,
+            15.6,
+            15.7
+          ]
+        },
+        {
+          "nav": 114,
+          "uthmani": {
+            "heap": 3998236,
+            "nodes": 54
+          },
+          "simple": {
+            "heap": 3684167,
+            "nodes": 32,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+                "bytes": 1836
+              }
+            ]
+          },
+          "latencies": [
+            5.1,
+            15,
+            15.8
+          ]
+        },
+        {
+          "nav": 108,
+          "uthmani": {
+            "heap": 3986276,
+            "nodes": 54
+          },
+          "simple": {
+            "heap": 3683499,
+            "nodes": 32,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+                "bytes": 1836
+              }
+            ]
+          },
+          "latencies": [
+            5.8,
+            14.9,
+            15.8
+          ]
+        },
+        {
+          "nav": 159,
+          "uthmani": {
+            "heap": 3976624,
+            "nodes": 54
+          },
+          "simple": {
+            "heap": 3688747,
+            "nodes": 32,
+            "requests": [
+              {
+                "url": "http://127.0.0.1:8815/quran/scripts/simple/surah/001.json",
+                "bytes": 1836
+              }
+            ]
+          },
+          "latencies": [
+            21.7,
+            16,
+            15.3
+          ]
+        }
+      ]
+    }
+  ],
+  "reopenOffline": "PASS new tab after prior tab closed; Simple persists",
+  "baselineIntegrity": "PASS protected Quran data, fonts, tools and annotations unchanged; Page renderer body unchanged except routing",
+  "fontCmap": "PASS all 55 Simple code points in existing Noto Naskh",
+  "syntax": "PASS reader, SW, browser verifier and four inline scripts",
+  "securityLicense": "PASS no new remote runtime requests, secrets, tracking, scans or font files; raw and all 114 derived chunks preserve publisher notice",
+  "visualEvidence": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5",
+  "responsiveVisuals": "48 representative page screenshots and 6 settings screenshots captured; six overview sheets inspected plus full-size mobile/desktop samples",
+  "uthmaniScreenshotRegression": "PASS 24 same-driver paired captures at 320/390/1280: pixel-identical to V2.4.2"
+}

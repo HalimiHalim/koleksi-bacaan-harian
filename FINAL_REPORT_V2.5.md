@@ -1,0 +1,36 @@
+# V2.5 final report — Quran Script Options
+
+Release scope: **Uthmani + Simple Arabic**. IndoPak deferred due to unresolved dataset-specific redistribution licensing. No IndoPak files, implementation code, runtime fetch or UI option included. The identity adapter and separate rendering paths can support a licensed future script without rewriting Uthmani/Simple; no V2.5.1 work started.
+
+1. **V2.4.2 baseline HEAD:** c3daddc788c3ee4f054885ed5eeb40eaacf115fc; protected implementation a6b7faedba9d66ee9852879dac14a533705b36e6.
+2. **V2.5 commit:** pending release commit; all local quality gates passed.
+3. **Files changed:** index.html, service-worker.js, quran/reader.js/CSS, quran/SOURCES.md; added Simple raw snapshot + 114 chapter JSON + alignment report; builder/browser verifier/validation report; progress/source-audit/final-report documents. Existing Quran, translation, font, Tajweed assets and verifiers unchanged.
+4. **Script sources:** existing Tanzil Uthmani v1.1; new direct publisher [Tanzil Simple download](https://tanzil.net/download/) on 2026-09-30. Exact request/options/hash in quran/SOURCES.md.
+5. **Licenses:** Tanzil CC BY 3.0 with publisher verbatim/attribution/link/full-notice conditions. Complete notice retained in raw source and all 114 derived files. Existing in-app Tanzil attribution retained. Existing font SIL OFL 1.1; QCF layout MIT and CPF annotation CC BY 4.0 unchanged.
+6. **Exact representations:** Uthmani v1.1; Simple (Imla’ei) v1.1 **with diacritics**, pause marks, sajdah and tatweel enabled; rub-el-hizb option disabled. No text conversion/normalization.
+7. **Fonts:** existing Noto Naskh Arabic variable TTF, 307,592 bytes; full 55-code-point Simple cmap coverage. No added font bytes or unrelated typography changes.
+8. **Uthmani architecture:** unchanged List source and Page flow; Page body identical except script dispatch; hash-checked existing Tajweed engine. Twenty-four same-driver screenshot pairs are pixel-identical to V2.4.2.
+9. **IndoPak architecture:** deferred; no assets/code/UI/runtime API. Future integration requires confirmed dataset/font licenses and all alignment gates.
+10. **Simple architecture:** lazy immutable per-surah dataset, capped eight-chapter in-memory cache, stable ayah identities, plain RTL Unicode text. No QCF word projection.
+11. **List integration:** full 114-surah/6236-ayah exact rendered text checked for each script; identity, numbering, translations, selected ayah/bookmarks and navigation preserved. Switching edits text in place and maintains visible scroll anchor.
+12. **Page integration:** all 604 existing page identities/end-marker assignments; separate whole-verse continuous RTL 32px Simple flow, heading/basmalah structure and themed ayah markers. All Uthmani words and special marks unchanged. Source sajdah/waqf retained in Simple; QCF quarter tokens not projected.
+13. **Persistence:** validated script field in existing reader state; fresh default Uthmani. Settings close, navigation, List/Page, reload and close/reopen in new offline tab passed.
+14. **Tajweed:** Uthmani existing OFF/ON exact mapping; Simple disabled/unavailable and zero colour spans; Uthmani preference survives and restores ON. No offset heuristics or extra mappings.
+15. **Counts per script:** 114 surahs / 6236 ayat each; zero missing/duplicate/extra/empty identities or malformed/unexpected Unicode strings. Both preserve 15 sajdah signs. Actual intro basmalah count is 112; baseline verifier's printed “111” is a reporting typo, its asserted set is 112. Surahs 95/97 source initial shadda preserved.
+16. **Page validation:** 5,436 renders = 604 pages × 3 widths × Uthmani OFF/ON plus Simple. Zero mismatches, marker-order errors, overflow, clipped containers or console/page errors.
+17. **320px:** 604 pages for each path pass; settings readable and all eight representative pages captured/inspected; dense pages grow vertically.
+18. **390px:** same 604-page coverage, switching/navigation/state/offline passes, representative screenshots inspected.
+19. **Desktop 1280px:** same 604-page coverage; full List sweep for both scripts; screenshots inspected, font/RTL alignment correct.
+20. **Performance/data:** Simple raw 1,353,105 bytes + runtime chunks 1,508,826 + audit alignment report 67,743 = 2,929,674 added data bytes. Only runtime chunks load on demand; no Simple requests during default Uthmani startup. Largest chunk 107,302 bytes; Page 1 requires 1,836-byte chapter. Reader JS +8,499 bytes uncompressed, font +0. Five-run local medians: initial navigation 125→136ms; default Page 1 DOM 54→54 nodes; heap ~3.96→3.98MB. Script render switch median 5.8ms cold / 15.6ms warm (RAF-scheduled local sample); UI interaction measurements 53–69ms. Simple maximum page DOM 166, Uthmani OFF 253 / ON 378.
+21. **PWA/offline:** fresh install default, V2.4.2→V2.5 cache upgrade, single current cache, Simple offline Page/List reload/reopen, Uthmani return and restored colours all passed on previously visited assets.
+22. **Console:** zero errors in full sweeps, List/switching, fresh/upgrade/offline and reopen tests. Production pending.
+23. **Local HEAD:** c3daddc788c3ee4f054885ed5eeb40eaacf115fc before release commit.
+24. **origin/main:** same fetched baseline before release push.
+25. **Vercel:** existing project; baseline reports deployment success; V2.5 deployment pending.
+26. **Production URL:** https://koleksi-bacaan-harian.vercel.app/ (existing project, no new Vercel project).
+27. **Working tree:** fully locally validated V2.5 changes, pending release commit.
+28. **Progress ledger:** CODEX_PROGRESS_V2.5.md records milestones 0–19 VERIFIED; milestone 20 IN PROGRESS.
+29. **Deferred option:** IndoPak due insufficiently confirmed redistribution license; no temporary approximation or disabled card. Simple Tajweed unsupported for V2.5; compact text selector used without previews.
+30. **Limitations:** Simple whole verses are assigned to existing end-marker pages, so printed word/line pagination is not promised; offline requires prior online visit for applicable lazy assets; physical iPhone Safari unavailable for testing. All responsive tests used Chrome at 320/390/1280. No next-version work started.
+
+Validation detail: tools/v2.5-validation-report.json and quran/scripts/script-alignment-report.json. Screenshot evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.5. Reproduce data checks with `python3 tools/build_quran_scripts.py --verify`, existing Quran and Tajweed verifiers. Full browser sweep: serve checkout on port 8815, run `node tools/verify_quran_scripts_browser.cjs` with Playwright available via NODE_PATH; QURAN_QA_URL/QURAN_QA_OUTPUT can override server/artifact directory.

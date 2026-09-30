@@ -17,7 +17,7 @@
   let surah = 0;
   let mode = 'list';
   let page = 1;
-  let state = { last: null, bookmarks: [], mode: 'list' };
+  let state = { last: null, bookmarks: [], mode: 'list', script: 'uthmani' };
   let requestId = 0;
   let versePages = null;
   let tajweedOn = false;
@@ -30,12 +30,20 @@
       state.last = saved.last && Number.isInteger(saved.last.surah) ? saved.last : null;
       state.bookmarks = Array.isArray(saved.bookmarks) ? saved.bookmarks.filter(key => /^\d{1,3}:\d{1,3}$/.test(key)) : [];
       state.mode = ['list', 'page'].includes(saved.mode) ? saved.mode : state.last?.mode === 'page' ? 'page' : 'list';
+      state.script = saved.script === 'simple' ? 'simple' : 'uthmani';
     }
   } catch (error) {}
   try { tajweedOn = localStorage.getItem(tajweedKey) === 'on'; } catch (error) {}
   function updateTajweedButtons() {
     $('quran-tajweed-off').setAttribute('aria-pressed', String(!tajweedOn));
     $('quran-tajweed-on').setAttribute('aria-pressed', String(tajweedOn));
+    const unsupported = state.script !== 'uthmani';
+    $('quran-tajweed-off').disabled = unsupported;
+    $('quran-tajweed-on').disabled = unsupported;
+    $('quran-tajweed-note').hidden = !unsupported;
+    for (const script of ['uthmani', 'simple']) {
+      $(`quran-script-${script}`).setAttribute('aria-pressed', String(state.script === script));
+    }
   }
   updateTajweedButtons();
   function save() { try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (error) {} }
@@ -44,6 +52,34 @@
     const response = await fetch(url);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return response.json();
+  }
+  // Script data is keyed by stable ayah identities, never by Uthmani character
+  // offsets or QCF word positions. Keep a small, lazy per-surah memory cache.
+  const simpleChapters = new Map();
+  async function simpleChapter(number) {
+    if (simpleChapters.has(number)) return simpleChapters.get(number);
+    const data = await getJson(`./quran/scripts/simple/surah/${String(number).padStart(3, '0')}.json`);
+    if (data.surah !== number || data.verses?.length !== chapter(number)?.[3] ||
+        data.verses.some(([ayah, text], i) => ayah !== i + 1 || typeof text !== 'string' || !text)) {
+      throw new Error('Invalid script identities');
+    }
+    simpleChapters.set(number, data);
+    if (simpleChapters.size > 8) simpleChapters.delete(simpleChapters.keys().next().value);
+    return data;
+  }
+  async function selectedChapter(number, script = state.script) {
+    const original = await getJson(path('surah', number));
+    if (script === 'uthmani') return original;
+    const simple = await simpleChapter(number);
+    return { ...original, verses: original.verses.map(([ayah, , meaning]) => [ayah, simple.verses[ayah - 1][1], meaning]) };
+  }
+  function simpleVerse(data, ayah) {
+    const text = data.verses[ayah - 1][1];
+    if (ayah !== 1 || !data.bismillah) return text;
+    if (!text.startsWith(data.bismillah + ' ')) throw new Error('Invalid basmalah');
+    // Display the original prefix as a separate structural block; the stored
+    // source verse remains complete and unchanged, including 95/97's shadda.
+    return text.slice(data.bismillah.length + 1);
   }
   function chapter(number) { return chapters[number - 1]; }
   function showArea(area) {
@@ -130,7 +166,7 @@
     setStatus('Memuatkan ayat…');
     if (mode === 'page') { await renderPage(token, resume ? last?.ayah : null); return; }
     try {
-      const data = await getJson(path('surah', number));
+      const data = await selectedChapter(number);
       if (token !== requestId) return;
       const fragment = document.createDocumentFragment();
       if (number !== 1 && number !== 9) {
@@ -203,6 +239,7 @@
     if (span.textContent !== word) span.textContent = word;
   }
   async function renderPage(token = ++requestId, preferredAyah = null) {
+    if (state.script === 'simple') return renderSimplePage(token, preferredAyah);
     const sheet = $('quran-mushaf-page');
     sheet.replaceChildren();
     $('quran-page-counter-bottom').textContent = `${page} / 604`;
@@ -294,6 +331,117 @@
       updateLast(currentAyah);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
   }
+  async function renderSimplePage(token, preferredAyah) {
+    const sheet = $('quran-mushaf-page');
+    sheet.replaceChildren();
+    const requestedPage = page;
+    $('quran-page-counter-bottom').textContent = `${page} / 604`;
+    $('quran-prev-page-bottom').disabled = page === 1;
+    $('quran-next-page-bottom').disabled = page === 604;
+    setStatus(`Memuatkan halaman ${page}…`);
+    try {
+      const data = await getJson(path('pages', requestedPage));
+      // End markers are the app's authoritative verse-to-page identity map.
+      // Whole Simple verses belong to that page; no QCF word alignment implied.
+      const items = data.lines.flat();
+      const keys = items.filter(([kind]) => kind === 'end').map(([, , key]) => key);
+      const numbers = [...new Set(keys.map(key => Number(key.split(':')[0])))];
+      const scripts = new Map(await Promise.all(numbers.map(async number => [number, await simpleChapter(number)])));
+      if (token !== requestId || mode !== 'page' || state.script !== 'simple') return;
+      if (!numbers.includes(surah)) surah = numbers[0];
+      const names = numbers.map(number => chapter(number)[1]);
+      $('quran-reader-title').textContent = numbers.length === 1 ? names[0] : `Halaman ${page}`;
+      $('quran-reader-arabic-title').textContent = numbers.map(number => chapter(number)[2]).join(' · ');
+      $('quran-reader-meta').textContent = `Halaman ${page} · ${names.join(' · ')}`;
+      const fragment = document.createDocumentFragment();
+      sheet.classList.toggle('is-compact', keys.reduce((count, key) => {
+        const [s, a] = key.split(':').map(Number);
+        return count + simpleVerse(scripts.get(s), a).split(' ').length;
+      }, 0) < 100);
+      let flow = null;
+      for (const [kind, word, key, number] of items) {
+        if (kind === 'surah_header' || kind === 'bismillah') {
+          flow = null;
+          const line = document.createElement('div');
+          line.className = `quran-page-line ${kind === 'surah_header' ? 'quran-page-heading' : 'quran-page-bismillah'}`;
+          const span = document.createElement('span');
+          span.textContent = kind === 'surah_header'
+            ? `سُورَةُ ${chapter(number)?.[2] || word}` : scripts.get(number).bismillah;
+          line.append(span); fragment.append(line);
+        } else if (kind === 'end') {
+          if (!flow) {
+            flow = document.createElement('div'); flow.className = 'quran-page-flow'; fragment.append(flow);
+          }
+          const [s, a] = key.split(':').map(Number);
+          const verse = document.createElement('span');
+          verse.className = 'quran-simple-verse'; verse.dataset.verseKey = key;
+          const words = simpleVerse(scripts.get(s), a).split(' ');
+          const last = words.pop();
+          if (words.length) verse.append(document.createTextNode(words.join(' ') + ' '));
+          const pair = document.createElement('span'); pair.className = 'quran-verse-end-pair';
+          pair.append(document.createTextNode(last + ' '));
+          const marker = document.createElement('span'); marker.className = 'quran-verse-marker';
+          if (a >= 100) marker.classList.add('three-digit');
+          marker.setAttribute('aria-label', `Akhir ayat ${key}`);
+          const digit = document.createElement('span'); digit.textContent = arabicDigits(a);
+          marker.append(digit); pair.append(marker); verse.append(pair);
+          if (flow.childNodes.length) flow.append(document.createTextNode(' '));
+          flow.append(verse);
+        }
+      }
+      const folio = document.createElement('div'); folio.className = 'quran-page-folio'; folio.textContent = arabicDigits(page);
+      fragment.append(folio); sheet.replaceChildren(fragment);
+      const current = `${surah}:${preferredAyah}`;
+      const first = keys.find(key => key.startsWith(`${surah}:`));
+      setStatus('');
+      updateLast(preferredAyah && keys.includes(current) ? preferredAyah : Number(first.split(':')[1]));
+    } catch (error) {
+      if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.');
+    }
+  }
+  let scriptSwitchPending = false;
+  async function switchScript(next) {
+    if (!['uthmani', 'simple'].includes(next) || !surah) return;
+    if (next === state.script) {
+      if (scriptSwitchPending) { ++requestId; scriptSwitchPending = false; setStatus(''); }
+      return;
+    }
+    scriptSwitchPending = true;
+    const token = ++requestId;
+    const ayah = state.last?.ayah || 1;
+    const anchor = mode === 'list' ? [...$('quran-verse-list').querySelectorAll('.quran-verse')]
+      .find(node => node.getBoundingClientRect().bottom > 80) : null;
+    const anchorTop = anchor?.getBoundingClientRect().top;
+    setStatus('Memuatkan script…');
+    try {
+      let listData;
+      if (mode === 'list') listData = await selectedChapter(surah, next);
+      else if (next === 'simple') {
+        const data = await getJson(path('pages', page));
+        const numbers = [...new Set(data.lines.flat().filter(([kind]) => kind === 'end').map(([, , key]) => Number(key.split(':')[0])))];
+        await Promise.all(numbers.map(simpleChapter));
+      }
+      if (token !== requestId) return;
+      state.script = next; save(); updateTajweedButtons();
+      if (mode === 'page') await renderPage(token, ayah);
+      else if (!$('quran-verse-list').querySelector('.quran-verse')) await openSurah(surah, true, 'list');
+      else {
+        const first = listData.verses[0][1].split(' ');
+        const basmalah = $('quran-verse-list').querySelector('.quran-list-bismillah');
+        if (basmalah) basmalah.textContent = first.slice(0, 4).join(' ');
+        for (const [a, text] of listData.verses) {
+          $(`quran-ayah-${a}`).querySelector('.quran-verse-arabic').textContent =
+            a === 1 && surah !== 1 && surah !== 9 ? text.split(' ').slice(4).join(' ') : text;
+        }
+        setStatus('');
+        if (anchor) window.scrollBy(0, anchor.getBoundingClientRect().top - anchorTop);
+      }
+    } catch (error) {
+      if (token === requestId) setStatus('Script belum tersedia. Sambung internet dan cuba lagi.');
+    } finally {
+      if (token === requestId) scriptSwitchPending = false;
+    }
+  }
   async function switchMode(next) {
     if (!surah || next === mode) return;
     const token = ++requestId; setMode(next);
@@ -336,9 +484,12 @@
   });
   $('quran-list-mode').addEventListener('click', () => switchMode('list'));
   $('quran-page-mode').addEventListener('click', () => switchMode('page'));
+  for (const script of ['uthmani', 'simple']) {
+    $(`quran-script-${script}`).addEventListener('click', () => switchScript(script));
+  }
   for (const [id, enabled] of [['quran-tajweed-off', false], ['quran-tajweed-on', true]]) {
     $(id).addEventListener('click', () => {
-      if (tajweedOn === enabled) return;
+      if (state.script !== 'uthmani' || tajweedOn === enabled) return;
       tajweedOn = enabled;
       try { localStorage.setItem(tajweedKey, enabled ? 'on' : 'off'); } catch (error) {}
       updateTajweedButtons();

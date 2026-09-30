@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v242-quran-flow";
+const CACHE_NAME = "uwa-bacaan-harian-v25-quran-scripts";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -6,8 +6,8 @@ const APP_SHELL = [
   INDEX_URL,
   "./manifest.webmanifest",
   "./fonts/NotoNaskhArabic-wght.ttf",
-  "./quran/reader.css?v=242",
-  "./quran/reader.js?v=242",
+  "./quran/reader.css?v=25",
+  "./quran/reader.js?v=25",
   "./quran/chapters.json",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
