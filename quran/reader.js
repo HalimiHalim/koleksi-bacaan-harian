@@ -17,7 +17,7 @@
   let surah = 0;
   let mode = 'list';
   let page = 1;
-  let state = { last: null, bookmarks: [] };
+  let state = { last: null, bookmarks: [], mode: 'list' };
   let requestId = 0;
   let versePages = null;
   let tajweedOn = false;
@@ -29,6 +29,7 @@
     if (saved && typeof saved === 'object') {
       state.last = saved.last && Number.isInteger(saved.last.surah) ? saved.last : null;
       state.bookmarks = Array.isArray(saved.bookmarks) ? saved.bookmarks.filter(key => /^\d{1,3}:\d{1,3}$/.test(key)) : [];
+      state.mode = ['list', 'page'].includes(saved.mode) ? saved.mode : state.last?.mode === 'page' ? 'page' : 'list';
     }
   } catch (error) {}
   try { tajweedOn = localStorage.getItem(tajweedKey) === 'on'; } catch (error) {}
@@ -46,6 +47,7 @@
   }
   function chapter(number) { return chapters[number - 1]; }
   function showArea(area) {
+    if (area !== 'reader') closeSettings();
     $('quran-routine').hidden = area !== 'routine';
     $('quran-library').hidden = area !== 'library';
     $('quran-reader').hidden = area !== 'reader';
@@ -105,6 +107,8 @@
   }
   function setMode(next) {
     mode = next;
+    state.mode = next;
+    save();
     $('quran-list-mode').setAttribute('aria-pressed', String(mode === 'list'));
     $('quran-page-mode').setAttribute('aria-pressed', String(mode === 'page'));
     $('quran-list-panel').hidden = mode !== 'list';
@@ -120,7 +124,7 @@
     $('quran-reader-arabic-title').textContent = item[2];
     $('quran-reader-meta').textContent = `Surah ${number} · ${item[3]} ayat · ${item[6] === 'makkah' ? 'Makkiyyah' : 'Madaniyyah'}`;
     page = resume && last?.surah === number && Number.isInteger(last.page) ? Math.max(1, Math.min(604, last.page)) : item[4];
-    setMode(requestedMode || (resume && last?.surah === number && last.mode === 'page' ? 'page' : 'list'));
+    setMode(requestedMode || state.mode);
     $('quran-verse-list').replaceChildren(); $('quran-mushaf-page').replaceChildren();
     showArea('reader');
     setStatus('Memuatkan ayat…');
@@ -159,26 +163,6 @@
         requestAnimationFrame(() => current?.scrollIntoView({ block: 'start' }));
       }
     } catch (error) { if (token === requestId) setStatus('Ayat belum tersedia. Semak sambungan internet dan cuba buka surah ini semula.'); }
-  }
-  function fitPageLines() {
-    const sheet = $('quran-mushaf-page');
-    const lines = [...sheet.querySelectorAll('.quran-page-line')];
-    const verseLines = lines.filter(line => !line.classList.contains('quran-page-heading') && !line.classList.contains('quran-page-bismillah'));
-    let size = 28;
-    // Full Uthmani marks can make dense lines wider on 320px phones.
-    while (true) {
-      for (const line of verseLines) line.style.fontSize = `${size}px`;
-      if (verseLines.every(line => line.scrollWidth <= line.clientWidth + 1) || size <= 11) break;
-      size -= 0.5;
-    }
-    for (const line of lines.filter(item => !verseLines.includes(item))) {
-      let headingSize = Math.min(24, size + 2);
-      do {
-        line.style.fontSize = `${headingSize}px`;
-        if (line.scrollWidth <= line.clientWidth + 1) break;
-        headingSize -= 1;
-      } while (headingSize >= 13);
-    }
   }
   async function verifiedTajweed(data, annotation) {
     if (!annotation || annotation.page !== data.page || !Array.isArray(annotation.tokens) ||
@@ -283,13 +267,12 @@
       const currentAyah = preferredAyah && verseKeys.includes(savedKey) ? preferredAyah : Number(firstKey.split(':')[1]);
       setStatus(tajweedOn && !tajweedTokens ? 'Warna Tajweed tidak tersedia untuk halaman ini; teks asal dipaparkan.' : '');
       updateLast(currentAyah);
-      requestAnimationFrame(fitPageLines);
-      document.fonts?.ready.then(fitPageLines);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
   }
   async function switchMode(next) {
     if (!surah || next === mode) return;
     const token = ++requestId; setMode(next);
+    window.scrollTo(0, 0);
     if (next === 'page') {
       try {
         versePages ||= await getJson('./quran/verse-pages.json');
@@ -306,6 +289,26 @@
   $('quran-search').addEventListener('input', event => renderChapters(event.target.value));
   $('quran-surah-list').addEventListener('click', event => { const button = event.target.closest('[data-surah]'); if (button) openSurah(Number(button.dataset.surah)); });
   $('quran-continue').addEventListener('click', () => { if (state.last) openSurah(state.last.surah, true); });
+  const settings = $('quran-settings');
+  const settingsToggle = $('quran-settings-toggle');
+  function closeSettings(returnFocus = false) {
+    settings.hidden = true;
+    settingsToggle.setAttribute('aria-expanded', 'false');
+    if (returnFocus) settingsToggle.focus();
+  }
+  settingsToggle.addEventListener('click', () => {
+    const opening = settings.hidden;
+    settings.hidden = !opening;
+    settingsToggle.setAttribute('aria-expanded', String(opening));
+    if (opening) $('quran-settings-close').focus();
+  });
+  $('quran-settings-close').addEventListener('click', () => closeSettings(true));
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.quran-settings-control') && !settings.hidden) closeSettings();
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !settings.hidden) closeSettings(true);
+  });
   $('quran-list-mode').addEventListener('click', () => switchMode('list'));
   $('quran-page-mode').addEventListener('click', () => switchMode('page'));
   for (const [id, enabled] of [['quran-tajweed-off', false], ['quran-tajweed-on', true]]) {
@@ -342,5 +345,4 @@
       verse.classList.add('is-current'); updateLast(Number(verse.dataset.ayah));
     }
   });
-  new ResizeObserver(() => { if (mode === 'page' && !$('quran-page-panel').hidden) fitPageLines(); }).observe(root);
 })();

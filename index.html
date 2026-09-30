@@ -966,7 +966,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 }
 
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=24">
+<link rel="stylesheet" href="./quran/reader.css?v=241">
 </head>
 <body>
 <div class="shell">
@@ -1107,17 +1107,20 @@ body[data-current-view="reference"] #allday-view { display:none; }
       <div class="quran-reader-topbar">
         <button type="button" id="quran-back" class="quran-back" aria-label="Kembali ke senarai surah"><span aria-hidden="true">‹</span><span class="quran-back-label">Semua surah</span></button>
         <div class="quran-reader-head"><div><span class="quran-eyebrow" id="quran-reader-meta"></span><h2 id="quran-reader-title"></h2></div><span lang="ar" dir="rtl" id="quran-reader-arabic-title"></span></div>
-        <span class="quran-reader-topbar-spacer" aria-hidden="true"></span>
+        <div class="quran-settings-control">
+          <button type="button" id="quran-settings-toggle" class="quran-settings-toggle" aria-label="Tetapan Quran" aria-haspopup="dialog" aria-expanded="false" aria-controls="quran-settings" title="Tetapan Quran"><span aria-hidden="true">⚙</span></button>
+          <div id="quran-settings" class="quran-settings" role="dialog" aria-label="Tetapan Quran" hidden>
+            <div class="quran-settings-head"><strong>Tetapan Quran</strong><button type="button" id="quran-settings-close" aria-label="Tutup tetapan">×</button></div>
+            <p class="quran-settings-section">Paparan · Bacaan</p>
+            <div class="quran-settings-row"><span id="quran-mode-label">Mod Bacaan</span><div class="quran-mode" role="group" aria-labelledby="quran-mode-label"><button type="button" id="quran-list-mode" aria-pressed="true">List</button><button type="button" id="quran-page-mode" aria-pressed="false">Page</button></div></div>
+            <div class="quran-settings-row"><span id="quran-tajweed-label">Tajweed Colours</span><div class="quran-tajweed-options" role="group" aria-labelledby="quran-tajweed-label"><button type="button" id="quran-tajweed-off" aria-pressed="true">OFF</button><button type="button" id="quran-tajweed-on" aria-pressed="false">ON</button></div></div>
+          </div>
+        </div>
       </div>
-      <div class="quran-mode" role="group" aria-label="Mod bacaan"><button type="button" id="quran-list-mode" aria-pressed="true">List View</button><button type="button" id="quran-page-mode" aria-pressed="false">Page View</button></div>
       <p id="quran-reader-status" class="app-feedback" role="status" aria-live="polite"></p>
       <div id="quran-list-panel"><p class="quran-mode-hint">Teks Arab dan terjemahan Melayu · ketik ayat untuk simpan tempat bacaan.</p><button type="button" id="quran-translation-toggle" class="quran-translation-toggle" aria-pressed="true">Terjemahan Melayu ✓</button><div id="quran-verse-list"></div></div>
       <div id="quran-page-panel" hidden>
         <p class="quran-mode-hint">Halaman mushaf Madinah · teks Arab sahaja</p>
-        <div class="quran-tajweed-setting" role="group" aria-label="Tajweed Colours">
-          <span>Tajweed Colours</span>
-          <div class="quran-tajweed-options"><button type="button" id="quran-tajweed-off" aria-pressed="true">OFF</button><button type="button" id="quran-tajweed-on" aria-pressed="false">ON</button></div>
-        </div>
         <div id="quran-mushaf-page" class="quran-mushaf-page" lang="ar" dir="rtl"></div>
         <div class="quran-page-controls quran-page-controls-bottom"><button type="button" id="quran-next-page-bottom" aria-label="Halaman seterusnya">← Seterusnya</button><span id="quran-page-counter-bottom"></span><button type="button" id="quran-prev-page-bottom" aria-label="Halaman sebelumnya">Sebelumnya →</button></div>
       </div>
@@ -3375,6 +3378,6 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/reader.js?v=24"></script>
+<script src="./quran/reader.js?v=241"></script>
 </body>
 </html>
