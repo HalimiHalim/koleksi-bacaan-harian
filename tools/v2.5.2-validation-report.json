@@ -1098,5 +1098,187 @@
   },
   "dataChanges": false,
   "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5.2",
-  "production": "PENDING"
+  "production": {
+    "status": "VERIFIED",
+    "implementationCommit": "bf28b0a7173b6b61835e6e975b1b27f70f34234e",
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "vercel": "success / Deployment has completed",
+    "deployment": 6828857337,
+    "mobileSmoke": [
+      {
+        "width": 320,
+        "tajweed": "off",
+        "page": 7,
+        "font": 17.75,
+        "frameHeight": 700,
+        "contentHeight": 651.4375,
+        "sparePercent": 3.9177728613569274,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 320,
+        "tajweed": "off",
+        "page": 12,
+        "font": 18.75,
+        "frameHeight": 700,
+        "contentHeight": 650.03125,
+        "sparePercent": 4.125184365781709,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 320,
+        "tajweed": "on",
+        "page": 7,
+        "font": 17.75,
+        "frameHeight": 700,
+        "contentHeight": 651.4375,
+        "sparePercent": 3.9177728613569274,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 320,
+        "tajweed": "on",
+        "page": 12,
+        "font": 18.75,
+        "frameHeight": 700,
+        "contentHeight": 650.03125,
+        "sparePercent": 4.125184365781709,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 390,
+        "tajweed": "off",
+        "page": 7,
+        "font": 19.75,
+        "frameHeight": 700,
+        "contentHeight": 644.46875,
+        "sparePercent": 4.94561209439528,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 390,
+        "tajweed": "off",
+        "page": 12,
+        "font": 21.25,
+        "frameHeight": 700,
+        "contentHeight": 650.03125,
+        "sparePercent": 4.125184365781709,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 390,
+        "tajweed": "on",
+        "page": 7,
+        "font": 19.75,
+        "frameHeight": 700,
+        "contentHeight": 644.46875,
+        "sparePercent": 4.94561209439528,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      },
+      {
+        "width": 390,
+        "tajweed": "on",
+        "page": 12,
+        "font": 21.25,
+        "frameHeight": 700,
+        "contentHeight": 650.03125,
+        "sparePercent": 4.125184365781709,
+        "errors": 0,
+        "noOverflow": true,
+        "localMetricsExact": true
+      }
+    ],
+    "desktopPageComparisons": 18,
+    "offline": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "upgrade": false,
+      "fittedFontOfflineMatchesOnline": true,
+      "cachedAssetsExact": true,
+      "cache": [
+        "uwa-bacaan-harian-v252-classic-mobile"
+      ],
+      "offline": [
+        "List Uthmani",
+        "Page Uthmani Tajweed",
+        "Classic OFF/ON",
+        "Simple Page"
+      ],
+      "reopenClassic": true,
+      "settingsAndBookmarksPreserved": true,
+      "errors": []
+    },
+    "settingsScripts": [
+      {
+        "width": 320,
+        "modeSwitches": true,
+        "classicSimpleFallback": true,
+        "classicRestores": true,
+        "simpleClassicDisabled": true,
+        "persistence": true,
+        "listPreserved": true,
+        "invalidSavedState": true,
+        "button": {
+          "w": 80.671875,
+          "h": 42
+        },
+        "errors": 0
+      },
+      {
+        "width": 390,
+        "modeSwitches": true,
+        "classicSimpleFallback": true,
+        "classicRestores": true,
+        "simpleClassicDisabled": true,
+        "persistence": true,
+        "listPreserved": true,
+        "invalidSavedState": true,
+        "button": {
+          "w": 92,
+          "h": 42
+        },
+        "errors": 0
+      },
+      {
+        "width": 1280,
+        "modeSwitches": true,
+        "classicSimpleFallback": true,
+        "classicRestores": true,
+        "simpleClassicDisabled": true,
+        "persistence": true,
+        "listPreserved": true,
+        "invalidSavedState": true,
+        "button": {
+          "w": 92,
+          "h": 42
+        },
+        "errors": 0
+      }
+    ],
+    "assetDataByteEquality": [
+      "index.html",
+      "service-worker.js",
+      "quran/reader.js?v=252",
+      "quran/reader.css?v=252",
+      "quran/pages/007.json?v=20",
+      "quran/pages/012.json?v=20",
+      "quran/tajweed/pages/007.json?v=24",
+      "quran/tajweed/pages/012.json?v=24",
+      "quran/scripts/simple/surah/002.json"
+    ],
+    "consoleErrors": 0
+  }
 }

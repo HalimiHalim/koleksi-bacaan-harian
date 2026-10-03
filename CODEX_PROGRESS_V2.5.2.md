@@ -2,6 +2,27 @@
 
 Date: 2026-10-03 Asia/Kuala_Lumpur
 
+## Final current status (supersedes historical checkpoints below)
+
+| Milestone | Status |
+|---|---|
+| 0 Baseline audit | VERIFIED |
+| 1 Width/height root cause | VERIFIED |
+| 2 Adaptive largest-safe fitter | VERIFIED |
+| 3 Page 7/12 visual targets | VERIFIED |
+| 4 Tajweed/order/marker regression | VERIFIED |
+| 5 All 604 mobile pages OFF/ON | VERIFIED |
+| 6 Font/spare distributions and flagged reviews | VERIFIED |
+| 7 Representative visuals | VERIFIED |
+| 8 Desktop Classic regression | VERIFIED |
+| 9 Modern Page regression | VERIFIED |
+| 10 Persistence/navigation/resize/font timing | VERIFIED |
+| 11 PWA/cache upgrade/offline | VERIFIED |
+| 12 Final local quality gate | VERIFIED |
+| 13 Main push/Vercel/production smoke | VERIFIED |
+
+Implementation commit: bf28b0a7173b6b61835e6e975b1b27f70f34234e, pushed to main and deployed. Final documentation closeout records these verified results; resolve its own hash with git HEAD/origin/main. Patch working tree clean after closeout, original user checkouts untouched. Physical iPhone/Safari was not available; phone-width Chrome/DPR3/font-delay/resize validation is documented honestly. Short viewports unable to fit at 11px scroll safely without clipping. No V2.6 or new feature work.
+
 - Baseline HEAD and freshly fetched origin/main: 9c0ae320ee639a778fc4fe80d0233e80c0e72e1b.
 - Branch: codex/v252-classic-mobile, reused attached managed worktree /Users/halimi_hanim/.codex/worktrees/v251-desktop-fix/Islamic App.
 - Baseline worktree clean; older user checkouts preserved.
@@ -68,3 +89,11 @@ Date: 2026-10-03 Asia/Kuala_Lumpur
 - Final upgrade/offline VERIFIED against latest assets: V2.5.1→v252, old cache removed, exact cached JS/CSS, offline fit sizes match online ON/OFF, cached List/Page/Classic/Simple, settings/bookmarks and new-tab Classic.
 - JS syntax/inline syntax and git diff --check VERIFIED. No data/font/source/script/palette mutations.
 - Milestones 0–12 VERIFIED. Milestone 13 PENDING: inspect final diff, commit/push/deploy/production smoke. No implementation gate remains.
+
+## Production closeout — VERIFIED
+- Implementation bf28b0a7173b6b61835e6e975b1b27f70f34234e pushed through existing main workflow; HEAD/origin/main equal before documentation closeout.
+- GitHub Vercel commit status success / Deployment has completed; Production deployment 6828857337 status success. URL https://koleksi-bacaan-harian.vercel.app/.
+- Classic pages 7/12 × 320/390 × OFF/ON: eight exact-local font/frame/content/spare matches, no overflow, paired markers and correct palette. Desktop Classic 1024/1280/1440 and modern Page 320/390/1280 retain baseline geometry/reading pixels; 18 regression/forced-colour comparisons passed.
+- Production settings/scripts/persistence passed at 320/390/1280; Classic↔Simple fallback/restoration, List, disabled Simple Classic and invalid-state normalization preserved; zero console/page errors.
+- Production offline passed with fitted fonts matching online ON/OFF and exact cached JS/CSS; cached List/Page/Classic/Simple, bookmarks/settings and offline new-tab Classic reopening. Only cache uwa-bacaan-harian-v252-classic-mobile.
+- Nine production assets/datasets byte-equal to local. All implementation/production quality gates complete; final report and JSON include full metrics and limits. Documentation-only closeout next; runtime unchanged since production verification.
