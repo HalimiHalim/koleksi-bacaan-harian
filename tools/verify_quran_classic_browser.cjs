@@ -5,7 +5,7 @@ const json=p=>JSON.parse(fs.readFileSync(path.join(root,p)));
 const reps=[1,2,303,420,531,534,535,537,597,604],chapters=json('quran/chapters.json');
 const classes={ghunnah:'ghunnah',hamzat_wasl:'silent',lam_shamsiyyah:'silent',silent:'silent',idghaam_ghunnah:'idgham',idghaam_no_ghunnah:'idgham',idghaam_mutajanisayn:'idgham',idghaam_mutaqaribayn:'idgham',idghaam_shafawi:'idgham',ikhfa:'ikhfa',ikhfa_shafawi:'ikhfa',iqlab:'iqlab',qalqalah:'qalqalah',madd_2:'madd',madd_246:'madd',madd_6:'madd',madd_munfasil:'madd',madd_muttasil:'madd'};
 (async()=>{const b=await chromium.launch({executablePath:process.env.QURAN_CHROME||'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',headless:true}),results=[];
-for(const width of [320,390,1280])for(const tajweed of ['off','on']){
+for(const width of (process.env.QURAN_QA_WIDTHS||'320,390,1280').split(',').map(Number))for(const tajweed of ['off','on']){
  const ctx=await b.newContext({viewport:{width,height:844},serviceWorkers:'block'}),p=await ctx.newPage(),errors=[];p.on('pageerror',e=>errors.push(e.message));p.on('console',m=>{if(m.type()==='error')errors.push(m.text())});await p.goto(url);await p.evaluate(tajweed=>{localStorage.setItem('uwa-quran-reader-v1',JSON.stringify({mode:'classic',script:'uthmani',last:{surah:1,ayah:1,page:1,mode:'classic'},bookmarks:[]}));localStorage.setItem('uwa-quran-tajweed-v1',tajweed)},tajweed);await p.reload();await p.locator('[data-app-view="allday"]').click();await p.locator('#quran-tab-library').click();await p.locator('#quran-continue').click();await p.evaluate(()=>document.fonts.ready);let minFont=28,maxFont=11,maxHeight=0;
  for(let n=1;n<=604;n++){
   await p.waitForFunction(n=>document.querySelector('#quran-classic-page .quran-page-folio')?.textContent===String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[+d])&&document.querySelector('#quran-reader-status').textContent===''&&[...document.querySelectorAll('#quran-classic-page .quran-classic-line')].every(e=>e.style.fontSize),n);
@@ -18,6 +18,8 @@ for(const width of [320,390,1280])for(const tajweed of ['off','on']){
    colors:[...sheet.querySelectorAll('[class^="tajweed-"]')].map(e=>[e.className,e.textContent]),
    quarters:sheet.querySelectorAll('.quran-page-quarter').length,sajdahs:sheet.querySelectorAll('.quran-page-sajdah').length,
    sizes:ordinary.map(e=>parseFloat(getComputedStyle(e).fontSize)),
+   alignment:ordinary.map(e=>getComputedStyle(e).justifyContent),
+   computedColors:[...sheet.querySelectorAll('[class^="tajweed-"]')].map(e=>[getComputedStyle(e).color,getComputedStyle(e).getPropertyValue('--'+e.className).trim()]),
    wrap:lines.every(e=>getComputedStyle(e).flexWrap==='nowrap'&&getComputedStyle(e).display==='flex'),
    overflow:lines.filter(e=>e.scrollWidth>e.clientWidth+1).length,doc:document.documentElement.scrollWidth-innerWidth,
    sheetOverflow:sheet.scrollWidth-sheet.clientWidth, height:sheet.getBoundingClientRect().height,
@@ -28,6 +30,8 @@ for(const width of [320,390,1280])for(const tajweed of ['off','on']){
   assert.deepEqual(seen.words,tokens.filter(x=>['word','bismillah'].includes(x[0])).map(x=>x[1]),label+' immutable words');
   assert.deepEqual(seen.lines,data.lines.map(line=>line.map(([kind,t,key,s])=>kind==='surah_header'?'سُورَةُ '+chapters[s-1][2]:kind==='end'?String(key.split(':')[1]).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[+d]):kind==='quarter'?'۞':t)),label+' QCF exact line/token order');
   assert.deepEqual(seen.colors,expectedColours,label+' exact annotation span text/classes');
+  for(const [color,hex] of seen.computedColors){const rgb=hex.match(/[a-f0-9]{2}/gi).map(x=>parseInt(x,16));assert.equal(color,`rgb(${rgb.join(', ')})`,label+' visible palette');}
+  if(width>620)assert(seen.alignment.every(x=>x==='center'),label+' natural desktop alignment');
   assert.deepEqual(seen.markers,tokens.filter(x=>x[0]==='end').map(x=>x[2]),label+' markers');assert.equal(seen.quarters,tokens.filter(x=>x[0]==='quarter').length);assert.equal(seen.sajdahs,tokens.filter(x=>x[0]==='sajdah').length);
   assert(seen.sizes.every(s=>s>=11&&s<=28)&&new Set(seen.sizes).size===1,label+' uniform historical size');assert(seen.wrap&&seen.overflow===0&&seen.doc<=1&&seen.sheetOverflow<=1,label+' overflow '+JSON.stringify(seen));
   minFont=Math.min(minFont,...seen.sizes);maxFont=Math.max(maxFont,...seen.sizes);maxHeight=Math.max(maxHeight,seen.height);

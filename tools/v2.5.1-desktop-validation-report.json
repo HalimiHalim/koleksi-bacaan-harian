@@ -1,0 +1,322 @@
+{
+  "baseline": "cab64c5063f96ded8559dc563bc61e9218670d57",
+  "classic": [
+    {
+      "width": 320,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 11.5,
+      "maxFont": 22.5,
+      "maxHeight": 624
+    },
+    {
+      "width": 320,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 11.5,
+      "maxFont": 22.5,
+      "maxHeight": 624
+    },
+    {
+      "width": 390,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 14,
+      "maxFont": 26,
+      "maxHeight": 738
+    },
+    {
+      "width": 390,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 14,
+      "maxFont": 26,
+      "maxHeight": 738
+    },
+    {
+      "width": 1024,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1024,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1280,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1280,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1440,
+      "tajweed": "off",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    },
+    {
+      "width": 1440,
+      "tajweed": "on",
+      "pages": 604,
+      "textMismatches": 0,
+      "exactAnnotationSpans": true,
+      "overflow": 0,
+      "errors": 0,
+      "minFont": 28,
+      "maxFont": 28,
+      "maxHeight": 909
+    }
+  ],
+  "page": [
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 2412
+    },
+    {
+      "width": 320,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 2469
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 1951
+    },
+    {
+      "width": 390,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 1893
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "off",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 253,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "uthmani",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 378,
+      "maxHeight": 858
+    },
+    {
+      "width": 1280,
+      "script": "simple",
+      "tajweed": "on",
+      "pages": 604,
+      "errors": 0,
+      "overflow": 0,
+      "textMismatches": 0,
+      "maxNodes": 166,
+      "maxHeight": 858
+    }
+  ],
+  "comparisons": 80,
+  "widths": [
+    320,
+    390,
+    1024,
+    1280,
+    1440
+  ],
+  "representativePages": [
+    1,
+    2,
+    303,
+    534,
+    535,
+    597,
+    604
+  ],
+  "page534DesktopGeometryUnchanged": true,
+  "mobileGeometryAndReadingPixelsUnchanged": true,
+  "forcedColorsDesktopPaletteVerified": true,
+  "forcedColorsMobileUnchanged": true,
+  "interactions": [
+    {
+      "width": 320,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 80.671875,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    },
+    {
+      "width": 1280,
+      "modeSwitches": true,
+      "classicSimpleFallback": true,
+      "classicRestores": true,
+      "simpleClassicDisabled": true,
+      "persistence": true,
+      "listPreserved": true,
+      "invalidSavedState": true,
+      "button": {
+        "w": 92,
+        "h": 42
+      },
+      "errors": 0
+    }
+  ],
+  "upgradeOffline": {
+    "url": "http://127.0.0.1:8823/",
+    "upgrade": true,
+    "cache": [
+      "uwa-bacaan-harian-v251-desktop-fix"
+    ],
+    "offline": [
+      "List Uthmani",
+      "Page Uthmani Tajweed",
+      "Classic OFF/ON",
+      "Simple Page"
+    ],
+    "reopenClassic": true,
+    "settingsAndBookmarksPreserved": true,
+    "errors": []
+  },
+  "counts": {
+    "surahs": 114,
+    "ayat": 6236,
+    "pages": 604,
+    "mappedTajweed": 59253,
+    "skipped": 804,
+    "conflicts": 273
+  },
+  "dataRendererAndPaletteMutated": false,
+  "userPCSpecificCauseConfirmed": false,
+  "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5.1-Desktop",
+  "production": "PENDING"
+}

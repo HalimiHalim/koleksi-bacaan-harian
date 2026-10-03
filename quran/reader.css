@@ -164,3 +164,14 @@ html[data-theme="midnight"] .quran-mushaf-page {
   .quran-classic-page { display:flex; flex-direction:column; justify-content:space-between; overflow-x:auto; }
   .quran-classic-page.is-compact { justify-content:flex-start; }
 }
+
+@media (min-width:621px) {
+  /* Keep QCF lines together at their natural width on desktop.
+     Full-width space-between spreads short lines into artificial word gaps. */
+  .quran-classic-page .quran-classic-line { justify-content:center; gap:.28em; }
+}
+@media (min-width:621px) and (forced-colors:active) {
+  /* Tajweed ON is an explicit request for the rule palette. Keep those
+     annotated glyph colours when the desktop replaces other UI colours. */
+  .quran-mushaf-page [class^="tajweed-"] { forced-color-adjust:none; }
+}
