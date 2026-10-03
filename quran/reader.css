@@ -175,3 +175,39 @@ html[data-theme="midnight"] .quran-mushaf-page {
      annotated glyph colours when the desktop replaces other UI colours. */
   .quran-mushaf-page [class^="tajweed-"] { forced-color-adjust:none; }
 }
+
+@media (max-width:620px) {
+  /* Only Classic reflows: original token groups remain in source order.
+     A fixed inner frame lets the fitter test height instead of growing it. */
+  .quran-classic-page {
+    height:var(--classic-fit-height,max(460px,calc(100dvh - 220px)));
+    min-height:0; justify-content:flex-start;
+  }
+  .quran-classic-page .quran-classic-line {
+    flex:none; flex-wrap:wrap; justify-content:center; white-space:normal; row-gap:0;
+  }
+  .quran-classic-page .quran-page-folio { flex:none; }
+}
+
+/* QCF groups stay available for exact source/annotation identities. */
+.quran-classic-section { display:contents; }
+@media (max-width:620px) {
+  .quran-classic-section {
+    display:flex; flex:none; flex-wrap:wrap; align-items:baseline; justify-content:center;
+    width:100%; gap:0 .12em; font-size:var(--classic-font-size,28px); line-height:1.95;
+  }
+  .quran-classic-section .quran-classic-line { display:contents; }
+  .quran-classic-page.is-compact .quran-classic-section { column-gap:.28em; line-height:1.55; }
+}
+@media (max-width:360px) {
+  .quran-classic-page .quran-classic-section { column-gap:.07em; }
+}
+
+.quran-classic-end-pair { display:contents; }
+.quran-classic-end-pair > .quran-page-word { flex:none; }
+.quran-classic-end-pair > .quran-verse-marker { flex:none; align-self:baseline; }
+@media (max-width:620px) {
+  .quran-classic-end-pair { display:inline-flex; flex:none; align-items:baseline; gap:.12em; white-space:nowrap; }
+  .quran-classic-page.is-compact .quran-classic-end-pair { gap:.28em; }
+}
+@media (max-width:360px) { .quran-classic-page .quran-classic-end-pair { gap:.07em; } }

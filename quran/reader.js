@@ -342,7 +342,7 @@
       updateLast(currentAyah);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
   }
-  function fitClassicLines() {
+  function fitDesktopClassicLines() {
     if (mode !== 'classic' || $('quran-classic-panel').hidden) return;
     const sheet = $('quran-classic-page');
     const lines = [...sheet.querySelectorAll('.quran-classic-line')];
@@ -363,10 +363,120 @@
       } while (headingSize >= 13);
     }
   }
+  // Mobile keeps QCF token groups but may wrap their words. Desktop retains
+  // its historical width fitter and the V2.5.1 centered spacing unchanged.
+  let classicFitFrame = 0;
+  let classicFitForced = false;
+  let classicFitSignature = '';
+  let classicFontsLoaded;
+  const classicMobile = matchMedia('(max-width:620px)');
+  function classicOuterHeight(element) {
+    const style = getComputedStyle(element);
+    if (style.display === 'none') return 0;
+    return element.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom);
+  }
+  function classicMobileHeight(sheet) {
+    const reader = $('quran-reader');
+    const panel = $('quran-classic-panel');
+    let occupied = 0;
+    for (const container of [root, reader, panel]) {
+      const style = getComputedStyle(container);
+      occupied += parseFloat(style.paddingTop) + parseFloat(style.paddingBottom) +
+        parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+      for (const child of container.children) {
+        if (child !== reader && child !== panel && child !== sheet) occupied += classicOuterHeight(child);
+      }
+    }
+    return Math.max(1, Math.floor((window.visualViewport?.height || innerHeight) - occupied));
+  }
+  function fitMobileClassicLines(sheet, height) {
+    const lines = [...sheet.querySelectorAll('.quran-classic-line')];
+    const ordinary = lines.filter(line => !line.matches('.quran-page-heading,.quran-page-bismillah'));
+    const structural = lines.filter(line => !ordinary.includes(line));
+    const minimum = 11, maximum = 28, precision = 0.25;
+    sheet.style.setProperty('--classic-fit-height', `${height}px`);
+    const style = getComputedStyle(sheet);
+    const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const border = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    // Keep 3% of the actual inner frame clear; measurements include every
+    // heading, basmalah, wrapped Quran row and the folio, with their margins.
+    let available = (height - padding - border) * 0.97;
+    const horizontalFits = line => line.scrollWidth <= line.clientWidth;
+    const sections = [...sheet.querySelectorAll('.quran-classic-section')];
+    const headingCaps = structural.map(line => {
+      let low = 13 / precision, high = 24 / precision, best = low;
+      while (low <= high) {
+        const candidate = Math.floor((low + high) / 2);
+        line.style.fontSize = `${candidate * precision}px`;
+        if (horizontalFits(line)) { best = candidate; low = candidate + 1; }
+        else high = candidate - 1;
+      }
+      return best * precision;
+    });
+    const apply = size => {
+      sheet.style.setProperty('--classic-font-size', `${size}px`);
+      for (const line of ordinary) line.style.fontSize = `${size}px`;
+      structural.forEach((line, i) => { line.style.fontSize = `${Math.min(headingCaps[i], size + 2)}px`; });
+    };
+    const contentHeight = () => {
+      const top = sheet.getBoundingClientRect().top + parseFloat(style.borderTopWidth) + parseFloat(style.paddingTop);
+      return Math.max(...[...sheet.children].map(child => {
+        const childStyle = getComputedStyle(child);
+        return child.getBoundingClientRect().bottom + parseFloat(childStyle.marginBottom) - top;
+      }));
+    };
+    const fits = () => [...structural, ...sections].every(horizontalFits) && contentHeight() <= available;
+    let low = minimum / precision, high = maximum / precision, best = low;
+    apply(minimum);
+    if (!fits()) {
+      // Very short landscape/keyboard viewports cannot contain a full page
+      // even at the historical minimum. Keep that minimum and a complete
+      // frame rather than clipping Quran content; the screen can scroll.
+      height = Math.ceil(contentHeight() / 0.97 + padding + border);
+      sheet.style.setProperty('--classic-fit-height', `${height}px`);
+      available = (height - padding - border) * 0.97;
+    }
+    while (low <= high) {
+      const candidate = Math.floor((low + high) / 2);
+      apply(candidate * precision);
+      if (fits()) { best = candidate; low = candidate + 1; }
+      else high = candidate - 1;
+    }
+    apply(best * precision);
+  }
+  function scheduleClassicFit(force = false) {
+    if (mode !== 'classic' || $('quran-reader').hidden || $('quran-classic-panel').hidden || !root.getClientRects().length) return;
+    classicFitForced ||= force;
+    classicFontsLoaded ||= document.fonts
+      ? document.fonts.load('28px "UWA Naskh Arabic"').then(() => document.fonts.ready)
+      : Promise.resolve();
+    classicFontsLoaded.then(() => {
+      if (classicFitFrame) return;
+      classicFitFrame = requestAnimationFrame(() => {
+        classicFitFrame = 0;
+        if (mode !== 'classic' || $('quran-reader').hidden || $('quran-classic-panel').hidden || !root.getClientRects().length) return;
+        const sheet = $('quran-classic-page');
+        if (!sheet.querySelector('.quran-classic-line')) return;
+        const height = classicMobile.matches ? classicMobileHeight(sheet) : 0;
+        const signature = `${requestId}:${sheet.clientWidth}:${height}:${devicePixelRatio}`;
+        if (!classicFitForced && signature === classicFitSignature) return;
+        classicFitForced = false;
+        classicFitSignature = signature;
+        if (classicMobile.matches) fitMobileClassicLines(sheet, height);
+        else {
+          sheet.style.removeProperty('--classic-fit-height');
+          sheet.style.removeProperty('--classic-font-size');
+          fitDesktopClassicLines();
+        }
+        sheet.dataset.fitReady = 'true';
+      });
+    });
+  }
   async function renderClassicPage(token = ++requestId, preferredAyah = null) {
     if (state.script !== 'uthmani') return;
     const sheet = $('quran-classic-page');
     sheet.replaceChildren();
+    delete sheet.dataset.fitReady;
     $('quran-classic-counter-bottom').textContent = `${page} / 604`;
     $('quran-prev-classic-bottom').disabled = page === 1;
     $('quran-next-classic-bottom').disabled = page === 604;
@@ -392,6 +502,7 @@
       // The few pages with under 100 words should not stretch like a dense page.
       const wordCount = data.lines.flat().filter(([kind]) => kind === 'word').length;
       sheet.classList.toggle('is-compact', wordCount < 100);
+      let section = null;
       for (const [lineIndex, items] of data.lines.entries()) {
         const line = document.createElement('div'); line.className = 'quran-classic-line';
         const type = items[0]?.[0];
@@ -408,7 +519,18 @@
             const ayahNumber = Number(verseKey.split(':')[1]);
             if (ayahNumber >= 100) marker.classList.add('three-digit');
             const digit = document.createElement('span'); digit.textContent = arabicDigits(ayahNumber);
-            marker.append(digit); line.append(marker);
+            marker.append(digit);
+            // Keep the verse ending together when mobile sections reflow.
+            // Contents wrappers leave desktop flex items unchanged.
+            const last = line.lastElementChild;
+            const word = last?.classList.contains('quran-page-word') ? last
+              : last?.classList.contains('quran-page-sajdah') ? last.previousElementSibling : null;
+            if (word?.classList.contains('quran-page-word')) {
+              const pair = document.createElement('span'); pair.className = 'quran-classic-end-pair';
+              word.replaceWith(pair); pair.append(word);
+              if (last !== word) pair.append(last);
+              pair.append(marker);
+            } else line.append(marker);
           } else {
             const span = document.createElement('span');
             span.className = kind === 'quarter' ? 'quran-page-quarter' : kind === 'sajdah' ? 'quran-page-sajdah' : 'quran-page-word';
@@ -420,7 +542,17 @@
             line.append(span);
           }
         }
-        fragment.append(line);
+        if (type === 'surah_header' || type === 'bismillah') {
+          section = null;
+          fragment.append(line);
+        } else {
+          if (!section) {
+            section = document.createElement('div');
+            section.className = 'quran-classic-section';
+            fragment.append(section);
+          }
+          section.append(line);
+        }
       }
       const folio = document.createElement('div'); folio.className = 'quran-page-folio'; folio.textContent = arabicDigits(page);
       fragment.append(folio); sheet.replaceChildren(fragment);
@@ -429,8 +561,7 @@
       const currentAyah = preferredAyah && verseKeys.includes(savedKey) ? preferredAyah : Number(firstKey.split(':')[1]);
       setStatus(tajweedOn && !tajweedTokens ? 'Warna Tajweed tidak tersedia untuk halaman ini; teks asal dipaparkan.' : '');
       updateLast(currentAyah);
-      requestAnimationFrame(fitClassicLines);
-      document.fonts?.ready.then(fitClassicLines);
+      scheduleClassicFit(true);
     } catch (error) { if (token === requestId) setStatus('Halaman belum tersedia. Semak sambungan internet dan cuba lagi.'); }
   }
   async function renderSimplePage(token, preferredAyah) {
@@ -624,7 +755,9 @@
       renderClassicPage();
     });
   }
-  new ResizeObserver(() => { if (mode === 'classic' && !$('quran-classic-panel').hidden) fitClassicLines(); }).observe(root);
+  new ResizeObserver(() => scheduleClassicFit()).observe(root);
+  window.addEventListener('resize', () => scheduleClassicFit());
+  window.visualViewport?.addEventListener('resize', () => scheduleClassicFit());
   $('quran-verse-list').addEventListener('click', event => {
     const bookmark = event.target.closest('[data-bookmark]');
     if (bookmark) {
