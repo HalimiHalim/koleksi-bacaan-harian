@@ -2,6 +2,24 @@
 
 Date: 2026-10-03 Asia/Kuala_Lumpur
 
+## Current final status (supersedes historical checkpoints below)
+
+| Milestone | Status |
+|---|---|
+| 0 Baseline audit | VERIFIED |
+| 1 Tajweed diagnosis (reproduced forced-colour case) | VERIFIED |
+| 2 Existing desktop palette restoration | VERIFIED |
+| 3 Classic spacing diagnosis | VERIFIED |
+| 4 Desktop line fix | VERIFIED |
+| 5 Desktop validation | VERIFIED |
+| 6 Mobile regression | VERIFIED |
+| 7 Full regression/data | VERIFIED |
+| 8 PWA/cache upgrade/offline | VERIFIED |
+| 9 Final local quality gate | VERIFIED |
+| 10 Main push/Vercel/production smoke | VERIFIED |
+
+Implementation: b0cbee2bf263f06deec2396a560487a83814fd05. Final documentation closeout records the verified release; resolve its own hash with git HEAD/origin/main. Managed patch tree clean after closeout. Original older checkouts preserved. Exact original PC setup remains unconfirmed, explicitly documented as a limitation. No new feature/version work.
+
 - Branch: codex/v251-desktop-fix
 - Baseline HEAD / freshly fetched origin/main: cab64c5063f96ded8559dc563bc61e9218670d57
 - Working tree: initially clean managed worktree. Older dirty Google Drive checkout preserved.
@@ -50,3 +68,14 @@ Date: 2026-10-03 Asia/Kuala_Lumpur
 - All data/source/palette/rendering code unchanged, verified diff scopes. No quran/reader.js changes.
 - Milestones 0–9 VERIFIED for reproduced conditions. Exact user PC setup is a known unconfirmed limitation; production normal Tajweed already correct before patch. No fabricated claim of a confirmed PC setup.
 - Release milestone 10 IN PROGRESS: implementation commit/push next, production deployment/smoke pending.
+
+## Release checkpoint
+- Implementation b0cbee2bf263f06deec2396a560487a83814fd05 committed and pushed via existing origin main workflow. HEAD/origin/main equal; implementation tree clean.
+- Vercel reports pending / deploying. Production smoke PENDING. Final report drafted; do not mark release complete until production validation passes.
+
+## Production closeout — VERIFIED
+- Implementation commit b0cbee2bf263f06deec2396a560487a83814fd05 pushed to main, GitHub Vercel status success / Deployment has completed, Production deployment 6827423393 status success.
+- Live https://koleksi-bacaan-harian.vercel.app/ smoke: 18 Page/Classic cases for 534/535 at 320/390/1280; ON/OFF, forced-colour palette at desktop, exact mobile/Page baseline geometry and reading pixels, no console/page errors. Screenshots in evidence production subdirectory.
+- Production PWA/offline VERIFIED: only uwa-bacaan-harian-v251-desktop-fix; List, Page, Classic OFF/ON, cached Simple, settings/bookmarks and offline new-tab Classic reopening.
+- Eight served assets/datasets byte-equal to local: HTML, SW, reader JS/CSS, 534/535 pages, 535 annotations, Simple 055. No mixed renderer assets.
+- All requested local/production gates complete for reproduced conditions. Final report and validation JSON carry full outcomes and limitations. Documentation-only closeout next; no runtime changes since verified production.

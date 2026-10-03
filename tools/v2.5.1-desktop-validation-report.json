@@ -318,5 +318,54 @@
   "dataRendererAndPaletteMutated": false,
   "userPCSpecificCauseConfirmed": false,
   "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.5.1-Desktop",
-  "production": "PENDING"
+  "production": {
+    "status": "VERIFIED",
+    "implementationCommit": "b0cbee2bf263f06deec2396a560487a83814fd05",
+    "deployment": 6827423393,
+    "vercel": "success / Deployment has completed",
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "smokeCases": 18,
+    "pages": [
+      534,
+      535
+    ],
+    "widths": [
+      320,
+      390,
+      1280
+    ],
+    "modes": [
+      "page",
+      "classic"
+    ],
+    "tajweedOffOn": true,
+    "forcedColorsDesktopPalette": true,
+    "consoleErrors": 0,
+    "assetByteEquality": [
+      "index.html",
+      "service-worker.js",
+      "quran/reader.css?v=251d1",
+      "quran/reader.js?v=251d1",
+      "quran/pages/534.json?v=20",
+      "quran/pages/535.json?v=20",
+      "quran/tajweed/pages/535.json?v=24",
+      "quran/scripts/simple/surah/055.json"
+    ],
+    "offline": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "upgrade": false,
+      "cache": [
+        "uwa-bacaan-harian-v251-desktop-fix"
+      ],
+      "offline": [
+        "List Uthmani",
+        "Page Uthmani Tajweed",
+        "Classic OFF/ON",
+        "Simple Page"
+      ],
+      "reopenClassic": true,
+      "settingsAndBookmarksPreserved": true,
+      "errors": []
+    }
+  }
 }
