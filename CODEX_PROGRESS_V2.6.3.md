@@ -13,9 +13,9 @@ Date: 2026-10-04 Asia/Kuala_Lumpur.
 |2 Card|VERIFIED|Exact supported-script content; progressive25, loading/error/offline; screenshots.|
 |3 Synchronization/navigation|VERIFIED|Three widths, reader/card/cross-tab sync, exact ayah/Back/history, async guards.|
 |4 Validation|VERIFIED|Models/invariants, accepted suites,78 exact reader comparisons, PWA/performance/syntax.|
-|5 Release|IN PROGRESS|Final diff/gate then commit/push/deployment/production.|
+|5 Release|VERIFIED|Release249bcf8 remote/deployment success; production suites/assets/SW verified.|
 
-First incomplete milestone5. Implementation and local validation complete; runtime/verifiers/records and explicit V2.6.2 acceptance updates in working tree. Commit/push/deploy PENDING. No confirmed issue in scope. Required release/production checks remain. Starting audit checkpoints below preserved. Before resuming read full ledger, inspect actual branch/HEAD/status and evidence, preserve changes, resume first incomplete milestone and repeat only missing/affected checks.
+First incomplete milestone: none. All milestones0–5 VERIFIED. Implementation/release HEAD249bcf80ed7c0851b095b5dfeaddbbfc721293bd matches remote main; successful Production deployment6838050280. Documentation-only closeout follows; resolve exact final HEAD with git rev-parse HEAD. No confirmed issue in scope or required implementation/production check outstanding. Historical audit checkpoints below preserved. Before resuming read full ledger, inspect actual branch/HEAD/status and evidence, preserve changes, resume first incomplete milestone and repeat only missing/affected checks.
 
 ## Audited baseline and decisions
 - Milestone0 VERIFIED: actual HEAD/origin/main match fb770e74362b0b699bf2d439d22d02b60a1267c2; clean starting worktree, V2.6.2 records read. No old saved-verse destination exists. List Simpan toggles state.bookmarks then saves uwa-quran-reader-v1; baseline regex-only load, append order, no persistence confirmation. Generic reader save previously rewrote all fields and could drop invalid evidence; Simpan also fell through to updateLast, which must stop for membership-only actions.
@@ -49,3 +49,15 @@ First incomplete milestone5. Implementation and local validation complete; runti
 ## Final gate — VERIFIED
 - Isolated final PWA rerun PASS with relevant console monitoring: complete old→new/preserved keys/offline/exact-ayah/uncached cases. Prior load timeout did not reproduce.19 model cases, favourites/edges/accepted suites,78 reader comparisons/invariants/performance/syntax all required local checks pass.
 -16 intended files reviewed; secrets patterns/private-browser artifact audit and staged diff check PASS. No incomplete implementation. First incomplete milestone5: commit/push/deploy/production. Working tree intentionally staged; commit/push PENDING.
+
+## Implementation release checkpoint
+- Verified implementation249bcf80ed7c0851b095b5dfeaddbbfc721293bd committed and fast-forward HEAD:main pushed. Independent ls-remote matches implementation hash; original checkouts untouched. Vercel deployment pending when first checked. Milestone5 IN PROGRESS, production tests next.
+
+## Production release gate — VERIFIED
+- Release249bcf80ed7c0851b095b5dfeaddbbfc721293bd independently matches remote main. GitHub Vercel success; Production deployment6838050280 success at https://koleksi-bacaan-harian.vercel.app/.
+- Production favourites/browser and edge suites PASS:320/390/1280, exact supported content/meaning, existing refs/newest save/remove/re-save, header-safe exact full List, Back focus/scroll, keyboard/pressed state, storage refusal, async/script/removal guards, cross-tab freshness, first/last ayahs, missing translation omission, no fabricated history. Relevant errors0.
+- Production unchanged checklist/recent suites PASS three widths: browsing/settings/bookmarks, checklist migration/manage/daily and accepted history ordering/cap/tracking/resume/shared-page rule.
+- Production current-cache PWA PASS: bookmarks/checklist/history/settings/backups preserved in isolated synthetic profile, offline both-script content/exact-ayah opening/newtab and graceful uncached reference/remove/failed-open-no-history. Actual V2.6.2→V2.6.3 upgrade tested separately locally from exact baseline; no claim of physical-device/old-production-profile upgrade.
+-14 live runtime/data/font assets byte-identical to local release. Explicit registration.update() passes; only v263 cache remains; five cached shell assets match local. Production Simple/populated/one/empty/error and offline screenshots inspected. Evidence /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.3/production.
+- All milestones VERIFIED; first incomplete none. V2.6.3 ready for user acceptance. No confirmed remaining issue; physical iPhone/Safari untested and uncached data needs network. Not user-approved stable/series-complete; no automatic next version.
+- Documentation-only closeout ledger/report/validation JSON next, normal fast-forward push, independent final local/remote hash/deployment and runtime-byte confirmation. No runtime changes after verified implementation; clean worktree after closeout. Original checkouts preserved.

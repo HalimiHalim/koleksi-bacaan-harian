@@ -1,6 +1,6 @@
 # V2.6.3 — Petikan Kegemaran
 Date: 2026-10-04 Asia/Kuala_Lumpur.
-Release: local verification complete; commit/push/deployment/production PENDING. Not user-approved stable.
+Release: V2.6.3 ready for user acceptance. Production verified; not user-approved stable.
 
 ## Files and approach
 - Runtime: index.html, quran/reader.js, quran/reader.css, service-worker.js, new quran/favourites.js.
@@ -37,5 +37,8 @@ Release: local verification complete; commit/push/deployment/production PENDING.
 ## Baseline, release and review
 - User explicitly accepted V2.6.2 stable. Accepted runtime806ab62618ce93a509f9188a152ba6eaffdcc53a; actual baseline/rollback documentation closeoutfb770e74362b0b699bf2d439d22d02b60a1267c2.
 - Branch codex/v263-favourite-excerpts, reused attached clean managed worktree. Original checkouts untouched. Rollback with new revert commit/main workflow, never reset/force-push. Retained bookmarks schema is backwards compatible; keep backup for recovery.
-- Local milestones0–4 VERIFIED; milestone5 release/production PENDING. Implementation verified before any commit/push. Exact hashes/deployment and clean final tree recorded after release. Ledger preserves interruption checkpoints.
+- Release249bcf80ed7c0851b095b5dfeaddbbfc721293bd matches independent remote-main hash. GitHub Vercel check success; Production deployment6838050280 success at https://koleksi-bacaan-harian.vercel.app/. Documentation closeout follows; resolve its exact HEAD with git rev-parse HEAD.
+- Production favourites/browser/edges, accepted checklist/recent browser suites PASS320/390/1280: save/remove/re-save/exact-ayah/Back, keyboard/pressed state/async guards/cross-tab, ordinary browsing/settings/bookmarks/checklist/history. Zero relevant errors. Production current-cache PWA passes cached both-script favourites/exact-ayah/new-tab, state preservation and graceful uncached reference/removal/failed-open-no-history. Actual old→new upgrade is separately verified locally from exact baseline, not claimed physical production-device testing.
+-14 live runtime/data/font assets match release bytes. Explicit production service-worker registration.update() passes; only v263 cache remains; five cached shell assets match local. Production Simple/populated/empty/one/error/offline screenshots inspected. Evidence /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.3/production: favourites-interactions.json, favourites-edges.json, favourites-pwa.json, checklist/interactions.json, recent/recent-interactions.json, production-assets.json, sw-update.json and screenshots.
+- All milestones0–5 VERIFIED; first incomplete none. Documentation-only ledger/report/JSON closeout committed/pushed after passing production; working tree clean on closeout, original user checkouts untouched. No confirmed remaining issue in scope. Ledger retains historical checkpoints, including one nonreproduced local offline load-event timeout followed by passing complete rerun.
 - Remaining review after successful release: actual preferred devices, especially physical iPhone/Safari, and explicit user acceptance. Uncached content still requires network. No next version/series-complete declaration automatically.
