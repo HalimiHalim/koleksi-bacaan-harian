@@ -1,6 +1,6 @@
 # V2.6.2 — Bacaan Terkini
 Date: 2026-10-04 Asia/Kuala_Lumpur.
-Release: V2.6.2 ready for user acceptance. Production verified; not user-approved stable.
+Release: explicitly accepted stable by the user on2026-10-04. Verified runtime806ab62618ce93a509f9188a152ba6eaffdcc53a; documentation closeoutfb770e74362b0b699bf2d439d22d02b60a1267c2.
 
 ## Files and implementation
 - Runtime: index.html, quran/reader.js, quran/reader.css, service-worker.js, new quran/recent.js.
@@ -46,3 +46,5 @@ Release: V2.6.2 ready for user acceptance. Production verified; not user-approve
 - Twelve production runtime/data assets match local bytes. Explicit service-worker registration.update() passes; only uwa-bacaan-harian-v262-recent-surahs remains and four cached shell assets match local. Production screenshots inspected: ten-entry row320/390, desktop List ayah20 and offline Classic. Evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2/production (recent-interactions.json, checklist/interactions.json, recent-pwa.json, production-assets.json, sw-update.json and screenshots).
 - All ledger milestones0–5 VERIFIED; first incomplete milestone none. Three documentation-only closeout files committed/pushed after production checks; working tree clean on closeout. Original user checkouts untouched. No confirmed remaining issue in scope. Ledger preserves historical checkpoints for resume.
 - Remaining user checks after release: review Bacaan Terkini on actual preferred devices and explicitly accept stable. V2.6.2 is not automatically user-approved; V2.6.3 will not begin without instruction.
+
+User explicitly accepted V2.6.2 stable on2026-10-04 and authorized V2.6.3. Historical release-gate statements above retain their original context.

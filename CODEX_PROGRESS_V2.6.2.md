@@ -89,3 +89,6 @@ First incomplete milestone: none. All milestones VERIFIED. Implementation HEAD/r
 - Production ten-item phone row320/390, readable desktop List ayah20 and offline Classic screenshots inspected. Evidence /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2/production.
 - No remaining required check or confirmed issue. Physical iPhone/Safari untested; uncached Quran still requires network. V2.6.2 ready for user acceptance. Not user-approved stable; no V2.6.3.
 - Documentation-only closeout updates this ledger/report/validation JSON, then normal fast-forward push and independent final hash/deployment check. No runtime changes after verified implementation. Working tree clean after closeout commit; final commit hash resolved from Git.
+
+## Explicit stable acceptance
+- On2026-10-04 the user explicitly accepted V2.6.2 stable and authorized V2.6.3. Accepted runtime806ab62618ce93a509f9188a152ba6eaffdcc53a, documentation closeoutfb770e74362b0b699bf2d439d22d02b60a1267c2.

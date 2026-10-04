@@ -218,3 +218,18 @@ html[data-theme="midnight"] .quran-mushaf-page {
   .quran-classic-page.is-compact .quran-classic-end-pair { gap:.28em; }
 }
 @media (max-width:360px) { .quran-classic-page .quran-classic-end-pair { gap:.07em; } }
+
+/* Saved excerpts share the accepted List text styles and theme. */
+.quran-favourites { min-width:0; margin-top:24px; padding:20px 16px; border:1px solid var(--line); border-radius:18px; background:var(--surface); }
+.quran-favourites h2 { margin:0 0 10px; color:var(--primary); font-size:1.2rem; }
+#quran-favourites-empty { color:var(--muted); font-size:.88rem; line-height:1.65; }
+.quran-favourite { min-width:0; padding:18px 0; border-top:1px solid var(--line); }
+.quran-favourite h3 { margin:0 0 12px; color:var(--primary); font-size:.94rem; overflow-wrap:anywhere; }
+.quran-favourite-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.quran-favourite-actions button { min-height:44px; max-width:100%; padding:8px 12px; border:1px solid var(--line); border-radius:11px; background:var(--surface-2); color:var(--primary); font:inherit; font-size:.82rem; cursor:pointer; }
+.quran-favourite-actions button:focus-visible,#quran-favourites-more:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+.quran-favourite .quran-verse-arabic { overflow-wrap:break-word; }
+.quran-favourite-loading { color:var(--muted); font-size:.85rem; }
+#quran-bookmark-status { margin:0; }
+#quran-bookmark-status:empty { display:none; }
+#quran-bookmark-status:not(:empty) { margin-bottom:10px; }

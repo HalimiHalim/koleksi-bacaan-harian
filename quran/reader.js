@@ -25,6 +25,11 @@
   let requestId = 0;
   let versePages = null;
   let recent = null;
+  let favourites = null;
+  let favouriteLimit = 10;
+  let favouriteToken = 0;
+  let favouriteSignature = '';
+  let favouriteReturn = null;
   let historyIntent = null;
   let listScrollEngaged = false;
   let positionTimer = 0;
@@ -65,7 +70,15 @@
   updateTajweedButtons();
   function save() {
     if (recent && !recent.protectLegacy()) return;
-    try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (error) {}
+    if (favourites) { favourites.saveReader(state); return; }
+    // Catalogue initialization may still be pending: preserve raw bookmarks.
+    try {
+      const raw = localStorage.getItem(stateKey);
+      const saved = raw === null ? {} : JSON.parse(raw);
+      if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return;
+      const { bookmarks, ...fields } = state;
+      localStorage.setItem(stateKey, JSON.stringify({ ...saved, ...fields, bookmarks:Object.prototype.hasOwnProperty.call(saved, 'bookmarks') ? saved.bookmarks : [] }));
+    } catch (error) {}
   }
   function setStatus(message, target = 'quran-reader-status') { $(target).textContent = message; }
   async function getJson(url) {
@@ -87,8 +100,21 @@
     if (simpleChapters.size > 8) simpleChapters.delete(simpleChapters.keys().next().value);
     return data;
   }
+  const originalChapters = new Map();
+  function originalChapter(number) {
+    if (!originalChapters.has(number)) {
+      const promise = getJson(path('surah', number)).then(data => {
+        if (data.surah !== number || data.verses?.length !== chapter(number)?.[3] ||
+            data.verses.some(([ayah, text], i) => ayah !== i + 1 || typeof text !== 'string' || !text)) throw new Error('Invalid verse identities');
+        return data;
+      }).catch(error => { originalChapters.delete(number); throw error; });
+      originalChapters.set(number, promise);
+      if (originalChapters.size > 8) originalChapters.delete(originalChapters.keys().next().value);
+    }
+    return originalChapters.get(number);
+  }
   async function selectedChapter(number, script = state.script) {
-    const original = await getJson(path('surah', number));
+    const original = await originalChapter(number);
     if (script === 'uthmani') return original;
     const simple = await simpleChapter(number);
     return { ...original, verses: original.verses.map(([ayah, , meaning]) => [ayah, simple.verses[ayah - 1][1], meaning]) };
@@ -114,6 +140,8 @@
     document.body.classList.toggle('quran-explore', area !== 'routine');
     document.body.classList.toggle('quran-reading', area === 'reader');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (area === 'routine') renderFavourites();
+    else { ++favouriteToken; favouriteSignature = ''; }
   }
   function renderRecent() {
     $('quran-recent').hidden = selecting;
@@ -209,6 +237,9 @@
       if (chapters.length !== 114 || chapters.some((item, i) => item[0] !== i+1)) throw new Error('Incomplete index');
       let historyStorage = null;
       try { historyStorage = localStorage; } catch {}
+      favourites ||= window.createQuranFavourites(chapters, historyStorage, bookmarkNotice);
+      syncBookmarkButtons();
+      renderFavourites();
       recent ||= window.createQuranRecent(chapters, historyStorage, message => setStatus(message, 'quran-recent-status'));
       window.dispatchEvent(new CustomEvent('quran-catalogue', { detail:chapters }));
       renderChapters($('quran-search').value);
@@ -217,6 +248,115 @@
       setStatus('Senarai surah belum tersedia. Sambung internet dan buka semula tab ini.', 'quran-library-status');
     }
   }
+  function bookmarkNotice(message) {
+    $('quran-favourites-status').textContent = message;
+    $('quran-bookmark-status').textContent = message;
+  }
+  function syncBookmarkButtons() {
+    if (!favourites) return;
+    state.bookmarks = favourites.oldestFirst;
+    for (const button of $('quran-verse-list').querySelectorAll('[data-bookmark]')) {
+      const saved = state.bookmarks.includes(button.dataset.bookmark);
+      button.setAttribute('aria-pressed', String(saved));
+      button.textContent = saved ? '★ Disimpan' : '☆ Simpan';
+    }
+  }
+  function favouritesActive() {
+    return document.body.dataset.currentView === 'allday' && !root.hidden && !$('quran-routine').hidden;
+  }
+  async function renderFavourites(force = false) {
+    if (!favourites || !favouritesActive()) { ++favouriteToken; favouriteSignature = ''; return; }
+    favourites.refresh(); syncBookmarkButtons();
+    const entries = favourites.entries, script = state.script;
+    const signature = JSON.stringify([entries, script, favouriteLimit]);
+    if (!force && signature === favouriteSignature) return;
+    favouriteSignature = signature;
+    const token = ++favouriteToken, list = $('quran-favourites-list');
+    list.replaceChildren();
+    $('quran-favourites-empty').hidden = entries.length > 0;
+    $('quran-favourites-more').hidden = entries.length <= favouriteLimit;
+    const groups = new Map();
+    for (const key of entries.slice(0, favouriteLimit)) {
+      const [number, ayah] = key.split(':').map(Number);
+      const article = document.createElement('article'); article.className = 'quran-favourite'; article.dataset.favourite = key;
+      const title = document.createElement('h3'); title.textContent = `${chapter(number)[1]} · ${key}`;
+      const content = document.createElement('div'); content.className = 'quran-favourite-content'; content.setAttribute('aria-busy', 'true');
+      const loading = document.createElement('p'); loading.className = 'quran-favourite-loading'; loading.textContent = 'Memuatkan petikan…'; content.append(loading);
+      const actions = document.createElement('div'); actions.className = 'quran-favourite-actions';
+      const open = document.createElement('button'); open.type = 'button'; open.dataset.favouriteOpen = key; open.textContent = 'Buka dalam surah'; open.setAttribute('aria-label', `Buka ${chapter(number)[1]} ${key} dalam surah`);
+      const remove = document.createElement('button'); remove.type = 'button'; remove.dataset.favouriteRemove = key; remove.textContent = 'Buang daripada kegemaran'; remove.setAttribute('aria-label', `Buang ${key} daripada kegemaran`);
+      actions.append(open, remove); article.append(title, content, actions); list.append(article);
+      if (!groups.has(number)) groups.set(number, []);
+      groups.get(number).push({ key, ayah, content });
+    }
+    await Promise.all([...groups].map(async ([number, nodes]) => {
+      try {
+        const data = await selectedChapter(number, script);
+        if (token !== favouriteToken || !favouritesActive() || state.script !== script) return;
+        for (const { key, ayah, content } of nodes) {
+          if (!favourites.entries.includes(key) || !content.isConnected) continue;
+          const [, arabic, meaning] = data.verses[ayah - 1];
+          const ar = document.createElement('p'); ar.className = 'quran-verse-arabic'; ar.lang = 'ar'; ar.dir = 'rtl'; ar.textContent = arabic;
+          content.replaceChildren(ar);
+          if (typeof meaning === 'string' && meaning) {
+            const ms = document.createElement('p'); ms.className = 'quran-verse-translation'; ms.lang = 'ms'; ms.textContent = meaning; content.append(ms);
+          }
+          content.setAttribute('aria-busy', 'false');
+        }
+      } catch {
+        if (token !== favouriteToken || !favouritesActive()) return;
+        for (const { content } of nodes) {
+          content.replaceChildren(); content.setAttribute('aria-busy', 'false');
+          const message = document.createElement('p'); message.className = 'quran-favourite-loading'; message.textContent = 'Teks petikan belum tersedia. Sambung internet dan cuba lagi. Rujukan simpanan dikekalkan.';
+          const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'quran-bookmark'; retry.dataset.favouriteRetry = ''; retry.textContent = 'Cuba lagi'; content.append(message, retry);
+        }
+      }
+    }));
+  }
+  async function placeListAnchor(ayah, token) {
+    await document.fonts.ready;
+    requestAnimationFrame(() => {
+      if (token !== requestId || !readerActive() || mode !== 'list') return;
+      const anchor = $(`quran-ayah-${ayah}`);
+      if (anchor) window.scrollTo({ top:scrollY + anchor.getBoundingClientRect().top - 80, behavior:'instant' });
+    });
+  }
+  $('quran-favourites-more').addEventListener('click', () => { favouriteLimit += 10; renderFavourites(); });
+  $('quran-favourites-list').addEventListener('click', async event => {
+    if (event.target.closest('[data-favourite-retry]')) { renderFavourites(true); return; }
+    const remove = event.target.closest('[data-favourite-remove]');
+    if (remove) {
+      const buttons = [...$('quran-favourites-list').querySelectorAll('[data-favourite-remove]')], index = buttons.indexOf(remove);
+      if (!favourites.set(remove.dataset.favouriteRemove, false)) return;
+      syncBookmarkButtons();
+      const rendering = renderFavourites();
+      const next = $('quran-favourites-list').querySelectorAll('[data-favourite-remove]');
+      (next[Math.min(index, next.length - 1)] || $('quran-favourites-title')).focus({ preventScroll:true });
+      await rendering; return;
+    }
+    const button = event.target.closest('[data-favourite-open]'), key = favourites?.canonical(button?.dataset.favouriteOpen);
+    if (!key || !favourites.entries.includes(key)) return;
+    const [number, ayah] = key.split(':').map(Number);
+    favouriteReturn = { key, top:scrollY };
+    readerOrigin = 'routine'; originButton = button;
+    $('quran-back').querySelector('.quran-back-label').textContent = 'Amalan Saya';
+    $('quran-back').setAttribute('aria-label', 'Kembali ke Amalan Saya');
+    const opening = openSurah(number, true, 'list', { surah:number, ayah, mode:'list' });
+    const token = requestId;
+    await opening; placeListAnchor(ayah, token);
+  });
+  // Only mount content for the visible Amalan Saya view. Invalidate requests on exit.
+  new MutationObserver(() => {
+    if (favouritesActive()) renderFavourites();
+    else { ++favouriteToken; favouriteSignature = ''; }
+  }).observe(document.body, { attributes:true, attributeFilter:['data-current-view'] });
+  new MutationObserver(() => {
+    if (favouritesActive()) renderFavourites();
+    else { ++favouriteToken; favouriteSignature = ''; }
+  }).observe(root, { attributes:true, attributeFilter:['hidden'] });
+  window.addEventListener('storage', event => {
+    if (event.key === stateKey || event.key === null) { favourites?.refresh(); syncBookmarkButtons(); renderFavourites(); }
+  });
   function updateLast(ayah = 1) {
     state.last = { surah, ayah, mode, page };
     save();
@@ -823,7 +963,19 @@
     const recentSurah = originButton?.dataset.recentSurah;
     showArea(readerOrigin); ++requestId;
     if (recentSurah) originButton = $('quran-recent-row').querySelector(`[data-recent-surah="${recentSurah}"]`);
-    if (originButton?.isConnected) originButton.focus({ preventScroll:true });
+    if (favouriteReturn) {
+      const returning = favouriteReturn; favouriteReturn = null;
+      const token = requestId;
+      renderFavourites(true).then(async () => {
+        await document.fonts.ready;
+        requestAnimationFrame(() => {
+          if (token !== requestId || !favouritesActive()) return;
+          const button = [...$('quran-favourites-list').querySelectorAll('[data-favourite-open]')].find(button => button.dataset.favouriteOpen === returning.key);
+          (button || $('quran-favourites-title')).focus({ preventScroll:true });
+          window.scrollTo({ top:returning.top, behavior:'instant' });
+        });
+      });
+    } else if (originButton?.isConnected) originButton.focus({ preventScroll:true });
   });
   $('quran-search').addEventListener('input', event => renderChapters(event.target.value));
   $('quran-surah-list').addEventListener('click', event => {
@@ -835,6 +987,7 @@
       selectionCount(); renderChapters($('quran-search').value);
       $('quran-surah-list').querySelector(`[data-surah="${id}"]`)?.focus({ preventScroll:true });
     } else {
+      favouriteReturn = null;
       readerOrigin = 'library'; originButton = button;
       $('quran-back').querySelector('.quran-back-label').textContent = 'Semua surah';
       $('quran-back').setAttribute('aria-label', 'Kembali ke senarai surah');
@@ -842,6 +995,7 @@
     }
   });
   window.addEventListener('quran-open-checklist', async event => {
+    favouriteReturn = null;
     originButton = document.activeElement; await loadChapters();
     readerOrigin = 'routine';
     $('quran-back').querySelector('.quran-back-label').textContent = 'Amalan Saya';
@@ -852,6 +1006,7 @@
     const button = event.target.closest('[data-recent-surah]');
     const entry = recent?.entries.find(item => item.surah === Number(button?.dataset.recentSurah));
     if (!entry || !recent.validate(entry)) return;
+    favouriteReturn = null;
     readerOrigin = 'library'; originButton = button;
     $('quran-back').querySelector('.quran-back-label').textContent = 'Semua surah';
     $('quran-back').setAttribute('aria-label', 'Kembali ke senarai surah');
@@ -936,10 +1091,10 @@
   $('quran-verse-list').addEventListener('click', event => {
     const bookmark = event.target.closest('[data-bookmark]');
     if (bookmark) {
+      if (!favourites || !favourites.refresh()) return;
       const key = bookmark.dataset.bookmark;
-      state.bookmarks = state.bookmarks.includes(key) ? state.bookmarks.filter(item => item !== key) : [...state.bookmarks, key];
-      bookmark.setAttribute('aria-pressed', String(state.bookmarks.includes(key)));
-      bookmark.textContent = state.bookmarks.includes(key) ? '★ Disimpan' : '☆ Simpan'; save();
+      if (favourites.set(key, !favourites.entries.includes(key))) syncBookmarkButtons();
+      return; // Membership management is not a reading-position interaction.
     }
     const verse = event.target.closest('[data-ayah]');
     if (verse) {

@@ -978,7 +978,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 #quran-selection[hidden] { display:none; }
 #quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=262">
+<link rel="stylesheet" href="./quran/reader.css?v=263">
 </head>
 <body>
 <div class="shell">
@@ -1105,6 +1105,13 @@ body[data-current-view="reference"] #allday-view { display:none; }
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
     <p id="quran-migration-notice" class="app-feedback" role="status"></p><p id="quran-empty" class="app-feedback" hidden>Belum ada surah. Gunakan Tambah + untuk memilih amalan harian.</p><div class="checklist" id="allday-checklist"></div>
     <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
+    <section id="quran-favourites" class="quran-favourites" aria-labelledby="quran-favourites-title">
+      <h2 id="quran-favourites-title" tabindex="-1">Petikan Kegemaran</h2>
+      <p id="quran-favourites-status" class="app-feedback" role="status" aria-live="polite"></p>
+      <p id="quran-favourites-empty">Belum ada petikan kegemaran. Tekan ☆ Simpan pada ayat dalam paparan List untuk menambah petikan.</p>
+      <div id="quran-favourites-list"></div>
+      <button type="button" id="quran-favourites-more" class="action-secondary" hidden>Tunjuk lagi</button>
+    </section>
     </div>
     <div id="quran-library" hidden>
       <div class="quran-section-title"><div><h2>Al-Quran</h2><p>114 surah · 6,236 ayat · 604 halaman</p></div></div>
@@ -1134,6 +1141,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
         </div>
       </div>
       <p id="quran-reader-status" class="app-feedback" role="status" aria-live="polite"></p>
+      <p id="quran-bookmark-status" class="app-feedback" role="status" aria-live="polite"></p>
       <div id="quran-list-panel"><p class="quran-mode-hint">Teks Arab dan terjemahan Melayu · ketik ayat untuk simpan tempat bacaan.</p><button type="button" id="quran-translation-toggle" class="quran-translation-toggle" aria-pressed="true">Terjemahan Melayu ✓</button><div id="quran-verse-list"></div></div>
       <div id="quran-page-panel" hidden>
         <p class="quran-mode-hint">Halaman mushaf Madinah · teks Arab sahaja</p>
@@ -1770,7 +1778,7 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
-<script src="./quran/checklist.js?v=262"></script>
+<script src="./quran/checklist.js?v=263"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -3440,7 +3448,8 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/recent.js?v=262"></script>
-<script src="./quran/reader.js?v=262"></script>
+<script src="./quran/favourites.js?v=263"></script>
+<script src="./quran/recent.js?v=263"></script>
+<script src="./quran/reader.js?v=263"></script>
 </body>
 </html>

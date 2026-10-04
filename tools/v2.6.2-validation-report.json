@@ -204,8 +204,8 @@
   "physicalIPhoneTested": false,
   "release": {
     "status": "VERIFIED",
-    "acceptanceStatus": "V2.6.2 ready for user acceptance",
-    "userAcceptedStable": false,
+    "acceptanceStatus": "Explicitly accepted stable",
+    "userAcceptedStable": true,
     "implementationHash": "806ab62618ce93a509f9188a152ba6eaffdcc53a",
     "remoteMatched": true,
     "deploymentId": 6837594912,
@@ -417,6 +417,7 @@
     ],
     "allMilestonesVerified": true,
     "firstIncompleteMilestone": null,
-    "closeoutHash": "Resolve final documentation-only HEAD with git rev-parse HEAD"
+    "closeoutHash": "Resolve final documentation-only HEAD with git rev-parse HEAD",
+    "acceptanceDate": "2026-10-04"
   }
 }
