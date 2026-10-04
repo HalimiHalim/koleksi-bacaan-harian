@@ -128,6 +128,134 @@
   "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.1",
   "physicalIPhoneTested": false,
   "release": {
-    "status": "PENDING"
+    "status": "VERIFIED",
+    "implementationCommit": "ff42625de47b6aa07f9b8a7ebde68cebd6479675",
+    "remoteMainMatched": true,
+    "githubVercelState": "success",
+    "deploymentId": 6836662220,
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "productionInteractions": [
+      {
+        "width": 320,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      },
+      {
+        "width": 390,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      },
+      {
+        "width": 1280,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      }
+    ],
+    "productionPwa": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "upgrade": false,
+      "cache": [
+        "uwa-bacaan-harian-v261-independent-quran"
+      ],
+      "offlineChecklistCatalogue": true,
+      "offlineUthmaniSimpleListPageClassic": true,
+      "newOfflineTab": true,
+      "userStatePreserved": true,
+      "errors": []
+    },
+    "productionAssets": [
+      {
+        "asset": "index.html",
+        "exactLocalBytes": true,
+        "sha256": "728fdd253318af5f205ceed2eead87b6ce3cc01627182f8350aeac3b86b2ce53"
+      },
+      {
+        "asset": "service-worker.js",
+        "exactLocalBytes": true,
+        "sha256": "da7f69f7996da678a95c059a52c1d8e0cfb8aa3a33740a90720867edae23fb83"
+      },
+      {
+        "asset": "quran/checklist.js?v=261",
+        "exactLocalBytes": true,
+        "sha256": "cb8715d35a15cf2bfdb74a3ec429809732513e54dc88c97811939dcdf7378e76"
+      },
+      {
+        "asset": "quran/reader.js?v=261",
+        "exactLocalBytes": true,
+        "sha256": "2fcce478d6274094496c2ee81eb144143f45d1e2065655d1472f35e71217daf2"
+      },
+      {
+        "asset": "quran/reader.css?v=261",
+        "exactLocalBytes": true,
+        "sha256": "e1c3c82f2c80b7d3ea862e1a4fb5e36247d97931fcd7d9df689868da1483804c"
+      },
+      {
+        "asset": "quran/chapters.json",
+        "exactLocalBytes": true,
+        "sha256": "1b26d33b511fac724b077e7282803b0e59aeb5fd88a4be75b8eae0be9211ca48"
+      },
+      {
+        "asset": "quran/pages/007.json?v=20",
+        "exactLocalBytes": true,
+        "sha256": "b1a68706698109ef058a7110761f31a84a8614f8bd73f227b49048a4ee1eb0a5"
+      },
+      {
+        "asset": "quran/pages/012.json?v=20",
+        "exactLocalBytes": true,
+        "sha256": "4e795d48839b9d8527f19330e0e5dd7f74870748c2571c0c1d079e802d14b1f1"
+      },
+      {
+        "asset": "quran/pages/604.json?v=20",
+        "exactLocalBytes": true,
+        "sha256": "3bef0755408eac5948ef13dbfaa86697564c6d830ca848572ee9b16ff7dc36e7"
+      },
+      {
+        "asset": "quran/tajweed/pages/007.json",
+        "exactLocalBytes": true,
+        "sha256": "2126c391df36617d0c1f6ee6b2972ed5ca76f259b77eed1c8773dd99c3b05f23"
+      },
+      {
+        "asset": "quran/scripts/simple/surah/001.json",
+        "exactLocalBytes": true,
+        "sha256": "04f4b674d26f04f37b1dc4dc6c3be1dafdf85a3fb5a718baaa932ce9f4ef34c7"
+      },
+      {
+        "asset": "fonts/NotoNaskhArabic-wght.ttf",
+        "exactLocalBytes": true,
+        "sha256": "67b5a525a661b607971fbd3f96a81b89d3a768e74534fca84f18ac97e6fab72f"
+      }
+    ],
+    "userAcceptedStable": false,
+    "productionSwUpdate": {
+      "updateCheck": true,
+      "cacheKeys": [
+        "uwa-bacaan-harian-v261-independent-quran"
+      ],
+      "cachedShellExact": true,
+      "assets": [
+        "./index.html",
+        "./quran/checklist.js?v=261",
+        "./quran/reader.js?v=261",
+        "./quran/reader.css?v=261"
+      ]
+    }
   }
 }

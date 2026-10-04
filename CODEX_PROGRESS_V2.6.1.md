@@ -68,3 +68,23 @@ Commit/push/deployment: PENDING; no implementation committed.
 - Final runtime/test/source diff inspected, git diff --check and final syntax/migration checks pass. No credentials/private storage snapshots/test user data/artifacts/dependencies included; test constants are synthetic fixtures. Generated Python cache removed; screenshots/evidence stay outside repo.
 - Fetched origin/main still baseline 1552582d00ddea19ba9f1fbec917b2985876c2fa; no newer remote work. Rollback/data compatibility documented above/report.
 - Milestone 5 IN PROGRESS: commit verified implementation, fast-forward push HEAD:main (existing Vercel GitHub workflow), verify hashes/deployment/production. First incomplete milestone: 5. Commit/push/deploy PENDING.
+
+## Commit checkpoint
+- Verified implementation committed: ff42625de47b6aa07f9b8a7ebde68cebd6479675. Exact intended 11 files, staged diff --check passed. Working tree clean immediately after implementation commit.
+- Fast-forward push to existing origin/main initiated; awaiting remote/deployment/production evidence. Milestone 5 IN PROGRESS; first incomplete milestone 5.
+
+## Push/deployment checkpoint
+- Implementation ff42625de47b6aa07f9b8a7ebde68cebd6479675 pushed fast-forward origin/main; independent git ls-remote exact hash match.
+- GitHub Vercel status success / Deployment has completed; existing Production deployment 6836662220, Vercel tNv4YkKhx819zAUM45vAFeqUsntP. Production checks IN PROGRESS at https://koleksi-bacaan-harian.vercel.app/.
+- Host Python urllib certificate bundle could not verify the HTTPS chain; switched verification to system curl with normal TLS verification (no insecure bypass). Browser HTTPS tests use normal certificate checks.
+- First incomplete milestone: 5 production smoke and record closeout. Implementation verified; no runtime changes since tested commit.
+
+## Production closeout — VERIFIED (current status supersedes historical checkpoints)
+- Branch codex/v261-independent-quran; application HEAD/release ff42625de47b6aa07f9b8a7ebde68cebd6479675. origin/main independently matched. Approved baseline/rollback remains 1552582d00ddea19ba9f1fbec917b2985876c2fa.
+- Production deployment 6836662220 explicitly success / Deployment has completed; existing Vercel workflow and alias verified.
+- Production interaction suite passes at 320/390/1280: single/multi-add/search/disabled duplicates/cancel/Escape/browser Back, name/full-reader and checkbox separation, correct return/focus, keyboard reorder/remove/checked Undo, persistence/progress/day rollover, ordinary browsing, settings/modes/scripts/Tajweed, source assignment writes, legacy migration/independence, empty state and failed-add rollback. Zero console/page errors.
+- Production offline suite passes: single v261 cache, catalogue/checklist/Uthmani/Simple List/Page/Classic, saved completion/settings and new offline tab. Explicit registration.update check passes; cached HTML/module/reader JS/CSS exact local bytes. Existing-state upgrade was separately verified locally against the approved baseline.
+- Twelve production assets/data/font exact local bytes. Production 320 checklist, 390 selection and desktop Classic screenshots inspected; no clipping/overflow. Evidence and JSON under /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.1/production and production-assets.json.
+- All milestones 0–5 VERIFIED. First incomplete milestone: none. Known issues: none confirmed within scope. Limitations: physical iPhone/Safari not tested; reader offline requires prior asset caching; no fuzzy conversion of custom/excerpt content.
+- Commit/push/deployment: application release complete and VERIFIED. Final documentation/report/JSON closeout follows; no runtime changes since verified release. Its own hash must be resolved via git HEAD/origin/main (a commit cannot contain its own hash). Working tree clean after that closeout, old user checkouts preserved.
+- V2.6.1 ready for user acceptance. Not declared user-approved stable. No V2.6.2/V2.6.3 work. Await explicit stable acceptance.
