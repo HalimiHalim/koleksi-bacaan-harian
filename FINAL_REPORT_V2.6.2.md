@@ -1,6 +1,6 @@
 # V2.6.2 — Bacaan Terkini
 Date: 2026-10-04 Asia/Kuala_Lumpur.
-Release: local checks complete; commit/push/deployment/production pending. Not user-approved stable.
+Release: V2.6.2 ready for user acceptance. Production verified; not user-approved stable.
 
 ## Files and implementation
 - Runtime: index.html, quran/reader.js, quran/reader.css, service-worker.js, new quran/recent.js.
@@ -41,5 +41,8 @@ Release: local checks complete; commit/push/deployment/production pending. Not u
 ## Baseline, rollback and release
 - Accepted V2.6.1 runtime ff42625de47b6aa07f9b8a7ebde68cebd6479675; baseline/rollback including documentation closeout 6753657175a9405856d6ad921d8e2122fcc9619d.
 - Branch codex/v262-recent-surahs, reused attached clean managed worktree. Original user checkouts preserved. Rollback through a new revert commit/main workflow, never reset/force-push. V2.6.1 ignores new history keys; existing reader last remains compatible; retain history/seed backup for forward recovery.
-- Implementation/release/local-remote hashes/deployment/production pending final release gate. Ledger records checkpoints and is authoritative for resume.
+- Implementation/release806ab62618ce93a509f9188a152ba6eaffdcc53a independently matches remote main. GitHub Vercel status success; Production deployment6837594912 success at https://koleksi-bacaan-harian.vercel.app/. Documentation closeout follows; its exact final HEAD is available from git rev-parse HEAD.
+- Production recent-reader and unchanged checklist suites PASS320/390/1280, including ordinary browsing/settings/bookmarks/history/position resume; zero relevant errors. Production PWA verifies current cache, preserved synthetic legacy/checklist/preferences, cached offline List/Page/Classic/both scripts/new-tab resume and graceful uncached failure. Actual old→new upgrade is the separately verified local baseline test, not a claimed physical production-device upgrade.
+- Twelve production runtime/data assets match local bytes. Explicit service-worker registration.update() passes; only uwa-bacaan-harian-v262-recent-surahs remains and four cached shell assets match local. Production screenshots inspected: ten-entry row320/390, desktop List ayah20 and offline Classic. Evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2/production (recent-interactions.json, checklist/interactions.json, recent-pwa.json, production-assets.json, sw-update.json and screenshots).
+- All ledger milestones0–5 VERIFIED; first incomplete milestone none. Three documentation-only closeout files committed/pushed after production checks; working tree clean on closeout. Original user checkouts untouched. No confirmed remaining issue in scope. Ledger preserves historical checkpoints for resume.
 - Remaining user checks after release: review Bacaan Terkini on actual preferred devices and explicitly accept stable. V2.6.2 is not automatically user-approved; V2.6.3 will not begin without instruction.

@@ -15,9 +15,9 @@ Date: 2026-10-04 Asia/Kuala_Lumpur.
 | 2 Reading tracking + resume | VERIFIED | Final browser suite, readable List anchors and Page/Classic boundaries. |
 | 3 Horizontal row | VERIFIED | 0/1/10, three widths, native touch/keyboard/wheel, inspected screenshots. |
 | 4 Validation | VERIFIED | Checklist/invariants/78 exact reader comparisons/PWA/performance/syntax. |
-| 5 Quality gate + release | IN PROGRESS | Local gate passed; commit/push/deployment/production next. |
+| 5 Quality gate + release | VERIFIED | Implementation806ab62 pushed; GitHub/Vercel success; live assets, three browser widths, PWA and SW update pass. |
 
-First incomplete milestone: 5. Changed files: runtime/history, four verifiers, V2.6.2 records and three V2.6.1 acceptance records (15 intended files). Known issues: none in scope confirmed. Remaining checks: staged review, commit/push/deployment and production. Commit/push/deployment: PENDING. Historical checkpoints below record the path to this current status.
+First incomplete milestone: none. All milestones VERIFIED. Implementation HEAD/release806ab62618ce93a509f9188a152ba6eaffdcc53a matches remote main; successful Production deployment6837594912. Changed15 implementation files recorded below. Known issues: none confirmed in scope. Production checks complete. Documentation closeout follows the verified implementation; resolve its exact HEAD with git rev-parse HEAD. Historical checkpoints below preserve the audit trail.
 
 ## Exact baseline audit
 - Reader storage uwa-quran-reader-v1 = {last:{surah,ayah,mode,page},bookmarks:["surah:ayah"],mode,script,uthmaniMode}. Separate uwa-quran-tajweed-v1 is on/off. Original reader saved last fields are only partially validated on load; seed must use strict catalogue ranges and known modes.
@@ -76,3 +76,16 @@ First incomplete milestone: 5. Changed files: runtime/history, four verifiers, V
 - Protected Quran renderer/fitting block, authoritative datasets/page mapping/fonts and checklist module unchanged. Syntax/diff/invariants/model accepted checklist checks pass. No secrets/private storage snapshots or test user data tracked; only synthetic test fixtures. Evidence outside repository. Generated Python cache removed.
 - Intended15 files: five runtime files (including recent module); four new verifiers; V2.6.2 validation JSON/ledger/report; three V2.6.1 acceptance records. Final review pending staged diff check. Freshly fetched origin/main still6753657175a9405856d6ad921d8e2122fcc9619d; no newer remote work.
 - Milestone5 IN PROGRESS: commit verified implementation, fast-forward HEAD:main via existing GitHub/Vercel workflow, verify hashes/deploy/production. First incomplete milestone5. Commit/push/deployment PENDING.
+
+## Implementation release checkpoint
+- Verified implementation committed as 806ab62618ce93a509f9188a152ba6eaffdcc53a after staged diff check. Normal fast-forward push HEAD:main succeeded; independent ls-remote matches that hash.
+- GitHub Vercel status success; Production deployment6837594912 reports success. Production browser/PWA/checklist suites running in isolated synthetic contexts; asset and service-worker checks pending. Milestone5 remains IN PROGRESS until smoke evidence passes.
+
+## Production gate — VERIFIED
+- Release806ab62618ce93a509f9188a152ba6eaffdcc53a independently matches origin/main. GitHub Vercel check and Production deployment6837594912 success; https://koleksi-bacaan-harian.vercel.app/.
+- Production recent/browser and unchanged checklist suites PASS320/390/1280: ordering/cap/resume/pending flush/shared-page active rule/direct browsing/settings/bookmarks/checklist/daily persistence; zero relevant errors.
+- Production PWA PASS: legacy seed/backup, checklist state/settings/bookmarks preserved, cached offline List/Page/Classic with both scripts and new-tab resume; uncached failure does not create history. Actual V2.6.1→V2.6.2 upgrade verified locally using exact release files; production fresh-context current-cache smoke is separately recorded and does not claim an old production browser upgrade.
+- Twelve live runtime/data assets byte-identical to local implementation. Explicit production registration.update() succeeds; only v262 cache remains; cached HTML/recent module/reader JS/CSS match local files.
+- Production ten-item phone row320/390, readable desktop List ayah20 and offline Classic screenshots inspected. Evidence /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2/production.
+- No remaining required check or confirmed issue. Physical iPhone/Safari untested; uncached Quran still requires network. V2.6.2 ready for user acceptance. Not user-approved stable; no V2.6.3.
+- Documentation-only closeout updates this ledger/report/validation JSON, then normal fast-forward push and independent final hash/deployment check. No runtime changes after verified implementation. Working tree clean after closeout commit; final commit hash resolved from Git.

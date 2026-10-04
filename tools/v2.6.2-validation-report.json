@@ -203,7 +203,220 @@
   "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2",
   "physicalIPhoneTested": false,
   "release": {
-    "status": "PENDING",
-    "userAcceptedStable": false
+    "status": "VERIFIED",
+    "acceptanceStatus": "V2.6.2 ready for user acceptance",
+    "userAcceptedStable": false,
+    "implementationHash": "806ab62618ce93a509f9188a152ba6eaffdcc53a",
+    "remoteMatched": true,
+    "deploymentId": 6837594912,
+    "deploymentStatus": "success",
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "productionRecentInteractions": {
+      "widths": [
+        {
+          "width": 320,
+          "zeroOneTen": true,
+          "listScrollResume": true,
+          "pendingFlush": true,
+          "dedupCap": true,
+          "noManagementHistory": true,
+          "keyboardWheel": true,
+          "nativeSwipe": true,
+          "sourceRequestsAtStartup": 0,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "zeroOneTen": true,
+          "listScrollResume": true,
+          "pendingFlush": true,
+          "dedupCap": true,
+          "noManagementHistory": true,
+          "keyboardWheel": true,
+          "nativeSwipe": true,
+          "sourceRequestsAtStartup": 0,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "zeroOneTen": true,
+          "listScrollResume": true,
+          "pendingFlush": true,
+          "dedupCap": true,
+          "noManagementHistory": true,
+          "keyboardWheel": true,
+          "nativeSwipe": false,
+          "sourceRequestsAtStartup": 0,
+          "errors": 0
+        }
+      ],
+      "pageCases": [
+        {
+          "mode": "page",
+          "multiSurahRetained": true,
+          "forwardBackward": true,
+          "resumeFocus": true,
+          "noLayoutHistory": true
+        },
+        {
+          "mode": "classic",
+          "multiSurahRetained": true,
+          "forwardBackward": true,
+          "resumeFocus": true,
+          "noLayoutHistory": true
+        }
+      ],
+      "compatibilityBookmarks": true,
+      "writeFailureReadingUsable": true,
+      "physicalIPhoneTested": false
+    },
+    "productionChecklistInteractions": [
+      {
+        "width": 320,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      },
+      {
+        "width": 390,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      },
+      {
+        "width": 1280,
+        "addSearchCancelBack": true,
+        "readerCheckboxIsolation": true,
+        "reorderRemoveUndo": true,
+        "reloadProgress": true,
+        "settingsModesScripts": true,
+        "dailyRollover": true,
+        "consoleErrors": 0,
+        "startupQuranContentRequests": 0
+      }
+    ],
+    "productionPwa": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "upgrade": false,
+      "checklistMigrationStatePreserved": true,
+      "legacySeedBackup": true,
+      "offlineHistory": true,
+      "cachedUthmaniSimpleListPageClassicResume": true,
+      "newOfflineTab": true,
+      "uncachedContentRequiresNetwork": true,
+      "uncachedFailureDoesNotRecord": true,
+      "cacheKeys": [
+        "uwa-bacaan-harian-v262-recent-surahs"
+      ],
+      "errors": []
+    },
+    "productionAssets": [
+      {
+        "asset": "index.html",
+        "bytes": 160689,
+        "sha256": "cc204c111f45c1f49f545697021961700f551d095e0ab3aa6c7e6ec31d0103e7",
+        "matchesLocal": true
+      },
+      {
+        "asset": "service-worker.js",
+        "bytes": 2548,
+        "sha256": "c3d7029862044b22e33d1928e7f020ad652440ebc19bad715ddc11e1c64b7951",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/recent.js?v=262",
+        "bytes": 4235,
+        "sha256": "a907a87050c8591c616494292fc7f083ab6463f7a13719b1acefe649c197cc43",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/reader.js?v=262",
+        "bytes": 52677,
+        "sha256": "11019eab64b7bee07d54c107f039ab2219b769a6d062870c2af611210827e040",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/reader.css?v=262",
+        "bytes": 16731,
+        "sha256": "932c099020fbf21aa2c6ec9fbb6669677c4301a5ac1ec392dce52405770819e1",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/checklist.js?v=262",
+        "bytes": 5775,
+        "sha256": "cb8715d35a15cf2bfdb74a3ec429809732513e54dc88c97811939dcdf7378e76",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/chapters.json",
+        "bytes": 5815,
+        "sha256": "1b26d33b511fac724b077e7282803b0e59aeb5fd88a4be75b8eae0be9211ca48",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/pages/007.json?v=20",
+        "bytes": 5372,
+        "sha256": "b1a68706698109ef058a7110761f31a84a8614f8bd73f227b49048a4ee1eb0a5",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/pages/012.json?v=20",
+        "bytes": 4734,
+        "sha256": "4e795d48839b9d8527f19330e0e5dd7f74870748c2571c0c1d079e802d14b1f1",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/pages/604.json?v=20",
+        "bytes": 3123,
+        "sha256": "3bef0755408eac5948ef13dbfaa86697564c6d830ca848572ee9b16ff7dc36e7",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/tajweed/pages/007.json?v=24",
+        "bytes": 3389,
+        "sha256": "2126c391df36617d0c1f6ee6b2972ed5ca76f259b77eed1c8773dd99c3b05f23",
+        "matchesLocal": true
+      },
+      {
+        "asset": "quran/scripts/simple/surah/002.json",
+        "bytes": 107302,
+        "sha256": "71892d6cbb482297f19c4f0eca5594113263aeee1e9e6ac2bae829fa2fbc82c9",
+        "matchesLocal": true
+      }
+    ],
+    "productionServiceWorkerUpdate": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "registrationUpdate": true,
+      "active": "https://koleksi-bacaan-harian.vercel.app/service-worker.js",
+      "cacheKeys": [
+        "uwa-bacaan-harian-v262-recent-surahs"
+      ],
+      "cachedShellMatchesLocal": [
+        "index.html",
+        "quran/recent.js?v=262",
+        "quran/reader.js?v=262",
+        "quran/reader.css?v=262"
+      ],
+      "errors": []
+    },
+    "productionScreenshotsInspected": [
+      "ten-320.png",
+      "ten-390.png",
+      "list-resume-1280.png",
+      "offline-classic-resume.png"
+    ],
+    "allMilestonesVerified": true,
+    "firstIncompleteMilestone": null,
+    "closeoutHash": "Resolve final documentation-only HEAD with git rev-parse HEAD"
   }
 }
