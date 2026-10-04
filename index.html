@@ -981,7 +981,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 #quran-selection[hidden] { display:none; }
 #quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=263-polish1">
+<link rel="stylesheet" href="./quran/reader.css?v=264">
 </head>
 <body>
 <div class="shell">
@@ -1782,7 +1782,8 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
-<script src="./quran/checklist.js?v=263-polish1"></script>
+<script src="./source-delete.js?v=264"></script>
+<script src="./quran/checklist.js?v=264"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -2341,49 +2342,18 @@ setTheme(getSavedTheme() || 'emerald');
     if (fresh.error || deleted.error || !fresh.items.some(item => item.id === id)) {
       editError.textContent = 'Data bacaan tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
     }
-    const changes = [
-      [customStorageKey, JSON.stringify(fresh.items.filter(item => item.id !== id))],
-      [deletedIdsKey, JSON.stringify(deleted.ids.includes(id) ? deleted.ids : [...deleted.ids, id])]
-    ];
-    for (const [type] of destinations) {
-      const membership = readMembers(type);
-      const order = readOrder(type, membership.ids);
-      const legacy = readLegacyRoutine(type);
-      if (membership.error || order.error || legacy.error) {
-        editError.textContent = 'Data rutin tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
-      }
-      if (membership.ids.includes(id)) changes.push([memberKey(type), JSON.stringify(membership.ids.filter(value => value !== id))]);
-      if (order.raw !== null && order.ids.includes(id)) changes.push([orderKey(type), JSON.stringify(order.ids.filter(value => value !== id))]);
-      try {
-        const legacyMembersRaw = localStorage.getItem(legacyMemberKey(type));
-        if (legacyMembersRaw !== null) {
-          const ids = JSON.parse(legacyMembersRaw).map(String);
-          if (ids.includes(id)) changes.push([legacyMemberKey(type), JSON.stringify(ids.filter(value => value !== id))]);
-        }
-        const legacyOrderRaw = localStorage.getItem(legacyOrderKey(type));
-        if (legacyOrderRaw !== null) {
-          const ids = JSON.parse(legacyOrderRaw).map(String);
-          if (ids.includes(id)) changes.push([legacyOrderKey(type), JSON.stringify(ids.filter(value => value !== id))]);
-        }
-      } catch {
-        editError.textContent = 'Data rutin asal tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
-      }
-    }
-    try {
-      for (let index = 0; index < localStorage.length; index++) {
-        const key = localStorage.key(index);
-        if (!/^(?:uwa-daily-|uwa-navigation-renovation-trial-v1-daily-)\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
-        const parsed = JSON.parse(localStorage.getItem(key));
-        if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid daily data');
-        if (parsed.some(value => String(value) === id)) changes.push([key, JSON.stringify(parsed.filter(value => String(value) !== id))]);
-      }
-    } catch {
-      editError.textContent = 'Data checklist tidak dapat dibaca. Tiada bacaan dipadam.'; return false;
-    }
+    let changes;
+    try { changes = window.planCustomSourceDeletion(localStorage, id, fresh.items, deleted.ids); }
+    catch (error) { editError.textContent = error.message; return false; }
     if (!applyStorageTransaction(changes)) {
       editError.textContent = `Delete gagal disimpan. ${storageFailureMessage()}`; return false;
     }
     customReadings = fresh.items.filter(item => item.id !== id);
+    // A pending checklist Undo is a live reference, not a recovery snapshot.
+    if (lastRemoval?.id === id && ['morning', 'evening'].includes(lastRemoval.type)) {
+      document.querySelector(`[data-undo="${lastRemoval.type}"]`).hidden = true;
+      lastRemoval = null;
+    }
     editDrafts.delete(id);
     editingId = null; formMode = 'add';
     formBaseline = { name:'', arabic:'', meaning:'', reference:'' };
@@ -2531,6 +2501,7 @@ setTheme(getSavedTheme() || 'emerald');
         try {
           if (value === null) localStorage.removeItem(key);
           else localStorage.setItem(key, value);
+          if (localStorage.getItem(key) !== value) throw new Error('Rollback verification failed');
         } catch { storageRollbackFailed = true; }
       }
       return false;
@@ -3464,8 +3435,8 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/favourites.js?v=263-polish1"></script>
-<script src="./quran/recent.js?v=263-polish1"></script>
-<script src="./quran/reader.js?v=263-polish1"></script>
+<script src="./quran/favourites.js?v=264"></script>
+<script src="./quran/recent.js?v=264"></script>
+<script src="./quran/reader.js?v=264"></script>
 </body>
 </html>

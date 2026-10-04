@@ -1,0 +1,294 @@
+{
+  "version": "V2.6.4",
+  "date": "2026-10-04",
+  "baseline": "35bbf575f8afc9e453297a3ec8ee277bffa7ab89",
+  "branch": "codex/v264-custom-delete-fix",
+  "acceptance": "pending; not declared stable",
+  "rootCause": {
+    "baseline": "35bbf575f8afc9e453297a3ec8ee277bffa7ab89",
+    "browserMessage": "Data checklist tidak dapat dibaca. Tiada bacaan dipadam.",
+    "retainedCustom": true,
+    "exactScanFailure": "ReferenceError: type is not defined",
+    "failingKey": "uwa-navigation-renovation-trial-v1-daily-2026-10-04-allday",
+    "path": "deleteUserReading → global daily-key scan → parsed.every(type === ...)",
+    "note": "The destination-loop type binding ends before this scan. Any matched daily key, including valid active Zikir/Doa state, evaluates the undeclared identifier."
+  },
+  "local": {
+    "model": {
+      "passed": 9,
+      "checks": [
+        "All 21 built-ins locked in edit and delete handlers before any read, even forged custom lookup",
+        "Absent explicit collections are not failures; only custom record and tombstone planned",
+        "Cleanup removes selected ID only, preserves numeric types, unrelated unknown IDs, daily duplicates and every Quran/backup raw byte",
+        "Malformed active lists, duplicate IDs, invalid values and orphan orders block without writes and identify module/field",
+        "Actual active storage read or enumeration failures are distinct from absence",
+        "Unsupported historical numeric custom identity/duplicate records and malformed tombstones preserved and writes blocked",
+        "Refused partial write rolls back all previous values, including originally absent tombstone",
+        "Snapshot read failure prevents all writes",
+        "Silently refused rollback is verified and reports possible incomplete recovery, never success"
+      ]
+    },
+    "browser": {
+      "url": "http://127.0.0.1:8826/",
+      "checks": [
+        {
+          "width": 320,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "assign": [],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "morning"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "evening"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "morning",
+            "evening"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "absentActiveCollectionsDelete": true
+        },
+        {
+          "absentTrialMarkerObsoleteMalformedQuranDelete": true
+        },
+        {
+          "pendingUndoCannotResurrect": true
+        },
+        {
+          "createEditAddBothDelete": true,
+          "liveAndDeletedIdCollisionsSkipped": true,
+          "quranAbsentFromPicker": true
+        },
+        {
+          "failure": "malformed-members",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "malformed-order",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "malformed-daily",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "active-read-denied",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "obsolete-read-denied",
+          "safeResult": true,
+          "retryRecovered": false
+        },
+        {
+          "failure": "partial-throw",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "partial-silent",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "custom-malformed",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "tombstone-malformed",
+          "safeResult": true,
+          "retryRecovered": true
+        }
+      ],
+      "isolatedSyntheticProfiles": true,
+      "physicalIPhoneSafariTested": false
+    },
+    "pwa": {
+      "url": "http://127.0.0.1:8828/",
+      "upgradeFromBaseline": true,
+      "allStorageRawBytesPreservedOnUpgrade": true,
+      "cacheKeys": [
+        "uwa-bacaan-harian-v264-custom-delete-fix"
+      ],
+      "cachedAssetsMatch": [
+        "index.html",
+        "source-delete.js?v=264",
+        "quran/reader.js?v=264",
+        "quran/reader.css?v=264",
+        "quran/favourites.js?v=264",
+        "quran/recent.js?v=264",
+        "quran/checklist.js?v=264"
+      ],
+      "offlineCustomDeleteAndReload": true,
+      "quranAndRecoveryStateUnchangedByDelete": true,
+      "offlineFavouriteExactAyah": true,
+      "errors": []
+    },
+    "existingUiRegression": {
+      "url": "http://127.0.0.1:8826/",
+      "widths": [
+        {
+          "width": 320,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 254,
+            "rowWidth": 254,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 324,
+            "rowWidth": 324,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 1022,
+            "rowWidth": 1022,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        }
+      ],
+      "initializationWarningPreserved": true,
+      "physicalIPhoneTested": false
+    },
+    "existingModels": {
+      "checklist": 19,
+      "recent": 23,
+      "favourites": 19
+    },
+    "inlineAndChangedJavaScriptSyntax": "PASS",
+    "gitDiffCheck": "PASS",
+    "screenshotsInspected": true,
+    "quranDataModulesFontsUnchanged": true,
+    "confirmationButtonHitTargetVerified": true
+  },
+  "release": {
+    "status": "PENDING"
+  },
+  "limitations": [
+    "Physical iPhone/Safari untested; phone widths emulated with Chrome.",
+    "Explicit user acceptance pending."
+  ],
+  "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.4"
+}
