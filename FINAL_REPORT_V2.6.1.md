@@ -2,7 +2,7 @@
 
 Date: 2026-10-04 Asia/Kuala_Lumpur.
 
-Release status: **V2.6.1 ready for user acceptance**. Implementation, remote, Vercel deployment and production checks VERIFIED. This is not user-approved stable.
+Release status: **V2.6.1 user-approved stable**, explicitly accepted on 2026-10-04 (Asia/Kuala_Lumpur). Implementation, remote, Vercel deployment and production checks VERIFIED.
 
 ## Files and architecture
 - Runtime: index.html, quran/reader.js, service-worker.js; new quran/checklist.js.
@@ -45,4 +45,4 @@ Release status: **V2.6.1 ready for user acceptance**. Implementation, remote, Ve
 - Implementation/release: ff42625de47b6aa07f9b8a7ebde68cebd6479675, pushed fast-forward to origin/main; local/remote hashes matched independently. GitHub Vercel status success / Deployment has completed; Production deployment 6836662220 success. Existing URL https://koleksi-bacaan-harian.vercel.app/.
 - Production VERIFIED: full interactions at 320/390/1280, checklist add/open/check/reload, ordinary 114 Surah search/browsing, List/Page/Classic, both scripts/Tajweed/settings, independent legacy migration, source assignment, empty state, keyboard management and no browser errors. Offline cached checklist/catalogue/readers and new-tab reopen pass. Explicit SW update check passes; only new cache and cached HTML/module/JS/CSS byte-equal to local. Twelve live assets/data/font byte-equal to verified worktree. Production screenshots inspected.
 - Documentation-only closeout commits the final report/ledger/JSON; runtime unchanged since verified production release. Resolve that record commit with git HEAD/origin/main. Working tree clean after closeout; ledger milestones 0–5 VERIFIED, no incomplete milestone.
-- User review: inspect deployed independent checklist and review behavior on actual preferred devices. Deployment does not constitute stable acceptance; wait for explicit acceptance before further feature work.
+- User explicitly accepted V2.6.1 as stable on 2026-10-04 and authorized V2.6.2. Earlier awaiting-acceptance wording in historical checkpoints is superseded. Physical device coverage remains as documented.

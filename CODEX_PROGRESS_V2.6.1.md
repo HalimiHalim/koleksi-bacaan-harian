@@ -88,3 +88,6 @@ Commit/push/deployment: PENDING; no implementation committed.
 - All milestones 0–5 VERIFIED. First incomplete milestone: none. Known issues: none confirmed within scope. Limitations: physical iPhone/Safari not tested; reader offline requires prior asset caching; no fuzzy conversion of custom/excerpt content.
 - Commit/push/deployment: application release complete and VERIFIED. Final documentation/report/JSON closeout follows; no runtime changes since verified release. Its own hash must be resolved via git HEAD/origin/main (a commit cannot contain its own hash). Working tree clean after that closeout, old user checkouts preserved.
 - V2.6.1 ready for user acceptance. Not declared user-approved stable. No V2.6.2/V2.6.3 work. Await explicit stable acceptance.
+
+## Explicit user acceptance
+- On 2026-10-04 (Asia/Kuala_Lumpur), user explicitly accepted V2.6.1 as stable and authorized V2.6.2. This supersedes earlier awaiting-acceptance wording. Runtime ff42625de47b6aa07f9b8a7ebde68cebd6479675 and closeout 6753657175a9405856d6ad921d8e2122fcc9619d are the accepted baseline. Feature work continues on codex/v262-recent-surahs with separate V2.6.2 ledger; V2.6.3 not authorized.

@@ -978,7 +978,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 #quran-selection[hidden] { display:none; }
 #quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=261">
+<link rel="stylesheet" href="./quran/reader.css?v=262">
 </head>
 <body>
 <div class="shell">
@@ -1109,7 +1109,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
     <div id="quran-library" hidden>
       <div class="quran-section-title"><div><h2>Al-Quran</h2><p>114 surah · 6,236 ayat · 604 halaman</p></div></div>
       <div id="quran-selection" hidden><p id="quran-selection-count" role="status" aria-live="polite"></p><div class="picker-actions"><button type="button" id="quran-selection-cancel" class="action-secondary">Batal</button><button type="button" id="quran-selection-done" class="action-secondary">Selesai</button></div></div>
-      <button type="button" id="quran-continue" class="quran-continue" hidden></button>
+      <section id="quran-recent" class="quran-recent" aria-labelledby="quran-recent-title"><h3 id="quran-recent-title">Bacaan Terkini</h3><p id="quran-recent-empty">Belum ada bacaan terkini</p><div id="quran-recent-row" class="quran-recent-row" role="group" aria-label="Surah dibaca terkini"></div><p id="quran-recent-status" class="app-feedback" role="status" aria-live="polite"></p></section>
       <label class="quran-search-label" for="quran-search">Cari surah</label>
       <input id="quran-search" class="quran-search" type="search" placeholder="Nama atau nombor surah" autocomplete="off">
       <p class="app-feedback" id="quran-library-status" role="status" aria-live="polite"></p>
@@ -1770,7 +1770,7 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
-<script src="./quran/checklist.js?v=261"></script>
+<script src="./quran/checklist.js?v=262"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -3440,6 +3440,7 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/reader.js?v=261"></script>
+<script src="./quran/recent.js?v=262"></script>
+<script src="./quran/reader.js?v=262"></script>
 </body>
 </html>

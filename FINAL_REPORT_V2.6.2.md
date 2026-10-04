@@ -1,0 +1,45 @@
+# V2.6.2 — Bacaan Terkini
+Date: 2026-10-04 Asia/Kuala_Lumpur.
+Release: local checks complete; commit/push/deployment/production pending. Not user-approved stable.
+
+## Files and implementation
+- Runtime: index.html, quran/reader.js, quran/reader.css, service-worker.js, new quran/recent.js.
+- Verification: tools/verify_quran_recent.cjs, tools/verify_quran_recent_browser.cjs, tools/verify_quran_recent_reader_regression.cjs, tools/verify_quran_recent_pwa.cjs and tools/v2.6.2-validation-report.json.
+- Records: CODEX_PROGRESS_V2.6.2.md, this report, and V2.6.1 ledger/report/JSON updated solely to record explicit user stable acceptance.
+- Replaces single Sambung bacaan button above Cari surah with Bacaan Terkini. Up to ten distinct surahs, newest first, one horizontal flex-nowrap row. Touch swipe, mouse/trackpad/wheel, keyboard Tab/focus-nearest scrolling; overflow constrained to row. Empty text Belum ada bacaan terkini. Full accessible names retained when visually truncated. Hidden during Tambah selection.
+- Existing catalogue/search/checklist and full-reader paths reused. Page/Simple/Classic/Tajweed renderer and fitting block byte-identical to accepted baseline; authoritative data/mapping/fonts/checklist module unchanged. No backend/accounts/dependencies/other deployment project.
+
+## Exact schema and legacy seed
+- Key uwa-quran-recent-v1 = {schema:1,entries:[{surah,mode,ayah,page?}]}. Canonical integer surah 1–114. List stores ayah anchor; Page/Classic also store page. Newest first by array order, max 10 unique; no timestamp, text, script or Tajweed state. Never resets by day; independent of checklist membership/completion.
+- Validates known modes, catalogue ayah counts and first/last-page bounds; invalid entries omitted, first valid duplicate retained, cap 10. A malformed root shows a concise notice and remains unchanged until genuine reading repairs it. Reader never opens an invalid stored ID/position.
+- Only a missing history key seeds one strictly valid original uwa-quran-reader-v1.last record. Existing empty or malformed history never reseeds. No fabricated older history.
+- Durable uwa-quran-recent-v1-legacy-backup = {schema:1,last:<original last object>} precedes seed writes. Legacy reader writes protected while seed backup cannot be saved. Original bookmarks/checklist untouched. One verified JSON write per history update; failure preserves persisted state, exposes notice, keeps session reading/history usable and retries on later genuine interaction, including unchanged position after storage recovers.
+
+## Reading positions and active-surah rule
+- Ordinary catalogue/checklist opens retain accepted V2.6.1 direct-opening behavior. Only recent tap passes stored position/mode to existing openSurah. History stores no script/Tajweed, so current preferences and compatibility remain authoritative: Classic history under Simple falls back to Page.
+- List records first visible ayah intersecting the 80px reading line, or first visible ayah below it, using stable data-ayah identity. Actual wheel/touch/keyboard reading engages tracking; verse tap retains original behavior. Trailing scroll writes throttled to one per second, with forced latest pending anchor flush on Back, capture-phase app navigation, hidden visibility and pagehide. Engagement ends after settling; no continued writes from programmatic resume/focus/background font/layout scrolling.
+- Recent List resume waits for existing render/fonts, then places ayah>1 at readable 80px anchor with instant scroll. No pixel offsets stored; token guard cancels obsolete requests. Ordinary direct openings unchanged. Back returns/focuses the refreshed recent item or original catalogue/checklist button as appropriate.
+- Page/Classic use actual navigated page. Retain current explicitly opened surah while it exists in that page's existing canonical verse-key set; otherwise select first surah in canonical reading/token order. Simple uses existing end-marker whole-verse identities. Only that single active surah is recorded, never every surah on a shared page.
+- Proven pages 603/604 example: explicit 113 on 604 retained; Back 603 selects 109; Forward 604 selects 112. History [112,109,113], no phantom 110/111/114. Same-surah metadata-only mode/script changes deduplicate and preserve history order; background prefetch/Tajweed rendering/Classic resize/fitting do not record.
+- Catalogue rendering/search, Tambah selections, checklist checking/reorder/removal are not reading events. Failed uncached opening also does not enter history. Verse Simpan/bookmarks unchanged; no V2.6.3.
+
+## Validation and screenshot evidence
+- 23 model cases: missing/valid seed/idempotence/recovery backup; invalid ID/ayah/page/mode; malformed schema; first/reopen/dedup/newest/cap 10; metadata order; reload/no day reset; read/write/backup failures and retry after storage recovery.
+- Chrome at 320/390/1280: zero/one/ten/long names; native CDP touch swipe at phone widths; wheel/Tab/offscreen focus; equal row top coordinates/no document overflow; catalogue/checklist history, management isolation, List scroll/ayah20 resume, pending Back/app-nav/hidden/pagehide flush, daily persistence, Page/Classic navigation/resume/multi-surah rule, compatibility/settings/bookmarks/focus and write failure. Zero relevant console/page errors.
+- Confirmed desktop stale-gesture overwrite fixed and retested: after saved scroll position, programmatic Back-button auto-scroll no longer overwrites it. Readable List resume tightened after screenshot QA. Harness adaptations honor existing hidden mobile nav and preserved reader on app-view reentry; none alter app behavior.
+- Accepted V2.6.1 checklist migration19 cases and unchanged browser regression suite pass at 320/390/1280, including add/search/cancel/check/reorder/removal/checked Undo/reload/day reset/storage failure/source assignment/independent migration.
+- 78 exact baseline/candidate reader comparisons: List 1/2/114, Page/Classic 1/7/12/604, 320/390/1280, Uthmani OFF/ON and Simple as applicable. Exact text/token geometry/font/reading pixels. Full604 sweeps not repeated because renderer/fitter bodies unchanged.
+- Existing Quran/script/Tajweed validators pass: 114/6236/604, exact original data and both scripts/112 intros/15 sajdah, 59,253 mapped annotations / 804 existing skips / 273 plain conflicts. All inline/module/reader/SW syntax and git diff --check pass. npm/build/typecheck inapplicable to this static PWA.
+- Evidence: /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2. Inspected zero/one/ten at all widths, final readable List resume, representative reading/offline captures. Physical iPhone/Safari not tested; desktop Chrome with phone viewport/touch emulation only.
+
+## Performance, storage and offline
+- Final five-run local fresh-context sample: baseline load median 136.1ms / candidate 133.7ms; resource decoded startup bytes 384,296→394,957 (+10,661 bytes excluding HTML). Zero Quran page/surah/script content requests at startup; only added small recent module. No all 604-page or full-text preload. Small sample, not universal speed claim.
+- One history write after a wheel gesture; 100 scroll events plus pending leave cause at most one history update. Repeated same position no writes. Tajweed/resize/fitting produce zero history writes. Compatible legacy last saves on the same flush. Empty history JSON 25 bytes; max 10 compact entries remains under 1KB.
+- Cache uwa-bacaan-harian-v262-recent-surahs / asset versions v262 follows existing network-first HTML/cache-first assets. New recent module shell-cached; reader data remains lazy.
+- V2.6.1→V2.6.2 upgrade passed: checklist membership/order/today completion/migration backup byte-equal; bookmarks/script/Tajweed retained; one legacy history seed/recovery backup. Offline history, List ayah 20 resume, cached Uthmani/Simple List/Page/Classic and new-tab resume pass. Uncached surah still needs network and fails gracefully without phantom history.
+
+## Baseline, rollback and release
+- Accepted V2.6.1 runtime ff42625de47b6aa07f9b8a7ebde68cebd6479675; baseline/rollback including documentation closeout 6753657175a9405856d6ad921d8e2122fcc9619d.
+- Branch codex/v262-recent-surahs, reused attached clean managed worktree. Original user checkouts preserved. Rollback through a new revert commit/main workflow, never reset/force-push. V2.6.1 ignores new history keys; existing reader last remains compatible; retain history/seed backup for forward recovery.
+- Implementation/release/local-remote hashes/deployment/production pending final release gate. Ledger records checkpoints and is authoritative for resume.
+- Remaining user checks after release: review Bacaan Terkini on actual preferred devices and explicitly accept stable. V2.6.2 is not automatically user-approved; V2.6.3 will not begin without instruction.

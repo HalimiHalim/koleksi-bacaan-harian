@@ -1,0 +1,209 @@
+{
+  "version": "2.6.2",
+  "baselineRollback": "6753657175a9405856d6ad921d8e2122fcc9619d",
+  "acceptedRuntime": "ff42625de47b6aa07f9b8a7ebde68cebd6479675",
+  "historyKey": "uwa-quran-recent-v1",
+  "modelCases": 23,
+  "checklistMigrationCases": 19,
+  "protectedRendererFitterSourcesMappingFontsChecklistUnchanged": true,
+  "recentInteractions": {
+    "widths": [
+      {
+        "width": 320,
+        "zeroOneTen": true,
+        "listScrollResume": true,
+        "pendingFlush": true,
+        "dedupCap": true,
+        "noManagementHistory": true,
+        "keyboardWheel": true,
+        "nativeSwipe": true,
+        "sourceRequestsAtStartup": 0,
+        "errors": 0
+      },
+      {
+        "width": 390,
+        "zeroOneTen": true,
+        "listScrollResume": true,
+        "pendingFlush": true,
+        "dedupCap": true,
+        "noManagementHistory": true,
+        "keyboardWheel": true,
+        "nativeSwipe": true,
+        "sourceRequestsAtStartup": 0,
+        "errors": 0
+      },
+      {
+        "width": 1280,
+        "zeroOneTen": true,
+        "listScrollResume": true,
+        "pendingFlush": true,
+        "dedupCap": true,
+        "noManagementHistory": true,
+        "keyboardWheel": true,
+        "nativeSwipe": false,
+        "sourceRequestsAtStartup": 0,
+        "errors": 0
+      }
+    ],
+    "pageCases": [
+      {
+        "mode": "page",
+        "multiSurahRetained": true,
+        "forwardBackward": true,
+        "resumeFocus": true,
+        "noLayoutHistory": true
+      },
+      {
+        "mode": "classic",
+        "multiSurahRetained": true,
+        "forwardBackward": true,
+        "resumeFocus": true,
+        "noLayoutHistory": true
+      }
+    ],
+    "compatibilityBookmarks": true,
+    "writeFailureReadingUsable": true,
+    "physicalIPhoneTested": false
+  },
+  "checklistInteractions": [
+    {
+      "width": 320,
+      "addSearchCancelBack": true,
+      "readerCheckboxIsolation": true,
+      "reorderRemoveUndo": true,
+      "reloadProgress": true,
+      "settingsModesScripts": true,
+      "dailyRollover": true,
+      "consoleErrors": 0,
+      "startupQuranContentRequests": 0
+    },
+    {
+      "width": 390,
+      "addSearchCancelBack": true,
+      "readerCheckboxIsolation": true,
+      "reorderRemoveUndo": true,
+      "reloadProgress": true,
+      "settingsModesScripts": true,
+      "dailyRollover": true,
+      "consoleErrors": 0,
+      "startupQuranContentRequests": 0
+    },
+    {
+      "width": 1280,
+      "addSearchCancelBack": true,
+      "readerCheckboxIsolation": true,
+      "reorderRemoveUndo": true,
+      "reloadProgress": true,
+      "settingsModesScripts": true,
+      "dailyRollover": true,
+      "consoleErrors": 0,
+      "startupQuranContentRequests": 0
+    }
+  ],
+  "readerComparisons": {
+    "count": 78,
+    "exactTextGeometryPixels": true
+  },
+  "pwa": {
+    "url": "http://127.0.0.1:8828/",
+    "upgrade": true,
+    "checklistMigrationStatePreserved": true,
+    "legacySeedBackup": true,
+    "offlineHistory": true,
+    "cachedUthmaniSimpleListPageClassicResume": true,
+    "newOfflineTab": true,
+    "uncachedContentRequiresNetwork": true,
+    "uncachedFailureDoesNotRecord": true,
+    "cacheKeys": [
+      "uwa-bacaan-harian-v262-recent-surahs"
+    ],
+    "errors": []
+  },
+  "performance": [
+    {
+      "kind": "baseline",
+      "runs": [
+        {
+          "loadMs": 409.80000001192093,
+          "bytes": 384296,
+          "quranDataRequests": 0,
+          "historyBytes": 0
+        },
+        {
+          "loadMs": 141.10000002384186,
+          "bytes": 384296,
+          "quranDataRequests": 0,
+          "historyBytes": 0
+        },
+        {
+          "loadMs": 100,
+          "bytes": 384296,
+          "quranDataRequests": 0,
+          "historyBytes": 0
+        },
+        {
+          "loadMs": 136.09999999403954,
+          "bytes": 384296,
+          "quranDataRequests": 0,
+          "historyBytes": 0
+        },
+        {
+          "loadMs": 107.90000000596046,
+          "bytes": 384296,
+          "quranDataRequests": 0,
+          "historyBytes": 0
+        }
+      ],
+      "medianMs": 136.09999999403954
+    },
+    {
+      "kind": "candidate",
+      "runs": [
+        {
+          "loadMs": 122.30000001192093,
+          "bytes": 394957,
+          "quranDataRequests": 0,
+          "historyBytes": 25
+        },
+        {
+          "loadMs": 133.69999998807907,
+          "bytes": 394957,
+          "quranDataRequests": 0,
+          "historyBytes": 25
+        },
+        {
+          "loadMs": 149.30000001192093,
+          "bytes": 394957,
+          "quranDataRequests": 0,
+          "historyBytes": 25
+        },
+        {
+          "loadMs": 103.19999998807907,
+          "bytes": 394957,
+          "quranDataRequests": 0,
+          "historyBytes": 25
+        },
+        {
+          "loadMs": 153.90000000596046,
+          "bytes": 394957,
+          "quranDataRequests": 0,
+          "historyBytes": 25
+        }
+      ],
+      "medianMs": 133.69999998807907
+    }
+  ],
+  "storageWrites": {
+    "settledWheelGesture": 1,
+    "burst100ScrollEventsPlusLeaveMaximum": 1,
+    "backgroundTajweedResizeFit": 0,
+    "positionThrottleMs": 1000,
+    "flushOnExit": true
+  },
+  "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.2",
+  "physicalIPhoneTested": false,
+  "release": {
+    "status": "PENDING",
+    "userAcceptedStable": false
+  }
+}

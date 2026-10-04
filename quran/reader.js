@@ -24,6 +24,12 @@
   let state = { last: null, bookmarks: [], mode: 'list', script: 'uthmani', uthmaniMode: 'list' };
   let requestId = 0;
   let versePages = null;
+  let recent = null;
+  let historyIntent = null;
+  let listScrollEngaged = false;
+  let positionTimer = 0;
+  let pendingListAyah = null;
+  let lastPositionFlush = 0;
   let tajweedOn = false;
   const arabicDigits = (number) => String(number).replace(/\d/g, digit => '٠١٢٣٤٥٦٧٨٩'[Number(digit)]);
   const path = (folder, number) => `./quran/${folder}/${String(number).padStart(3, '0')}.json${folder === 'pages' ? '?v=20' : ''}`;
@@ -57,7 +63,10 @@
     }
   }
   updateTajweedButtons();
-  function save() { try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (error) {} }
+  function save() {
+    if (recent && !recent.protectLegacy()) return;
+    try { localStorage.setItem(stateKey, JSON.stringify(state)); } catch (error) {}
+  }
   function setStatus(message, target = 'quran-reader-status') { $(target).textContent = message; }
   async function getJson(url) {
     const response = await fetch(url);
@@ -94,7 +103,8 @@
   }
   function chapter(number) { return chapters[number - 1]; }
   function showArea(area) {
-    if (area !== 'reader') closeSettings();
+    if (area !== 'reader') { flushReadingPosition(); listScrollEngaged = false; closeSettings(); }
+    if (area === 'library') renderRecent();
     $('quran-routine').hidden = area !== 'routine';
     $('quran-library').hidden = area !== 'library';
     $('quran-reader').hidden = area !== 'reader';
@@ -105,18 +115,66 @@
     document.body.classList.toggle('quran-reading', area === 'reader');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-  function renderContinue() {
-    const last = state.last;
-    const button = $('quran-continue');
-    if (!last || !chapter(last.surah)) { button.hidden = true; return; }
-    button.hidden = selecting;
-    button.replaceChildren();
-    const lead = document.createElement('strong');
-    lead.textContent = `Sambung bacaan · ${chapter(last.surah)[1]}`;
-    const sub = document.createElement('small');
-    sub.textContent = ['page', 'classic'].includes(last.mode) ? `Halaman ${last.page || chapter(last.surah)[4]}` : `Ayat ${last.ayah || 1}`;
-    button.append(lead, sub);
+  function renderRecent() {
+    $('quran-recent').hidden = selecting;
+    const entries = recent?.entries || [];
+    const list = $('quran-recent-row');
+    list.replaceChildren();
+    $('quran-recent-empty').hidden = entries.length > 0;
+    list.hidden = !entries.length;
+    for (const entry of entries) {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'quran-recent-item';
+      button.dataset.recentSurah = entry.surah;
+      const name = document.createElement('strong'); name.textContent = chapter(entry.surah)[1];
+      const position = document.createElement('small');
+      position.textContent = entry.mode === 'list' ? `Ayat ${entry.ayah}` : `Halaman ${entry.page}`;
+      button.setAttribute('aria-label', `${name.textContent}, ${position.textContent}`);
+      button.append(name, position); list.append(button);
+    }
+    // This runs on library entry/exit only, not on scroll or font fitting.
+    list.scrollLeft = 0;
   }
+  function readerActive() {
+    return document.body.dataset.currentView === 'allday' && !root.hidden && !$('quran-reader').hidden;
+  }
+  function visibleListAyah() {
+    if (!readerActive() || mode !== 'list' || !listScrollEngaged) return null;
+    const nodes = [...$('quran-verse-list').querySelectorAll('[data-ayah]')];
+    const node = nodes.find(node => {
+      const rect = node.getBoundingClientRect();
+      return rect.bottom > 80 && rect.top < innerHeight;
+    });
+    return node ? Number(node.dataset.ayah) : null;
+  }
+  function flushReadingPosition() {
+    clearTimeout(positionTimer); positionTimer = 0;
+    const ayah = pendingListAyah ?? visibleListAyah();
+    pendingListAyah = null; listScrollEngaged = false;
+    if (ayah && (state.last?.surah !== surah || state.last?.ayah !== ayah || state.last?.mode !== mode)) {
+      historyIntent = { token:requestId, touch:true };
+      updateLast(ayah); lastPositionFlush = Date.now();
+    }
+  }
+  function engageListScroll(event) {
+    if (!readerActive() || mode !== 'list' || document.hidden || $('quran-reader-status').textContent || !$('quran-settings').hidden) return;
+    if (event.type === 'keydown' && (!['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(event.key) || event.target.closest?.('button,input,textarea'))) return;
+    listScrollEngaged = true;
+  }
+  window.addEventListener('wheel', engageListScroll, { passive:true });
+  window.addEventListener('touchmove', engageListScroll, { passive:true });
+  window.addEventListener('keydown', engageListScroll);
+  window.addEventListener('scroll', () => {
+    if (!listScrollEngaged || !readerActive() || mode !== 'list') return;
+    pendingListAyah = visibleListAyah();
+    clearTimeout(positionTimer);
+    positionTimer = setTimeout(flushReadingPosition, Math.max(200, 1000 - (Date.now() - lastPositionFlush)));
+  }, { passive:true });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) flushReadingPosition(); });
+  window.addEventListener('pagehide', flushReadingPosition);
+  document.addEventListener('click', event => {
+    if (event.target.closest('[data-app-view]')) { flushReadingPosition(); listScrollEngaged = false; }
+  }, true);
   function renderChapters(query = '') {
     const list = $('quran-surah-list');
     const q = query.trim().toLocaleLowerCase();
@@ -149,16 +207,22 @@
       setStatus('Memuatkan senarai surah…', 'quran-library-status');
       chapters = await getJson('./quran/chapters.json');
       if (chapters.length !== 114 || chapters.some((item, i) => item[0] !== i+1)) throw new Error('Incomplete index');
+      let historyStorage = null;
+      try { historyStorage = localStorage; } catch {}
+      recent ||= window.createQuranRecent(chapters, historyStorage, message => setStatus(message, 'quran-recent-status'));
       window.dispatchEvent(new CustomEvent('quran-catalogue', { detail:chapters }));
       renderChapters($('quran-search').value);
-      renderContinue();
+      renderRecent();
     } catch (error) {
       setStatus('Senarai surah belum tersedia. Sambung internet dan buka semula tab ini.', 'quran-library-status');
     }
   }
   function updateLast(ayah = 1) {
     state.last = { surah, ayah, mode, page };
-    save(); renderContinue();
+    save();
+    if (recent && historyIntent?.token === requestId && readerActive()) {
+      recent.record(state.last, historyIntent.touch); historyIntent = null;
+    }
   }
   function setMode(next) {
     mode = next === 'classic' && state.script !== 'uthmani' ? 'page' : next;
@@ -172,11 +236,13 @@
     $('quran-page-panel').hidden = mode !== 'page';
     $('quran-classic-panel').hidden = mode !== 'classic';
   }
-  async function openSurah(number, resume = false, requestedMode = null) {
+  async function openSurah(number, resume = false, requestedMode = null, position = null, interaction = 'open') {
     if (!chapter(number)) return;
+    flushReadingPosition(); listScrollEngaged = false;
     surah = number;
-    const last = state.last;
+    const last = position || state.last;
     const token = ++requestId;
+    historyIntent = { token, touch:interaction === 'open' };
     const item = chapter(number);
     $('quran-reader-title').textContent = item[1];
     $('quran-reader-arabic-title').textContent = item[2];
@@ -651,8 +717,10 @@
       if (scriptSwitchPending) { ++requestId; scriptSwitchPending = false; setStatus(''); }
       return;
     }
+    flushReadingPosition(); listScrollEngaged = false;
     scriptSwitchPending = true;
     const token = ++requestId;
+    historyIntent = { token, touch:false };
     const ayah = state.last?.ayah || 1;
     const anchor = mode === 'list' ? [...$('quran-verse-list').querySelectorAll('.quran-verse')]
       .find(node => node.getBoundingClientRect().bottom > 80) : null;
@@ -693,7 +761,10 @@
   async function switchMode(next) {
     if (!surah || next === mode || (next === 'classic' && state.script !== 'uthmani')) return;
     const previousMode = mode;
-    const token = ++requestId; setMode(next);
+    flushReadingPosition(); listScrollEngaged = false;
+    const token = ++requestId;
+    historyIntent = { token, touch:false };
+    setMode(next);
     window.scrollTo(0, 0);
     if (next === 'page' || next === 'classic') {
       if (previousMode === 'list') {
@@ -705,7 +776,7 @@
       if (token !== requestId || mode !== next) return;
       if (next === 'classic') await renderClassicPage(token, state.last?.ayah);
       else await renderPage(token, state.last?.ayah);
-    } else { await openSurah(surah, true, 'list'); }
+    } else { await openSurah(surah, true, 'list', null, 'metadata'); }
   }
 
   const settings = $('quran-settings');
@@ -725,7 +796,7 @@
     selecting = false; pending.clear();
     if (history.state?.quranSelecting) history.back();
     $('quran-selection').hidden = true;
-    $('quran-search').value = ''; renderChapters(); renderContinue(); showArea('routine');
+    $('quran-search').value = ''; renderChapters(); renderRecent(); showArea('routine');
     $('quran-add').focus({ preventScroll:true });
   }
   $('quran-add').addEventListener('click', async () => {
@@ -733,7 +804,7 @@
     selecting = true; pending.clear();
     history.pushState({ quranSelecting:true }, '', location.href);
     $('quran-selection').hidden = false;
-    $('quran-continue').hidden = true; $('quran-search').value = ''; selectionCount();
+    $('quran-recent').hidden = true; $('quran-search').value = ''; selectionCount();
     showArea('library'); await loadChapters(); if (selecting) { renderChapters(); $('quran-search').focus(); }
   });
   window.addEventListener('popstate', () => { if (selecting) finishSelection(); });
@@ -749,7 +820,9 @@
     readerOrigin = 'library'; showArea('library'); loadChapters();
   });
   $('quran-back').addEventListener('click', () => {
-    ++requestId; showArea(readerOrigin);
+    const recentSurah = originButton?.dataset.recentSurah;
+    showArea(readerOrigin); ++requestId;
+    if (recentSurah) originButton = $('quran-recent-row').querySelector(`[data-recent-surah="${recentSurah}"]`);
     if (originButton?.isConnected) originButton.focus({ preventScroll:true });
   });
   $('quran-search').addEventListener('input', event => renderChapters(event.target.value));
@@ -775,12 +848,38 @@
     $('quran-back').setAttribute('aria-label', 'Kembali ke Amalan Saya');
     openSurah(event.detail);
   });
-  $('quran-continue').addEventListener('click', () => {
-    readerOrigin = 'library'; originButton = $('quran-continue');
+  $('quran-recent-row').addEventListener('click', event => {
+    const button = event.target.closest('[data-recent-surah]');
+    const entry = recent?.entries.find(item => item.surah === Number(button?.dataset.recentSurah));
+    if (!entry || !recent.validate(entry)) return;
+    readerOrigin = 'library'; originButton = button;
     $('quran-back').querySelector('.quran-back-label').textContent = 'Semua surah';
     $('quran-back').setAttribute('aria-label', 'Kembali ke senarai surah');
-    if (state.last) openSurah(state.last.surah, true);
+    const opening = openSurah(entry.surah, true, entry.mode, entry);
+    const token = requestId;
+    opening.then(async () => {
+      if (entry.mode !== 'list' || entry.ayah <= 1) return;
+      await document.fonts.ready;
+      requestAnimationFrame(() => {
+        if (token !== requestId || !readerActive() || mode !== 'list') return;
+        const anchor = $(`quran-ayah-${entry.ayah}`);
+        if (anchor) window.scrollTo({ top:scrollY + anchor.getBoundingClientRect().top - 80, behavior:'instant' });
+      });
+    });
   });
+  $('quran-recent-row').addEventListener('focusin', event => {
+    const button = event.target.closest('[data-recent-surah]');
+    if (!button) return;
+    const row = $('quran-recent-row'), rect = button.getBoundingClientRect(), frame = row.getBoundingClientRect();
+    if (rect.left < frame.left) row.scrollLeft -= frame.left - rect.left + 3;
+    else if (rect.right > frame.right) row.scrollLeft += rect.right - frame.right + 3;
+  });
+  $('quran-recent-row').addEventListener('wheel', event => {
+    const row = $('quran-recent-row');
+    if (Math.abs(event.deltaY) <= Math.abs(event.deltaX) || row.scrollWidth <= row.clientWidth) return;
+    const before = row.scrollLeft; row.scrollLeft += event.deltaY;
+    if (row.scrollLeft !== before) event.preventDefault();
+  }, { passive:false });
   // Only the small catalogue is needed for routine names; no Quran pages loaded.
   loadChapters();
   settingsToggle.addEventListener('click', () => {
@@ -820,13 +919,15 @@
   for (const id of ['quran-prev-page-bottom', 'quran-next-page-bottom']) {
     $(id).addEventListener('click', () => {
       page = Math.max(1, Math.min(604, page + (id.includes('prev') ? -1 : 1)));
-      renderPage();
+      const token = ++requestId; historyIntent = { token, touch:true };
+      renderPage(token);
     });
   }
   for (const id of ['quran-prev-classic-bottom', 'quran-next-classic-bottom']) {
     $(id).addEventListener('click', () => {
       page = Math.max(1, Math.min(604, page + (id.includes('prev') ? -1 : 1)));
-      renderClassicPage();
+      const token = ++requestId; historyIntent = { token, touch:true };
+      renderClassicPage(token);
     });
   }
   new ResizeObserver(() => scheduleClassicFit()).observe(root);
@@ -843,7 +944,10 @@
     const verse = event.target.closest('[data-ayah]');
     if (verse) {
       $('quran-verse-list').querySelector('.is-current')?.classList.remove('is-current');
-      verse.classList.add('is-current'); updateLast(Number(verse.dataset.ayah));
+      verse.classList.add('is-current');
+      clearTimeout(positionTimer); pendingListAyah = null; listScrollEngaged = false;
+      historyIntent = { token:requestId, touch:true };
+      updateLast(Number(verse.dataset.ayah));
     }
   });
 })();
