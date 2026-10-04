@@ -14,9 +14,9 @@ Date: 2026-10-04 Asia/Kuala_Lumpur.
 |3 Synchronization/navigation|VERIFIED|Three widths, reader/card/cross-tab sync, exact ayah/Back/history, async guards.|
 |4 Validation|VERIFIED|Models/invariants, accepted suites,78 exact reader comparisons, PWA/performance/syntax.|
 |5 Release|VERIFIED|Release249bcf8 remote/deployment success; production suites/assets/SW verified.|
-|UI Polish|IN PROGRESS|Requested within V2.6.3; baseline c8807ca clean/remote matched; implementation and focused checks next.|
+|UI Polish|VERIFIED|Release19e3f14, Production6838398305 success; focused three widths/timers/migration/favourites/PWA/assets pass.|
 
-First incomplete milestone: UI Polish release. Original milestones0–5 VERIFIED; UI Polish implementation/local checks VERIFIED, release/production IN PROGRESS. Implementation/release HEAD249bcf80ed7c0851b095b5dfeaddbbfc721293bd matches remote main; successful Production deployment6838050280. Documentation-only closeout follows; resolve exact final HEAD with git rev-parse HEAD. No confirmed issue in scope. Original feature checks complete; current polish release/production checks remain. Historical audit checkpoints below preserved. Before resuming read full ledger, inspect actual branch/HEAD/status and evidence, preserve changes, resume first incomplete milestone and repeat only missing/affected checks.
+First incomplete milestone: none. Original milestones0–5 and UI Polish VERIFIED. Current runtime release19e3f14c5cbe5a22b6a2270665c1f620dee80da6 matches remote main; Production6838398305 successful. Implementation/release HEAD249bcf80ed7c0851b095b5dfeaddbbfc721293bd matches remote main; successful Production deployment6838050280. Documentation-only closeout follows; resolve exact final HEAD with git rev-parse HEAD. No confirmed issue in scope. Original feature and current polish required checks complete. Historical audit checkpoints below preserved. Before resuming read full ledger, inspect actual branch/HEAD/status and evidence, preserve changes, resume first incomplete milestone and repeat only missing/affected checks.
 
 ## Audited baseline and decisions
 - Milestone0 VERIFIED: actual HEAD/origin/main match fb770e74362b0b699bf2d439d22d02b60a1267c2; clean starting worktree, V2.6.2 records read. No old saved-verse destination exists. List Simpan toggles state.bookmarks then saves uwa-quran-reader-v1; baseline regex-only load, append order, no persistence confirmation. Generic reader save previously rewrote all fields and could drop invalid evidence; Simpan also fell through to updateLast, which must stop for membership-only actions.
@@ -80,3 +80,13 @@ First incomplete milestone: UI Polish release. Original milestones0–5 VERIFIED
 
 ## UI Polish — release gate checkpoint
 - Seven intended files reviewed: two runtime files, two focused verifiers and three existing V2.6.3 records. Syntax/model/focused UI/PWA/screenshots and diff checks passed. No private browser state or secrets tracked; synthetic fixtures only. Fresh origin/main stillc8807ca30cc1fd417c014368401ae50cf6529234. Commit/push next; first incomplete UI Polish release.
+
+## UI Polish — pushed implementation
+- Verified polish commit19e3f14c5cbe5a22b6a2270665c1f620dee80da6 pushed normally to main. Independent ls-remote matches; GitHub Vercel check success. Seven production asset and focused UI/PWA checks underway; milestone UI Polish remains IN PROGRESS until production verified.
+
+## UI Polish — production VERIFIED
+- Implementation/runtime19e3f14c5cbe5a22b6a2270665c1f620dee80da6 independently matches remote main; GitHub Vercel and Production6838398305 success. Production https://koleksi-bacaan-harian.vercel.app/.
+- Production focused UI PASS320/390/1280: button populated/empty geometry/placement/count/sort isolation, add/search/multi-select/Selesai/Batal/browser Back/focus, sort/removal/Undo, exact15s/no rerender extension/reset/stale message+error/reload, migration paragraph/spacing absent and original readings/backups/marker preserved. Actionable initialization/storage warnings retained. Favourites save/remove/exact-ayah/Back and recent resume PASS. Relevant errors0.
+- Production PWA PASS: current cache/update/state preservation, six cached shell assets match local, cached offline favourites/exact-ayah/Back. Actual priorV2.6.3→polish upgrade separately verified locally from exactc8807ca baseline; no physical-device upgrade claim. Seven live runtime assets byte-identical. Production focused phone add/populated/empty/desktop/offline screenshots inspected.
+- Evidence /Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.3-UI-Polish/production. No required checks outstanding or confirmed issue. Physical iPhone/Safari remains untested. V2.6.3 ready for user acceptance; not stable and no next version.
+- Documentation-only ledger/report/validation JSON closeout follows, normal push and independent final hash/deployment/runtime-byte check. No runtime changes after verified polish; clean worktree on closeout. Final documentation HEAD resolved with git rev-parse HEAD. Original worktrees unchanged.

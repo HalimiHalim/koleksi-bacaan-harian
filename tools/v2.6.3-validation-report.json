@@ -674,8 +674,178 @@
     "checklistMigrationModelCases": 19,
     "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.3-UI-Polish",
     "release": {
-      "status": "PENDING",
-      "userAcceptedStable": false
+      "status": "VERIFIED",
+      "acceptanceStatus": "V2.6.3 ready for user acceptance",
+      "userAcceptedStable": false,
+      "implementationHash": "19e3f14c5cbe5a22b6a2270665c1f620dee80da6",
+      "remoteMatched": true,
+      "deploymentId": 6838398305,
+      "deploymentStatus": "success",
+      "productionUI": {
+        "url": "https://koleksi-bacaan-harian.vercel.app/",
+        "widths": [
+          {
+            "width": 320,
+            "geometry": {
+              "label": "+ Tambah Surah",
+              "width": 254,
+              "rowWidth": 254,
+              "height": 62,
+              "rowHeight": 62,
+              "afterLast": true,
+              "beforeFavourites": true,
+              "insideChecklist": false,
+              "controls": 0,
+              "buttons": 1,
+              "overflow": false,
+              "header": [
+                "Susun",
+                "0/0selesai"
+              ]
+            },
+            "addSearchMultiSelectCancelBackFocus": true,
+            "sortRemoveUndoExcluded": true,
+            "favouritesRecentSmoke": true,
+            "expiresExactly15000": true,
+            "rerenderDoesNotExtend": true,
+            "successResetsDeadline": true,
+            "oldTimerCannotEraseErrorOrMessage": true,
+            "reloadNotPersisted": true,
+            "migrationNoticeAbsentDataUnchanged": true,
+            "emptyPlacement": true,
+            "errors": 0
+          },
+          {
+            "width": 390,
+            "geometry": {
+              "label": "+ Tambah Surah",
+              "width": 324,
+              "rowWidth": 324,
+              "height": 62,
+              "rowHeight": 62,
+              "afterLast": true,
+              "beforeFavourites": true,
+              "insideChecklist": false,
+              "controls": 0,
+              "buttons": 1,
+              "overflow": false,
+              "header": [
+                "Susun",
+                "0/0selesai"
+              ]
+            },
+            "addSearchMultiSelectCancelBackFocus": true,
+            "sortRemoveUndoExcluded": true,
+            "favouritesRecentSmoke": true,
+            "expiresExactly15000": true,
+            "rerenderDoesNotExtend": true,
+            "successResetsDeadline": true,
+            "oldTimerCannotEraseErrorOrMessage": true,
+            "reloadNotPersisted": true,
+            "migrationNoticeAbsentDataUnchanged": true,
+            "emptyPlacement": true,
+            "errors": 0
+          },
+          {
+            "width": 1280,
+            "geometry": {
+              "label": "+ Tambah Surah",
+              "width": 1022,
+              "rowWidth": 1022,
+              "height": 62,
+              "rowHeight": 62,
+              "afterLast": true,
+              "beforeFavourites": true,
+              "insideChecklist": false,
+              "controls": 0,
+              "buttons": 1,
+              "overflow": false,
+              "header": [
+                "Susun",
+                "0/0selesai"
+              ]
+            },
+            "addSearchMultiSelectCancelBackFocus": true,
+            "sortRemoveUndoExcluded": true,
+            "favouritesRecentSmoke": true,
+            "expiresExactly15000": true,
+            "rerenderDoesNotExtend": true,
+            "successResetsDeadline": true,
+            "oldTimerCannotEraseErrorOrMessage": true,
+            "reloadNotPersisted": true,
+            "migrationNoticeAbsentDataUnchanged": true,
+            "emptyPlacement": true,
+            "errors": 0
+          }
+        ],
+        "initializationWarningPreserved": true,
+        "physicalIPhoneTested": false
+      },
+      "productionPwa": {
+        "url": "https://koleksi-bacaan-harian.vercel.app/",
+        "upgrade": false,
+        "stateAndMigrationBackupsPreserved": true,
+        "cacheKeys": [
+          "uwa-bacaan-harian-v263-ui-polish-1"
+        ],
+        "registrationUpdate": true,
+        "cachedShellMatches": [
+          "index.html",
+          "quran/reader.js?v=263-polish1",
+          "quran/reader.css?v=263-polish1",
+          "quran/favourites.js?v=263-polish1",
+          "quran/recent.js?v=263-polish1",
+          "quran/checklist.js?v=263-polish1"
+        ],
+        "offlineFavouritesAndExactAyah": true,
+        "errors": []
+      },
+      "productionAssets": [
+        {
+          "asset": "index.html",
+          "bytes": 162597,
+          "sha256": "ed5a15c66e0a707812e0d41063b7d7a51402825e37046a59662b864673b07357",
+          "matchesLocal": true
+        },
+        {
+          "asset": "service-worker.js",
+          "bytes": 2619,
+          "sha256": "a972779fed84c3e625640a8a8ef0baad323c15ee7f5e9b1e30f1a1a16bbd65c3",
+          "matchesLocal": true
+        },
+        {
+          "asset": "quran/favourites.js?v=263-polish1",
+          "bytes": 4431,
+          "sha256": "b818e0cf796f8834e4d65b9e79dbe75ed09c203a8ac8478c53459ec125626375",
+          "matchesLocal": true
+        },
+        {
+          "asset": "quran/recent.js?v=263-polish1",
+          "bytes": 4235,
+          "sha256": "a907a87050c8591c616494292fc7f083ab6463f7a13719b1acefe649c197cc43",
+          "matchesLocal": true
+        },
+        {
+          "asset": "quran/reader.js?v=263-polish1",
+          "bytes": 61920,
+          "sha256": "f741960cbdc01684cccca88e3164c341f6d8f490d700b8c46edb39272e87d085",
+          "matchesLocal": true
+        },
+        {
+          "asset": "quran/reader.css?v=263-polish1",
+          "bytes": 18041,
+          "sha256": "54c54197e1b0099d073fd9bd7fd4054127c8ba37b78f8ca9a738bbf0a13964df",
+          "matchesLocal": true
+        },
+        {
+          "asset": "quran/checklist.js?v=263-polish1",
+          "bytes": 5775,
+          "sha256": "cb8715d35a15cf2bfdb74a3ec429809732513e54dc88c97811939dcdf7378e76",
+          "matchesLocal": true
+        }
+      ],
+      "firstIncompleteMilestone": null,
+      "closeoutHash": "Resolve final documentation-only HEAD with git rev-parse HEAD"
     }
   }
 }
