@@ -154,7 +154,8 @@
     "pwa": {
       "url": "http://127.0.0.1:8828/",
       "upgradeFromBaseline": true,
-      "allStorageRawBytesPreservedOnUpgrade": true,
+      "allStorageRawBytesPreservedAfterReload": true,
+      "explicitRegistrationUpdate": true,
       "cacheKeys": [
         "uwa-bacaan-harian-v264-custom-delete-fix"
       ],
@@ -284,7 +285,336 @@
     "confirmationButtonHitTargetVerified": true
   },
   "release": {
-    "status": "PENDING"
+    "status": "VERIFIED",
+    "runtimeCommit": "6f9408ad4a0d177adb78c99a1bc20630ff6fab8d",
+    "independentRemoteMain": "6f9408ad4a0d177adb78c99a1bc20630ff6fab8d",
+    "githubStatus": {
+      "sha": "6f9408ad4a0d177adb78c99a1bc20630ff6fab8d",
+      "state": "success",
+      "statuses": [
+        {
+          "context": "Vercel",
+          "state": "success",
+          "target_url": "https://vercel.com/halimi-dashboard/koleksi-bacaan-harian/E5EKhYa71adjtzpvLLEpuZu3VRc1"
+        }
+      ]
+    },
+    "productionDeployment": {
+      "id": 6843005572,
+      "sha": "6f9408ad4a0d177adb78c99a1bc20630ff6fab8d",
+      "statuses": [
+        {
+          "created_at": "2026-10-04T15:37:14Z",
+          "environment": "Production",
+          "environment_url": "https://koleksi-bacaan-harian-lrm5nv94d-halimi-dashboard.vercel.app",
+          "log_url": "https://koleksi-bacaan-harian-lrm5nv94d-halimi-dashboard.vercel.app",
+          "state": "success"
+        }
+      ]
+    },
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "productionBrowser": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "checks": [
+        {
+          "width": 320,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "legacyDelete": true,
+          "confirmationCancelFocus": true,
+          "unrelatedStateAndQuranPreserved": true,
+          "reloadNoResurrection": true,
+          "builtInsUILocked": 21,
+          "overflow": false,
+          "errors": 0
+        },
+        {
+          "assign": [],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "morning"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "evening"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "assign": [
+            "morning",
+            "evening"
+          ],
+          "delete": true,
+          "obsoleteQuranAbsent": true
+        },
+        {
+          "absentActiveCollectionsDelete": true
+        },
+        {
+          "absentTrialMarkerObsoleteMalformedQuranDelete": true
+        },
+        {
+          "pendingUndoCannotResurrect": true
+        },
+        {
+          "createEditAddBothDelete": true,
+          "liveAndDeletedIdCollisionsSkipped": true,
+          "quranAbsentFromPicker": true
+        },
+        {
+          "failure": "malformed-members",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "malformed-order",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "malformed-daily",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "active-read-denied",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "obsolete-read-denied",
+          "safeResult": true,
+          "retryRecovered": false
+        },
+        {
+          "failure": "partial-throw",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "partial-silent",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "custom-malformed",
+          "safeResult": true,
+          "retryRecovered": true
+        },
+        {
+          "failure": "tombstone-malformed",
+          "safeResult": true,
+          "retryRecovered": true
+        }
+      ],
+      "isolatedSyntheticProfiles": true,
+      "physicalIPhoneSafariTested": false
+    },
+    "productionPwa": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "upgradeFromBaseline": false,
+      "allStorageRawBytesPreservedAfterReload": true,
+      "explicitRegistrationUpdate": true,
+      "cacheKeys": [
+        "uwa-bacaan-harian-v264-custom-delete-fix"
+      ],
+      "cachedAssetsMatch": [
+        "index.html",
+        "source-delete.js?v=264",
+        "quran/reader.js?v=264",
+        "quran/reader.css?v=264",
+        "quran/favourites.js?v=264",
+        "quran/recent.js?v=264",
+        "quran/checklist.js?v=264"
+      ],
+      "offlineCustomDeleteAndReload": true,
+      "quranAndRecoveryStateUnchangedByDelete": true,
+      "offlineFavouriteExactAyah": true,
+      "errors": []
+    },
+    "productionQuranSmoke": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "widths": [
+        {
+          "width": 320,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 254,
+            "rowWidth": 254,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 324,
+            "rowWidth": 324,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 1022,
+            "rowWidth": 1022,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        }
+      ],
+      "initializationWarningPreserved": true,
+      "physicalIPhoneTested": false
+    },
+    "productionAssetBytes": {
+      "url": "https://koleksi-bacaan-harian.vercel.app/",
+      "assets": [
+        {
+          "asset": "index.html",
+          "matches": true,
+          "sha256": "e12f934188d36f2a9b804611250885961f6cf204e9ea24d519e9f4a54da48c9c",
+          "bytes": 160812
+        },
+        {
+          "asset": "service-worker.js",
+          "matches": true,
+          "sha256": "216d87ea36067624bbb7c63729a748065353f256aeb480656f8f8fb840771f8b",
+          "bytes": 2615
+        },
+        {
+          "asset": "source-delete.js?v=264",
+          "matches": true,
+          "sha256": "c9817740c9bd2eb4d4232408905b6773168aa0bd143037a917a7e415c0b2558b",
+          "bytes": 3075
+        },
+        {
+          "asset": "quran/reader.js?v=264",
+          "matches": true,
+          "sha256": "f741960cbdc01684cccca88e3164c341f6d8f490d700b8c46edb39272e87d085",
+          "bytes": 61920
+        },
+        {
+          "asset": "quran/reader.css?v=264",
+          "matches": true,
+          "sha256": "54c54197e1b0099d073fd9bd7fd4054127c8ba37b78f8ca9a738bbf0a13964df",
+          "bytes": 18041
+        },
+        {
+          "asset": "quran/checklist.js?v=264",
+          "matches": true,
+          "sha256": "cb8715d35a15cf2bfdb74a3ec429809732513e54dc88c97811939dcdf7378e76",
+          "bytes": 5775
+        },
+        {
+          "asset": "quran/recent.js?v=264",
+          "matches": true,
+          "sha256": "a907a87050c8591c616494292fc7f083ab6463f7a13719b1acefe649c197cc43",
+          "bytes": 4235
+        },
+        {
+          "asset": "quran/favourites.js?v=264",
+          "matches": true,
+          "sha256": "b818e0cf796f8834e4d65b9e79dbe75ed09c203a8ac8478c53459ec125626375",
+          "bytes": 4431
+        }
+      ],
+      "allMatch": true
+    },
+    "productionScreenshotsInspected": true,
+    "realUserDataTouched": false,
+    "recordCloseout": "Verification/QA closeout commit follows; resolve final HEAD and independent remote after push."
   },
   "limitations": [
     "Physical iPhone/Safari untested; phone widths emulated with Chrome.",

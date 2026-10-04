@@ -16,9 +16,9 @@ Date: 2026-10-04, Asia/Kuala_Lumpur.
 | 1 Safe targeted deletion | VERIFIED | Source-only planner, validation, persistence/rollback readback and selected pending Undo cleanup; model/browser/PWA tests. |
 | 2 Built-in locks/custom creation | VERIFIED | Identity/history audit; all 1–21 UI and handler guards; live/deleted ID collision retries; create/edit/Add to/delete. |
 | 3 Focused validation | VERIFIED | Model 9 groups, browser 20 scenarios, existing regression, syntax/diff and baseline-to-current PWA upgrade/offline pass; screenshots inspected. |
-| 4 Release | IN PROGRESS | All local gates pass; intended diff/secrets review and rollback recorded. Commit/push/deployment and production verification next. |
+| 4 Release | VERIFIED | Runtime 6f9408ad independently matches main; Vercel success, Production deployment 6843005572 success; assets and all synthetic production checks pass. |
 
-First incomplete milestone: **4**, commit/push/deployment and production verification. Working tree has the intended implementation/tests/records only. Release status: PENDING.
+First incomplete milestone: **none** for implementation/release gates. Runtime HEAD/main `6f9408ad4a0d177adb78c99a1bc20630ff6fab8d` verified; verification/QA record closeout follows (HEAD identifies its final commit without a self-referential hash). Release status: VERIFIED, ready for user acceptance. At the closeout boundary check clean status and independent remote/deployment again. If interrupted before that boundary, finish only the records commit/push/readback.
 
 ## Proven root cause and identity audit
 
@@ -59,3 +59,11 @@ Evidence outside Git: `/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.4`. Only
 3. Implementation, 9 model groups, 19 browser scenarios, existing regression and local upgrade/offline tests pass. Two test-fixture assertions corrected: custom title itself contains “Quran”, so affected-module assertion scopes the confirmation suffix; initial theme explicitly seeded for exact PWA whole-storage snapshot. Neither correction changed runtime behavior.
 
 4. Milestones 0–3 VERIFIED: final 20-scenario browser suite passes; confirmation controls visible at 320/390/desktop, remaining custom entry/actions and Zikir completion screenshots inspected. First incomplete 4. All local gates pass; release authorized by task, PENDING.
+
+5. Runtime `6f9408ad4a0d177adb78c99a1bc20630ff6fab8d` committed/pushed normally after local gates. Independent remote-main SHA matches; GitHub Vercel success and matching Production deployment 6843005572 success. Production 20-scenario delete suite, existing Quran smoke at all widths, 8 live assets, 7 cached shell assets, explicit registration update, offline delete/reload and cached favourite exact-ayah pass. Screenshots inspected, no page/console errors; Quran and backups unchanged, synthetic isolated contexts only. Final QA helper records explicit registration update and distinguishes baseline upgrade from fresh production reload; both local/production PWA tests rerun and pass. Milestone 4 VERIFIED; evidence/QA-only closeout next, no runtime changes.
+
+## Release closeout
+
+- All milestones 0–4 VERIFIED. Runtime: `6f9408ad4a0d177adb78c99a1bc20630ff6fab8d`. Final records commit is this ledger's Git HEAD; check exact full hash with `git rev-parse HEAD`, independent remote-main and its GitHub/Vercel deployment after normal push. Records commit changes only report/ledger/validation JSON and the tested PWA verification helper (explicit update and accurately labeled evidence); runtime bytes stay identical.
+- Production evidence: `production/custom-delete-browser.json`, `custom-delete-pwa.json`, `regression/ui-polish.json`, `production-assets.json`, `release-verification.json` and inspected screenshots in the external QA directory. Final hash/deployment readback evidence is `production/closeout.json`.
+- Working tree clean after verified closeout; original user checkouts untouched. No unresolved confirmed issue in scope. Physical iPhone/Safari and explicit user acceptance remain. **V2.6.4 ready for user acceptance.** Never declare stable automatically; no next feature begun.

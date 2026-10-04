@@ -1,6 +1,6 @@
 # V2.6.4 — Custom Entry Delete Fix
 
-Implementation and local validation complete; release verification pending. V2.6.3 has not been assumed accepted stable. Baseline/rollback: `35bbf575f8afc9e453297a3ec8ee277bffa7ab89`.
+**V2.6.4 ready for user acceptance.** Implementation, local and production verification complete. V2.6.3 has not been assumed accepted stable. Baseline/rollback: `35bbf575f8afc9e453297a3ec8ee277bffa7ab89`.
 
 ## Root cause
 
@@ -22,13 +22,17 @@ Original identities 1–21, including Selawat 21, remain locked in UI and edit/s
 
 - Exact before reproduction and retained custom record; after deletion succeeds and reload shows no resurrection.
 - 9 targeted model integrity groups, including all 21 handler locks, missing/malformed/orphan/inaccessible keys, throwing/silent/write-then-throw refusals, partial rollback, absent-key restoration and unverified rollback warning.
-- Browser at 320px/390px/1280px: legacy/no assignment/Zikir/Doa/both, unrelated state, full create/edit/Add to/delete, ID collision retries, all built-in UI locks, confirmation/cancel/focus, pending Undo, active failures/retry and ignored obsolete Quran read failures. No console/page errors or horizontal overflow. Screenshot review recorded in ledger.
+- 20 browser scenarios at 320px/390px/1280px: legacy/no assignment/Zikir/Doa/both, unrelated state, full create/edit/Add to/delete, ID collision retries, all built-in UI locks, confirmation/cancel/focus, pending Undo, active failures/retry and ignored obsolete Quran read failures. No console/page errors or horizontal overflow. Screenshot review recorded in ledger.
 - Existing checklist 19, recent 23 and favourites 19 model checks; existing UI Polish smoke at all widths exercises checklist/favourites/recent and preserves migration evidence.
 - Baseline → V2.6.4 PWA upgrade preserves every seeded storage byte. All 7 cached assets match; offline custom deletion and reload pass with Quran/backups unchanged and cached favourite exact-ayah open retained.
 - Inline/changed JavaScript syntax and `git diff --check` pass. Intended diff reviewed, no private browser data/secrets tracked. All tests use isolated synthetic profiles; no real production user entries touched.
 
 ## Release and rollback
 
-Runtime commit, independent remote hash, GitHub/Vercel deployment and production synthetic smoke: **PENDING**. Normal existing main/Vercel workflow; no force-push. Rollback with a new revert commit toward the baseline, retain recovery snapshots and user storage; old delete bug would return. No data migration to reverse. Work preserved in attached worktree on `codex/v264-custom-delete-fix`; progress ledger tracks first incomplete milestone and release evidence.
+Runtime commit `6f9408ad4a0d177adb78c99a1bc20630ff6fab8d` independently matches remote main. GitHub Vercel status **success**; Production deployment **6843005572**, matching full runtime SHA, **success** at https://koleksi-bacaan-harian.vercel.app/.
+
+Production: all 20 synthetic custom-delete browser scenarios pass; existing checklist/favourites/recent UI smoke passes at 320/390/1280. Eight live runtime assets byte-match the commit. Explicit service-worker registration update succeeds; only the v264 cache remains, seven cached shell assets match, offline custom deletion/reload and favourite exact-ayah open pass. Quran/backups remain unchanged by deletion. Production screenshots inspected; zero console/page errors. Production testing uses only new isolated synthetic contexts; no real user entries touched. Actual old → new PWA upgrade is separately proven locally, not claimed for an existing production user profile.
+
+Normal existing main/Vercel workflow, no force-push. Rollback with a new revert commit toward `35bbf575f8afc9e453297a3ec8ee277bffa7ab89`, retain recovery snapshots and user storage; old delete bug would return. No data migration to reverse. Branch `codex/v264-custom-delete-fix`, attached worktree preserved; all milestones 0–4 VERIFIED. Verification/QA record closeout follows the runtime commit, without runtime changes; resolve its final hash using `git rev-parse HEAD` and compare `git ls-remote origin refs/heads/main`. Working tree clean at the verified closeout boundary. Ledger retains resumable checkpoints and release evidence.
 
 Evidence: `/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.4` (before reproduction, model/browser/PWA JSON and screenshots; existing regression evidence under `regression`). Physical iPhone/Safari remains untested. Actual preferred-device check and explicit user acceptance remain after release. No stable declaration or next feature.
