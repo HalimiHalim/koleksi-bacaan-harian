@@ -547,5 +547,135 @@
   "validationNotes": [
     "One final PWA offline reload load-event timeout; isolated repeat passed complete upgrade/offline suite.",
     "Empty status spacing affected Page screenshot; fixed,78 exact comparisons passed."
-  ]
+  ],
+  "uiPolish": {
+    "baselineRollback": "c8807ca30cc1fd417c014368401ae50cf6529234",
+    "version": "2.6.3",
+    "focused": {
+      "url": "http://127.0.0.1:8826/",
+      "widths": [
+        {
+          "width": 320,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 254,
+            "rowWidth": 254,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 390,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 324,
+            "rowWidth": 324,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        },
+        {
+          "width": 1280,
+          "geometry": {
+            "label": "+ Tambah Surah",
+            "width": 1022,
+            "rowWidth": 1022,
+            "height": 62,
+            "rowHeight": 62,
+            "afterLast": true,
+            "beforeFavourites": true,
+            "insideChecklist": false,
+            "controls": 0,
+            "buttons": 1,
+            "overflow": false,
+            "header": [
+              "Susun",
+              "0/0selesai"
+            ]
+          },
+          "addSearchMultiSelectCancelBackFocus": true,
+          "sortRemoveUndoExcluded": true,
+          "favouritesRecentSmoke": true,
+          "expiresExactly15000": true,
+          "rerenderDoesNotExtend": true,
+          "successResetsDeadline": true,
+          "oldTimerCannotEraseErrorOrMessage": true,
+          "reloadNotPersisted": true,
+          "migrationNoticeAbsentDataUnchanged": true,
+          "emptyPlacement": true,
+          "errors": 0
+        }
+      ],
+      "initializationWarningPreserved": true,
+      "physicalIPhoneTested": false
+    },
+    "pwa": {
+      "url": "http://127.0.0.1:8828/",
+      "upgrade": true,
+      "stateAndMigrationBackupsPreserved": true,
+      "cacheKeys": [
+        "uwa-bacaan-harian-v263-ui-polish-1"
+      ],
+      "registrationUpdate": true,
+      "cachedShellMatches": [
+        "index.html",
+        "quran/reader.js?v=263-polish1",
+        "quran/reader.css?v=263-polish1",
+        "quran/favourites.js?v=263-polish1",
+        "quran/recent.js?v=263-polish1",
+        "quran/checklist.js?v=263-polish1"
+      ],
+      "offlineFavouritesAndExactAyah": true,
+      "errors": []
+    },
+    "protectedQuranModulesDataFontsUnchanged": true,
+    "checklistMigrationModelCases": 19,
+    "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V2.6.3-UI-Polish",
+    "release": {
+      "status": "PENDING",
+      "userAcceptedStable": false
+    }
+  }
 }

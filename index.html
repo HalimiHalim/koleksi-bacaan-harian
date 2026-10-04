@@ -971,14 +971,17 @@ body[data-current-view="reference"] #allday-view { display:none; }
 #allday-checklist.is-sorting .quran-checkbox-target { display:none; }
 #allday-checklist .check-row { grid-template-columns:44px minmax(0,1fr) auto; }
 #allday-checklist.is-sorting .check-row { grid-template-columns:minmax(0,1fr) auto auto; }
-#quran-add { white-space:nowrap; }
+#quran-add { display:flex; align-items:center; justify-content:center; width:100%; min-height:62px; margin-top:7px; padding:8px 10px; border:1px solid var(--line); border-radius:14px; background:var(--surface-2); color:var(--primary); font:inherit; font-weight:800; cursor:pointer; }
+#quran-add:focus-visible { outline:3px solid var(--accent); outline-offset:2px; }
+#quran-add:disabled { opacity:.5; cursor:default; }
+#allday-sort-status:empty,#quran-migration-notice:empty { display:none; }
 #quran-routine .routine-head-actions { gap:8px; }
 #quran-routine .routine-head-actions button { padding-inline:12px; min-height:44px; }
 #quran-routine .routine-large-progress { min-width:56px; }
 #quran-selection[hidden] { display:none; }
 #quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=263">
+<link rel="stylesheet" href="./quran/reader.css?v=263-polish1">
 </head>
 <body>
 <div class="shell">
@@ -1100,10 +1103,11 @@ body[data-current-view="reference"] #allday-view { display:none; }
     </div>
     <div id="quran-routine">
     <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
-      <div class="routine-head-actions"><button type="button" id="quran-add" class="action-secondary">Tambah +</button><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
+      <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
-    <p id="quran-migration-notice" class="app-feedback" role="status"></p><p id="quran-empty" class="app-feedback" hidden>Belum ada surah. Gunakan Tambah + untuk memilih amalan harian.</p><div class="checklist" id="allday-checklist"></div>
+    <p id="quran-migration-notice" class="app-feedback" role="status"></p><p id="quran-empty" class="app-feedback" hidden>Belum ada surah. Gunakan + Tambah Surah untuk memilih amalan harian.</p><div class="checklist" id="allday-checklist"></div>
+    <button type="button" id="quran-add" class="quran-add-row">+ Tambah Surah</button>
     <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
     <section id="quran-favourites" class="quran-favourites" aria-labelledby="quran-favourites-title">
       <h2 id="quran-favourites-title" tabindex="-1">Petikan Kegemaran</h2>
@@ -1778,7 +1782,7 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
-<script src="./quran/checklist.js?v=263"></script>
+<script src="./quran/checklist.js?v=263-polish1"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -2670,7 +2674,18 @@ setTheme(getSavedTheme() || 'emerald');
     }
   }
 
-  function sortMessage(type, message) {
+  let quranAddNoticeTimer = 0;
+  let quranNoticeGeneration = 0;
+  function sortMessage(type, message, addSuccess = false) {
+    if (type === 'allday') {
+      clearTimeout(quranAddNoticeTimer); quranAddNoticeTimer = 0;
+      const generation = ++quranNoticeGeneration;
+      if (addSuccess) quranAddNoticeTimer = setTimeout(() => {
+        const status = document.getElementById('allday-sort-status');
+        if (generation !== quranNoticeGeneration || status.textContent !== message) return;
+        status.textContent = ''; quranAddNoticeTimer = 0;
+      }, 15000);
+    }
     if (lastRemoval?.type === type) lastRemoval = null;
     document.querySelector(`[data-undo="${type}"]`).hidden = true;
     document.getElementById(`${type}-sort-status`).textContent = message;
@@ -3301,11 +3316,12 @@ setTheme(getSavedTheme() || 'emerald');
         [daily.key, JSON.stringify(daily.ids.filter(id => !additions.includes(id)))]
       ];
       if (!applyStorageTransaction(changes)) return false;
-      sortMessage('allday', additions.length ? 'Surah ditambah.' : '');
+      sortMessage('allday', additions.length ? 'Surah ditambah.' : '', additions.length > 0);
       buildChecklist('allday'); updateProgressUI(); return true;
     }
   };
-  document.getElementById('quran-migration-notice').textContent = quranChecklist.notice;
+  // Suppress explanatory migration copy; retain actionable initialization errors.
+  document.getElementById('quran-migration-notice').textContent = quranChecklist.ready ? '' : quranChecklist.notice;
   document.getElementById('quran-add').disabled = !quranChecklist.ready;
   let checklistDay = localDayKey();
   function refreshQuranDaily() {
@@ -3448,8 +3464,8 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/favourites.js?v=263"></script>
-<script src="./quran/recent.js?v=263"></script>
-<script src="./quran/reader.js?v=263"></script>
+<script src="./quran/favourites.js?v=263-polish1"></script>
+<script src="./quran/recent.js?v=263-polish1"></script>
+<script src="./quran/reader.js?v=263-polish1"></script>
 </body>
 </html>

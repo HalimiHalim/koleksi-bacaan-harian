@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v263-favourite-excerpts";
+const CACHE_NAME = "uwa-bacaan-harian-v263-ui-polish-1";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -6,12 +6,12 @@ const APP_SHELL = [
   INDEX_URL,
   "./manifest.webmanifest",
   "./fonts/NotoNaskhArabic-wght.ttf",
-  "./quran/reader.css?v=263",
-  "./quran/reader.js?v=263",
+  "./quran/reader.css?v=263-polish1",
+  "./quran/reader.js?v=263-polish1",
   "./quran/chapters.json",
-  "./quran/checklist.js?v=263",
-  "./quran/recent.js?v=263",
-  "./quran/favourites.js?v=263",
+  "./quran/checklist.js?v=263-polish1",
+  "./quran/recent.js?v=263-polish1",
+  "./quran/favourites.js?v=263-polish1",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"
