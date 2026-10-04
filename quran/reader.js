@@ -14,6 +14,10 @@
     madd_munfasil:'madd', madd_muttasil:'madd'
   };
   let chapters = [];
+  let selecting = false;
+  const pending = new Set();
+  let readerOrigin = 'library';
+  let originButton = null;
   let surah = 0;
   let mode = 'list';
   let page = 1;
@@ -105,7 +109,7 @@
     const last = state.last;
     const button = $('quran-continue');
     if (!last || !chapter(last.surah)) { button.hidden = true; return; }
-    button.hidden = false;
+    button.hidden = selecting;
     button.replaceChildren();
     const lead = document.createElement('strong');
     lead.textContent = `Sambung bacaan · ${chapter(last.surah)[1]}`;
@@ -117,6 +121,7 @@
     const list = $('quran-surah-list');
     const q = query.trim().toLocaleLowerCase();
     list.replaceChildren();
+    const currentMembers = selecting ? window.QuranRoutine.members().ids : [];
     for (const item of chapters) {
       if (q && !`${item[0]} ${item[1]} ${item[2]}`.toLocaleLowerCase().includes(q)) continue;
       const button = document.createElement('button');
@@ -128,6 +133,12 @@
       const meta = document.createElement('span'); meta.className = 'quran-surah-meta'; meta.textContent = `${item[3]} ayat · halaman ${item[4]}`;
       detail.append(name, meta);
       const arabic = document.createElement('span'); arabic.className = 'quran-surah-arabic'; arabic.lang = 'ar'; arabic.dir = 'rtl'; arabic.textContent = item[2];
+      if (selecting) {
+        const present = currentMembers.includes(String(item[0]));
+        button.disabled = present;
+        button.setAttribute('aria-pressed', String(present || pending.has(String(item[0]))));
+        meta.textContent = present ? 'Sudah ditambah' : pending.has(String(item[0])) ? 'Dipilih ✓' : meta.textContent;
+      }
       button.append(number, detail, arabic); list.append(button);
     }
     setStatus(list.childElementCount ? '' : 'Tiada surah ditemui.', 'quran-library-status');
@@ -137,7 +148,8 @@
     try {
       setStatus('Memuatkan senarai surah…', 'quran-library-status');
       chapters = await getJson('./quran/chapters.json');
-      if (chapters.length !== 114) throw new Error('Incomplete index');
+      if (chapters.length !== 114 || chapters.some((item, i) => item[0] !== i+1)) throw new Error('Incomplete index');
+      window.dispatchEvent(new CustomEvent('quran-catalogue', { detail:chapters }));
       renderChapters($('quran-search').value);
       renderContinue();
     } catch (error) {
@@ -696,12 +708,6 @@
     } else { await openSurah(surah, true, 'list'); }
   }
 
-  $('quran-tab-routine').addEventListener('click', () => showArea('routine'));
-  $('quran-tab-library').addEventListener('click', () => { showArea('library'); loadChapters(); });
-  $('quran-back').addEventListener('click', () => { ++requestId; showArea('library'); });
-  $('quran-search').addEventListener('input', event => renderChapters(event.target.value));
-  $('quran-surah-list').addEventListener('click', event => { const button = event.target.closest('[data-surah]'); if (button) openSurah(Number(button.dataset.surah)); });
-  $('quran-continue').addEventListener('click', () => { if (state.last) openSurah(state.last.surah, true); });
   const settings = $('quran-settings');
   const settingsToggle = $('quran-settings-toggle');
   function closeSettings(returnFocus = false) {
@@ -709,6 +715,74 @@
     settingsToggle.setAttribute('aria-expanded', 'false');
     if (returnFocus) settingsToggle.focus();
   }
+  function selectionCount() {
+    $('quran-selection-count').textContent = `Pilih surah · ${pending.size} dipilih`;
+  }
+  function finishSelection(saveChanges = false) {
+    if (saveChanges && !window.QuranRoutine.add([...pending].sort((a,b) => Number(a)-Number(b)))) {
+      setStatus(`Surah tidak dapat disimpan. ${window.QuranRoutine.error()}`, 'quran-library-status'); return;
+    }
+    selecting = false; pending.clear();
+    if (history.state?.quranSelecting) history.back();
+    $('quran-selection').hidden = true;
+    $('quran-search').value = ''; renderChapters(); renderContinue(); showArea('routine');
+    $('quran-add').focus({ preventScroll:true });
+  }
+  $('quran-add').addEventListener('click', async () => {
+    if (window.QuranRoutine.members().error) return;
+    selecting = true; pending.clear();
+    history.pushState({ quranSelecting:true }, '', location.href);
+    $('quran-selection').hidden = false;
+    $('quran-continue').hidden = true; $('quran-search').value = ''; selectionCount();
+    showArea('library'); await loadChapters(); if (selecting) { renderChapters(); $('quran-search').focus(); }
+  });
+  window.addEventListener('popstate', () => { if (selecting) finishSelection(); });
+  document.querySelectorAll('[data-app-view]').forEach(button => button.addEventListener('click', () => { if (selecting) finishSelection(); }));
+  $('quran-selection-done').addEventListener('click', () => finishSelection(true));
+  $('quran-selection-cancel').addEventListener('click', () => finishSelection());
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && selecting) { event.preventDefault(); finishSelection(); }
+  });
+  $('quran-tab-routine').addEventListener('click', () => { if (selecting) finishSelection(); else showArea('routine'); });
+  $('quran-tab-library').addEventListener('click', () => {
+    if (selecting) finishSelection();
+    readerOrigin = 'library'; showArea('library'); loadChapters();
+  });
+  $('quran-back').addEventListener('click', () => {
+    ++requestId; showArea(readerOrigin);
+    if (originButton?.isConnected) originButton.focus({ preventScroll:true });
+  });
+  $('quran-search').addEventListener('input', event => renderChapters(event.target.value));
+  $('quran-surah-list').addEventListener('click', event => {
+    const button = event.target.closest('[data-surah]');
+    if (!button || button.disabled) return;
+    if (selecting) {
+      const id = button.dataset.surah;
+      if (pending.has(id)) pending.delete(id); else pending.add(id);
+      selectionCount(); renderChapters($('quran-search').value);
+      $('quran-surah-list').querySelector(`[data-surah="${id}"]`)?.focus({ preventScroll:true });
+    } else {
+      readerOrigin = 'library'; originButton = button;
+      $('quran-back').querySelector('.quran-back-label').textContent = 'Semua surah';
+      $('quran-back').setAttribute('aria-label', 'Kembali ke senarai surah');
+      openSurah(Number(button.dataset.surah));
+    }
+  });
+  window.addEventListener('quran-open-checklist', async event => {
+    originButton = document.activeElement; await loadChapters();
+    readerOrigin = 'routine';
+    $('quran-back').querySelector('.quran-back-label').textContent = 'Amalan Saya';
+    $('quran-back').setAttribute('aria-label', 'Kembali ke Amalan Saya');
+    openSurah(event.detail);
+  });
+  $('quran-continue').addEventListener('click', () => {
+    readerOrigin = 'library'; originButton = $('quran-continue');
+    $('quran-back').querySelector('.quran-back-label').textContent = 'Semua surah';
+    $('quran-back').setAttribute('aria-label', 'Kembali ke senarai surah');
+    if (state.last) openSurah(state.last.surah, true);
+  });
+  // Only the small catalogue is needed for routine names; no Quran pages loaded.
+  loadChapters();
   settingsToggle.addEventListener('click', () => {
     const opening = settings.hidden;
     settings.hidden = !opening;

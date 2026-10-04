@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v252-classic-mobile";
+const CACHE_NAME = "uwa-bacaan-harian-v261-independent-quran";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -6,9 +6,10 @@ const APP_SHELL = [
   INDEX_URL,
   "./manifest.webmanifest",
   "./fonts/NotoNaskhArabic-wght.ttf",
-  "./quran/reader.css?v=252",
-  "./quran/reader.js?v=252",
+  "./quran/reader.css?v=261",
+  "./quran/reader.js?v=261",
   "./quran/chapters.json",
+  "./quran/checklist.js?v=261",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"

@@ -965,8 +965,20 @@ body[data-current-view="reference"] #allday-view { display:none; }
   .toc th:last-child { width:86px; }
 }
 
+#allday-checklist .checklist-name { min-height:44px; }
+#allday-checklist input { width:24px; height:24px; margin:0; }
+.quran-checkbox-target { display:grid; place-items:center; width:44px; height:44px; cursor:pointer; }
+#allday-checklist.is-sorting .quran-checkbox-target { display:none; }
+#allday-checklist .check-row { grid-template-columns:44px minmax(0,1fr) auto; }
+#allday-checklist.is-sorting .check-row { grid-template-columns:minmax(0,1fr) auto auto; }
+#quran-add { white-space:nowrap; }
+#quran-routine .routine-head-actions { gap:8px; }
+#quran-routine .routine-head-actions button { padding-inline:12px; min-height:44px; }
+#quran-routine .routine-large-progress { min-width:56px; }
+#quran-selection[hidden] { display:none; }
+#quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=252">
+<link rel="stylesheet" href="./quran/reader.css?v=261">
 </head>
 <body>
 <div class="shell">
@@ -1088,14 +1100,15 @@ body[data-current-view="reference"] #allday-view { display:none; }
     </div>
     <div id="quran-routine">
     <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
-      <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
+      <div class="routine-head-actions"><button type="button" id="quran-add" class="action-secondary">Tambah +</button><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
-    <div class="checklist" id="allday-checklist"></div>
+    <p id="quran-migration-notice" class="app-feedback" role="status"></p><p id="quran-empty" class="app-feedback" hidden>Belum ada surah. Gunakan Tambah + untuk memilih amalan harian.</p><div class="checklist" id="allday-checklist"></div>
     <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
     </div>
     <div id="quran-library" hidden>
       <div class="quran-section-title"><div><h2>Al-Quran</h2><p>114 surah · 6,236 ayat · 604 halaman</p></div></div>
+      <div id="quran-selection" hidden><p id="quran-selection-count" role="status" aria-live="polite"></p><div class="picker-actions"><button type="button" id="quran-selection-cancel" class="action-secondary">Batal</button><button type="button" id="quran-selection-done" class="action-secondary">Selesai</button></div></div>
       <button type="button" id="quran-continue" class="quran-continue" hidden></button>
       <label class="quran-search-label" for="quran-search">Cari surah</label>
       <input id="quran-search" class="quran-search" type="search" placeholder="Nama atau nombor surah" autocomplete="off">
@@ -1757,6 +1770,7 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
+<script src="./quran/checklist.js?v=261"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -2010,7 +2024,7 @@ setTheme(getSavedTheme() || 'emerald');
   }
 
   let activePicker = null;
-  const destinations = [['morning','Zikir'], ['evening','Himpunan Doa'], ['allday','Quran']];
+  const destinations = [['morning','Zikir'], ['evening','Himpunan Doa']];
 
   function createActionCell(id, name, builtIn) {
     const cell = document.createElement('td');
@@ -2293,7 +2307,7 @@ setTheme(getSavedTheme() || 'emerald');
   document.getElementById('delete-reading').addEventListener('click', () => {
     const item = userReading(editingId);
     if (!item || isBuiltIn(editingId)) { editError.textContent = 'Bacaan asal dikunci dan tidak boleh dipadam.'; return; }
-    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Zikir, Himpunan Doa dan Quran. Tindakan ini tidak boleh dibuat asal.`;
+    document.getElementById('delete-question').textContent = `Padam “${item.name}”? Bacaan ini juga akan dikeluarkan daripada checklist Zikir dan Himpunan Doa. Tindakan ini tidak boleh dibuat asal.`;
     deleteConfirm.hidden = false;
     document.getElementById('delete-cancel').focus();
   });
@@ -2348,7 +2362,7 @@ setTheme(getSavedTheme() || 'emerald');
         const key = localStorage.key(index);
         if (!/^(?:uwa-daily-|uwa-navigation-renovation-trial-v1-daily-)\d{4}-\d{2}-\d{2}-(morning|evening|allday)$/.test(key)) continue;
         const parsed = JSON.parse(localStorage.getItem(key));
-        if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
+        if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid daily data');
         if (parsed.some(value => String(value) === id)) changes.push([key, JSON.stringify(parsed.filter(value => String(value) !== id))]);
       }
     } catch {
@@ -2380,13 +2394,15 @@ setTheme(getSavedTheme() || 'emerald');
 
   const trialPrefix = 'uwa-navigation-renovation-trial-v1';
   const trialMarkerKey = `${trialPrefix}-initialized`;
-  const collectionTypes = ['morning', 'evening', 'allday'];
+  const collectionTypes = ['morning', 'evening'];
   const doaBuiltInIds = ['1', '8', '9', '13', '15', '16', '18', '19', '20'];
-  const quranBuiltInIds = ['4', '15', '17'];
+  const quranNames = new Map();
+  const quranChecklist = window.QuranChecklist;
+  function checklistName(type, id) { return type === 'allday' ? (quranNames.get(id) || `Surah ${id}`) : names[id]; }
 
-  function storageKey(type) { return `${trialPrefix}-daily-${localDayKey()}-${type}`; }
-  function memberKey(type) { return `${trialPrefix}-members-${type}`; }
-  function orderKey(type) { return `${trialPrefix}-order-${type}`; }
+  function storageKey(type) { return type === 'allday' ? quranChecklist.keys.daily(localDayKey()) : `${trialPrefix}-daily-${localDayKey()}-${type}`; }
+  function memberKey(type) { return type === 'allday' ? quranChecklist.keys.members : `${trialPrefix}-members-${type}`; }
+  function orderKey(type) { return type === 'allday' ? quranChecklist.keys.order : `${trialPrefix}-order-${type}`; }
   function legacyStorageKey(type) { return `uwa-daily-${localDayKey()}-${type}`; }
   function legacyMemberKey(type) { return `uwa-routine-members-${type}-v1`; }
   function legacyOrderKey(type) { return `uwa-routine-order-${type}-v1`; }
@@ -2426,24 +2442,18 @@ setTheme(getSavedTheme() || 'emerald');
       /(?:\bya allah\b|\bo allah\b|اللَّهُمَّ|اللهم|أَعُوذُ|اعوذ)/i.test(`${item.arabic} ${item.meaning}`);
   }
 
-  function classifiesCustomQuran(item) {
-    return /\b(?:surah|surat|sūrah|quran|qur['’]?an|al-qur['’]?an)\b/i.test(`${item.name} ${item.reference}`) ||
-      /\b(?:ayat|verse)\s+\d+\b/i.test(item.reference);
-  }
-
   function initializeTrialState() {
     try {
       if (localStorage.getItem(trialMarkerKey) !== null) return true;
       const trialKeys = collectionTypes.flatMap(type => [memberKey(type), orderKey(type), storageKey(type)]);
       if (trialKeys.some(key => localStorage.getItem(key) !== null)) return false;
-      const legacy = collectionTypes.map(readLegacyRoutine);
+      const legacy = [...collectionTypes, 'allday'].map(readLegacyRoutine);
       if (legacy.some(result => result.error)) return false;
       const zikirIds = [...new Set(legacy.flatMap(result => result.ids))];
       const doaIds = [...doaBuiltInIds, ...customReadings.filter(classifiesCustomDoa).map(item => item.id)];
-      const quranIds = [...quranBuiltInIds, ...customReadings.filter(classifiesCustomQuran).map(item => item.id)];
-      const memberships = [zikirIds, [...new Set(doaIds)], [...new Set(quranIds)]];
+      const memberships = [zikirIds, [...new Set(doaIds)]];
       const legacyDone = new Set();
-      for (const type of collectionTypes) {
+      for (const type of [...collectionTypes, 'allday']) {
         const raw = localStorage.getItem(legacyStorageKey(type));
         if (raw === null) continue;
         const parsed = JSON.parse(raw);
@@ -2463,10 +2473,11 @@ setTheme(getSavedTheme() || 'emerald');
 
   function readMembers(type) {
     try {
+      if (type === 'allday' && !quranChecklist.ready) throw new Error('Quran migration incomplete');
       const raw = localStorage.getItem(memberKey(type));
       if (raw === null) return { ids:[], error:true, raw:null };
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid membership');
+      if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid membership');
       const ids = parsed.map(String);
       if (new Set(ids).size !== ids.length) throw new Error('Duplicate membership');
       return { ids, error:false, raw };
@@ -2480,7 +2491,7 @@ setTheme(getSavedTheme() || 'emerald');
       const raw = localStorage.getItem(orderKey(type));
       if (raw === null) return { ids:[...members], error:false, raw:null };
       const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid order');
+      if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid order');
       const ids = parsed.map(String);
       if (new Set(ids).size !== ids.length || !ids.every(id => members.includes(id))) throw new Error('Unknown order');
       return { ids:[...ids, ...members.filter(id => !ids.includes(id))], error:false, raw };
@@ -2606,7 +2617,7 @@ setTheme(getSavedTheme() || 'emerald');
     const key = storageKey(type);
     try {
       const parsed = JSON.parse(localStorage.getItem(key) || '[]');
-      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
+      if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid daily data');
       return new Set(parsed.map(String));
     } catch {
       corruptDailyKeys.add(key);
@@ -2616,7 +2627,7 @@ setTheme(getSavedTheme() || 'emerald');
 
   function saveDone(type, set) {
     const key = storageKey(type);
-    if (corruptDailyKeys.has(key)) return false;
+    if (corruptDailyKeys.has(key) || (type === 'allday' && !quranChecklist.ready)) return false;
     try {
       const value = JSON.stringify(Array.from(set));
       localStorage.setItem(key, value);
@@ -2627,22 +2638,23 @@ setTheme(getSavedTheme() || 'emerald');
   function routineFor(type) {
     const membership = readMembers(type);
     const order = readOrder(type, membership.ids);
+    if (type === 'allday') return order.ids.map(id => [id, '×1']);
     const base = [...morningRoutine, ...eveningRoutine, ...allDayIds.map(id => [id, '×1'])];
     const repeats = new Map();
     base.forEach(([id, repeat]) => { if (!repeats.has(String(id))) repeats.set(String(id), repeat); });
-    return order.ids.filter(id => names[id]).map(id => [id, type === 'morning' ? (repeats.get(id) || '×1') : '×1']);
+    return order.ids.filter(id => checklistName(type, id)).map(id => [id, type === 'morning' ? (repeats.get(id) || '×1') : '×1']);
   }
 
   function saveRoutineOrder(type, ids) {
     const membership = readMembers(type);
     const order = readOrder(type, membership.ids);
-    const visible = order.ids.filter(id => names[id]);
+    const visible = order.ids.filter(id => checklistName(type, id));
     if (membership.error || order.error || ids.length !== visible.length ||
         new Set(ids).size !== ids.length || !ids.every(id => visible.includes(id))) return false;
     try {
       const key = orderKey(type);
       let next = 0;
-      const value = JSON.stringify(order.ids.map(id => names[id] ? ids[next++] : id));
+      const value = JSON.stringify(order.ids.map(id => checklistName(type, id) ? ids[next++] : id));
       localStorage.setItem(key, value);
       return localStorage.getItem(key) === value;
     } catch {
@@ -2685,7 +2697,7 @@ setTheme(getSavedTheme() || 'emerald');
     if (corruptDailyKeys.has(key)) throw new Error('Invalid daily data');
     const raw = localStorage.getItem(key);
     const parsed = raw === null ? [] : JSON.parse(raw);
-    if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
+    if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid daily data');
     return { key, ids:parsed.map(String) };
   }
 
@@ -2737,7 +2749,7 @@ setTheme(getSavedTheme() || 'emerald');
       if (membership.error || order.error || membership.ids.includes(removal.id)) throw new Error('Invalid routine data');
       const raw = localStorage.getItem(removal.dailyKey);
       const parsed = raw === null ? [] : JSON.parse(raw);
-      if (!Array.isArray(parsed) || !parsed.every(validTrialId)) throw new Error('Invalid daily data');
+      if (!Array.isArray(parsed) || !parsed.every(type === 'allday' ? quranChecklist.validId : validTrialId)) throw new Error('Invalid daily data');
       daily = parsed.map(String);
     } catch {
       document.getElementById(`${type}-sort-status`).textContent = 'Undo gagal. Data checklist tidak dapat dibaca.';
@@ -3004,6 +3016,7 @@ setTheme(getSavedTheme() || 'emerald');
     }
     root.replaceChildren();
     const routine = routineFor(type);
+    if (type === 'allday') document.getElementById('quran-empty').hidden = routine.length > 0 || !quranChecklist.ready;
     routine.forEach(([id, repeat]) => {
       const row = document.createElement('div');
       row.className = 'check-row';
@@ -3011,7 +3024,7 @@ setTheme(getSavedTheme() || 'emerald');
 
       const checkbox = document.createElement('input');
       checkbox.type = 'checkbox';
-      checkbox.setAttribute('aria-label', `Tanda selesai ${names[id]}`);
+      checkbox.setAttribute('aria-label', `Tanda selesai ${checklistName(type, id)}`);
       checkbox.addEventListener('change', () => {
         const done = getDone(type);
         if (checkbox.checked) done.add(id);
@@ -3023,8 +3036,8 @@ setTheme(getSavedTheme() || 'emerald');
       const nameButton = document.createElement('button');
       nameButton.type = 'button';
       nameButton.className = 'checklist-name';
-      nameButton.textContent = names[id];
-      nameButton.addEventListener('click', () => scrollToReading(id));
+      nameButton.textContent = checklistName(type, id);
+      nameButton.addEventListener('click', () => { if (type === 'allday') window.dispatchEvent(new CustomEvent('quran-open-checklist', { detail:Number(id) })); else scrollToReading(id); });
 
       const repeatBadge = document.createElement('span');
       repeatBadge.className = 'repeat-badge';
@@ -3034,11 +3047,13 @@ setTheme(getSavedTheme() || 'emerald');
       handle.type = 'button';
       handle.className = 'drag-handle';
       handle.textContent = '⠿';
-      handle.setAttribute('aria-label', `Susun ${names[id]} dalam ${routineLabels[type]}. Tahan dan seret, atau Space atau Enter untuk angkat, anak panah untuk alih, Delete untuk keluarkan, Escape untuk batal.`);
+      handle.setAttribute('aria-label', `Susun ${checklistName(type, id)} dalam ${routineLabels[type]}. Tahan dan seret, atau Space atau Enter untuk angkat, anak panah untuk alih, Delete untuk keluarkan, Escape untuk batal.`);
       handle.setAttribute('aria-grabbed', 'false');
-      enableSortHandle(handle, type, root, row, names[id]);
+      enableSortHandle(handle, type, root, row, checklistName(type, id));
 
-      row.append(checkbox, nameButton, repeatBadge, handle);
+      const checkControl = type === 'allday' ? document.createElement('label') : checkbox;
+      if (type === 'allday') { checkControl.className = 'quran-checkbox-target'; checkControl.appendChild(checkbox); }
+      row.append(checkControl, nameButton, repeatBadge, handle);
       root.appendChild(row);
     });
   }
@@ -3126,7 +3141,7 @@ setTheme(getSavedTheme() || 'emerald');
     const done = type ? getDone(type) : new Set();
     document.querySelectorAll('.card-complete').forEach(button => {
       const id = button.dataset.zikirId;
-      const inRoutine = type && routineFor(type).some(([routineId]) => routineId === id);
+      const inRoutine = type && type !== 'allday' && routineFor(type).some(([routineId]) => routineId === id);
       button.hidden = !inRoutine;
       if (!inRoutine) return;
       const isDone = done.has(id);
@@ -3139,7 +3154,7 @@ setTheme(getSavedTheme() || 'emerald');
     const completeButton = event.target.closest('.card-complete');
     if (!completeButton) return;
     const type = currentRoutineType();
-    if (!type) return;
+    if (!type || type === 'allday') return;
     const id = completeButton.dataset.zikirId;
     const done = getDone(type);
     if (done.has(id)) done.delete(id);
@@ -3181,7 +3196,7 @@ setTheme(getSavedTheme() || 'emerald');
     if (view === 'home') showCards([]);
     if (view === 'morning') showCards(routineIds('morning'));
     if (view === 'evening') showCards(routineIds('evening'));
-    if (view === 'allday') showCards(routineIds('allday'));
+    if (view === 'allday') showCards([]);
     if (view === 'reference') showCards(null);
     if (view === 'edit') showCards([]);
 
@@ -3255,6 +3270,45 @@ setTheme(getSavedTheme() || 'emerald');
     if (/^#bacaan-u-[a-z0-9-]+$/.test(location.hash)) {
       switchView('reference', { scrollTop:false });
       setTimeout(() => document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior:'smooth', block:'start' }), 20);
+    }
+  });
+
+  window.addEventListener('quran-catalogue', event => {
+    event.detail.forEach(item => quranNames.set(String(item[0]), item[1]));
+    buildChecklist('allday'); updateProgressUI();
+  });
+  window.QuranRoutine = {
+    error: storageFailureMessage,
+    members: () => readMembers('allday'),
+    add: ids => {
+      const membership = readMembers('allday');
+      const order = readOrder('allday', membership.ids);
+      if (membership.error || order.error || !ids.every(quranChecklist.validId)) return false;
+      const additions = [...new Set(ids)].filter(id => !membership.ids.includes(id));
+      let daily;
+      try { daily = dailySnapshot('allday'); } catch { return false; }
+      const changes = [
+        [memberKey('allday'), JSON.stringify([...membership.ids, ...additions])],
+        [orderKey('allday'), JSON.stringify([...order.ids, ...additions])],
+        [daily.key, JSON.stringify(daily.ids.filter(id => !additions.includes(id)))]
+      ];
+      if (!applyStorageTransaction(changes)) return false;
+      sortMessage('allday', additions.length ? 'Surah ditambah.' : '');
+      buildChecklist('allday'); updateProgressUI(); return true;
+    }
+  };
+  document.getElementById('quran-migration-notice').textContent = quranChecklist.notice;
+  document.getElementById('quran-add').disabled = !quranChecklist.ready;
+  let checklistDay = localDayKey();
+  function refreshQuranDaily() {
+    if (checklistDay !== localDayKey()) { checklistDay = localDayKey(); updateProgressUI(); }
+  }
+  window.addEventListener('focus', refreshQuranDaily);
+  document.addEventListener('visibilitychange', refreshQuranDaily);
+  setInterval(refreshQuranDaily, 30000);
+  window.addEventListener('storage', event => {
+    if (event.key === null || event.key?.startsWith('uwa-quran-checklist-v1')) {
+      buildChecklist('allday'); updateProgressUI();
     }
   });
 
@@ -3386,6 +3440,6 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/reader.js?v=252"></script>
+<script src="./quran/reader.js?v=261"></script>
 </body>
 </html>
