@@ -981,7 +981,7 @@ body[data-current-view="reference"] #allday-view { display:none; }
 #quran-selection[hidden] { display:none; }
 #quran-selection .picker-actions { justify-content:flex-start; }
 </style>
-<link rel="stylesheet" href="./quran/reader.css?v=264">
+<link rel="stylesheet" href="./quran/reader.css?v=300">
 </head>
 <body>
 <div class="shell">
@@ -1102,14 +1102,16 @@ body[data-current-view="reference"] #allday-view { display:none; }
       <button type="button" id="quran-tab-library" aria-pressed="false">114 Surah</button>
     </div>
     <div id="quran-routine">
-    <div class="routine-head"><div><h2>📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
+    <section id="quran-checklist-card" class="routine-panel" aria-labelledby="quran-checklist-title">
+    <div class="routine-head"><div><h2 id="quran-checklist-title">📖 Quran</h2><p>Checklist bacaan Quran harian. Progress disimpan untuk hari semasa.</p></div>
       <div class="routine-head-actions"><button type="button" class="action-secondary sort-toggle" data-sort="allday" aria-pressed="false">Susun</button><div class="routine-large-progress"><span id="allday-count-big">0/6</span>selesai</div></div></div>
     <div class="progress-track"><div class="progress-fill" id="allday-progress-big"></div></div>
     <div class="sort-feedback"><p class="app-feedback" id="allday-sort-status" role="status" aria-live="polite"></p><button type="button" class="undo-remove" data-undo="allday" hidden>Undo</button></div>
     <p id="quran-migration-notice" class="app-feedback" role="status"></p><p id="quran-empty" class="app-feedback" hidden>Belum ada surah. Gunakan + Tambah Surah untuk memilih amalan harian.</p><div class="checklist" id="allday-checklist"></div>
     <button type="button" id="quran-add" class="quran-add-row">+ Tambah Surah</button>
     <button type="button" class="remove-zone" data-remove="allday" hidden><span class="remove-zone-icon" aria-hidden="true">🗑</span><span class="remove-zone-title">Remove from Checklist</span><span class="remove-zone-hint">Seret dan lepaskan bacaan di sini</span></button>
-    <section id="quran-favourites" class="quran-favourites" aria-labelledby="quran-favourites-title">
+    </section>
+    <section id="quran-favourites" class="routine-panel quran-favourites" aria-labelledby="quran-favourites-title">
       <h2 id="quran-favourites-title" tabindex="-1">Petikan Kegemaran</h2>
       <p id="quran-favourites-status" class="app-feedback" role="status" aria-live="polite"></p>
       <p id="quran-favourites-empty">Belum ada petikan kegemaran. Tekan ☆ Simpan pada ayat dalam paparan List untuk menambah petikan.</p>
@@ -1782,8 +1784,8 @@ applySavedArabicEdits();
 setTheme(getSavedTheme() || 'emerald');
 </script>
 
-<script src="./source-delete.js?v=264"></script>
-<script src="./quran/checklist.js?v=264"></script>
+<script src="./source-delete.js?v=300"></script>
+<script src="./quran/checklist.js?v=300"></script>
 <script>
 /* ===== MARK 7 · DAILY FLOW ===== */
 (() => {
@@ -3435,8 +3437,8 @@ setTheme(getSavedTheme() || 'emerald');
 })();
 </script>
 
-<script src="./quran/favourites.js?v=264"></script>
-<script src="./quran/recent.js?v=264"></script>
-<script src="./quran/reader.js?v=264"></script>
+<script src="./quran/favourites.js?v=300"></script>
+<script src="./quran/recent.js?v=300"></script>
+<script src="./quran/reader.js?v=300"></script>
 </body>
 </html>

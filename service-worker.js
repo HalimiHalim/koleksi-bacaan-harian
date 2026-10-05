@@ -1,4 +1,4 @@
-const CACHE_NAME = "uwa-bacaan-harian-v264-custom-delete-fix";
+const CACHE_NAME = "uwa-bacaan-harian-v300-centered-page-favourites";
 const INDEX_URL = "./index.html";
 const ROOT_URL = "./";
 const APP_SHELL = [
@@ -6,13 +6,13 @@ const APP_SHELL = [
   INDEX_URL,
   "./manifest.webmanifest",
   "./fonts/NotoNaskhArabic-wght.ttf",
-  "./quran/reader.css?v=264",
-  "./quran/reader.js?v=264",
+  "./quran/reader.css?v=300",
+  "./quran/reader.js?v=300",
   "./quran/chapters.json",
-  "./quran/checklist.js?v=264",
-  "./source-delete.js?v=264",
-  "./quran/recent.js?v=264",
-  "./quran/favourites.js?v=264",
+  "./quran/checklist.js?v=300",
+  "./source-delete.js?v=300",
+  "./quran/recent.js?v=300",
+  "./quran/favourites.js?v=300",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./icons/apple-touch-icon.png"

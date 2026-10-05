@@ -103,7 +103,7 @@ html[data-theme="midnight"] .quran-mushaf-page {
 .tajweed-iqlab { color:var(--tajweed-iqlab); }
 .tajweed-qalqalah { color:var(--tajweed-qalqalah); }
 .tajweed-silent { color:var(--tajweed-silent); }
-.quran-page-flow { direction:rtl; text-align:right; font-size:32px; line-height:1.8; }
+.quran-page-flow { direction:rtl; text-align:center; text-align-last:center; font-size:32px; line-height:1.8; }
 .quran-page-line { direction:rtl; width:100%; font-size:32px; line-height:1.8; text-align:center; }
 .quran-page-heading { margin:0 0 3px; padding:0 8px; border-top:1px solid var(--accent); border-bottom:1px solid var(--accent); color:var(--primary); }
 .quran-page-bismillah { color:var(--primary); }
@@ -219,8 +219,10 @@ html[data-theme="midnight"] .quran-mushaf-page {
 }
 @media (max-width:360px) { .quran-classic-page .quran-classic-end-pair { gap:.07em; } }
 
-/* Saved excerpts share the accepted List text styles and theme. */
-.quran-favourites { min-width:0; margin-top:24px; padding:20px 16px; border:1px solid var(--line); border-radius:18px; background:var(--surface); }
+/* Amalan Saya uses sibling cards; library and reader retain their shell. */
+body:not(.quran-explore) #allday-view { padding:0; border:0; background:transparent; box-shadow:none; }
+/* Saved excerpts share the accepted List text styles and routine card theme. */
+.quran-favourites { min-width:0; }
 .quran-favourites h2 { margin:0 0 10px; color:var(--primary); font-size:1.2rem; }
 #quran-favourites-empty { color:var(--muted); font-size:.88rem; line-height:1.65; }
 .quran-favourite { min-width:0; padding:18px 0; border-top:1px solid var(--line); }
