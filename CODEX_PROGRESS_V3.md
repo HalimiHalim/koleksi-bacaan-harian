@@ -16,10 +16,10 @@ Date: 2026-10-05, Asia/Kuala_Lumpur.
 | 0 Baseline audit | VERIFIED | Baseline screenshots/DOM/line geometry: baseline-evidence, all 27 Page cases + List/Classic and cards at 3 widths. |
 | 1 Implementation | VERIFIED | 27 Page cases, unchanged List/Classic pixels, sibling card geometry/themes, existing favourite and UI Polish interactions pass. |
 | 2 Validation | VERIFIED | Required matrix + existing favourites/UI Polish/checklist adapter, model/syntax/diff checks pass. |
-| 3 Release | IN PROGRESS | Local gates passed; conventional v300 asset/cache bump; upgrade/offline and remote/production pending. |
+| 3 Release | VERIFIED | V2.6.4 upgrade/offline, runtime push/hash/Production deployment, 8 live assets, production 27-case matrix and interaction/offline smoke pass. |
 
-First incomplete milestone: 3.
-Changed files: index.html, quran/reader.css, service-worker.js, this ledger. Commit/push/deployment: not started. Known issues: none proven in V3; physical iPhone/Safari unavailable.
+First incomplete milestone: none.
+Changed files: index.html, quran/reader.css, service-worker.js, this ledger. Runtime commit/push/deployment: VERIFIED (3a80299). Final records closeout follows; inspect Git HEAD for its exact hash. Known issues: none proven in V3; physical iPhone/Safari unavailable.
 
 ## Audit
 - `.quran-page-flow` reader.css is modern Page continuous RTL body, currently right aligned; heading/basmalah use centered `.quran-page-line`. Classic and List have separate selectors/renderers.
@@ -29,7 +29,7 @@ Changed files: index.html, quran/reader.css, service-worker.js, this ledger. Com
 
 ## Completed and remaining checks
 Completed: git baseline/remote/worktree audit, source visibility and return navigation inspection.
-Remaining: local layout/interaction checks; release version bump, upgrade/offline and production checks.
+Remaining: no implementation/release checks; final records commit/push/hash/deployment readback. Physical iPhone/Safari and user acceptance remain.
 
 Baseline capture fixture corrected to seed authoritative recent history: legacy last position does not replace an already initialized empty recent collection. No app change was needed. Baseline Page/List/Classic and empty/populated screenshots captured before edits (immutable Git archive served independently). Existing model checks pass: checklist 19, favourites 19, recent 23, custom deletion 9 groups.
 
@@ -47,3 +47,15 @@ Checklist external adapter passes all widths plus legacy/empty/refused-write che
 - V2.6.4 → V3 real service-worker upgrade passes: all seeded localStorage raw bytes unchanged on upgrade/reload; old cache removed, only v300 cache remains; 7 cached runtime assets byte-match final files. Offline custom deletion/reload preserves Quran/recovery state; cached favourite exact-ayah opens; cached As-Saffat page 446 is centered and sibling cards remain separate offline. Evidence pwa/custom-delete-pwa.json and offline screenshots, no page errors.
 - Final intended diff reviewed: only HTML card structure/labels, scoped CSS, conventional asset/cache version changes. reader.js, all storage modules, datasets, mappings, Tajweed, fonts and source-delete.js bytes unchanged. No migrations, dependencies/backend, secrets/private browser state or QA screenshots tracked.
 - Fetched origin/main still baseline 4bb4c88 before release; normal commit and push authorized by task, pending. Rollback through ordinary revert commit/main/Vercel workflow to V2.6.4 runtime; no reset/force-push or user data conversion.
+
+## Production checkpoint
+- Runtime commit/pushed remote-main: `3a802990b0092ee5f4b597c67ecd81a205575602`; fetched origin/main and independent ls-remote match. GitHub Vercel status success; matching Production deployment `6852969171` success. No duplicate deployment project created.
+- Production 8 live runtime assets byte-match commit; production PWA explicit update/cache/offline scenario passes (production-pwa/custom-delete-pwa.json). Local baseline upgrade is separate from production fresh-profile reload; no claim of testing existing user profiles.
+- Production UI Polish interaction smoke passes all widths; production rendering matrix 320/390 verified, desktop also verified; complete 27-case matrix passes.
+- All 15 card theme/width comparisons pass; inspected empty-card 390 screenshot clearly shows checklist ending after + Tambah Surah and 18px gap. No runtime changes since passing local validation other than tested version strings.
+
+## Final closeout
+- All milestones 0–3 VERIFIED; no first incomplete milestone. V3 ready for user acceptance; accepted V2.6.4 remains the stable baseline until user feedback. No next version work begun.
+- Production matrix complete: 27 Page cases/378 lines; unchanged DOM/wrapping and 1px maximum center offset; six List/Classic screenshot buffers match baseline. Unique IDs, routine-only sibling cards and raw data preservation pass. Production interaction and offline smoke zero page/console errors.
+- Final records commit contains only this ledger, FINAL_REPORT_V3.md and tools/v3-validation-report.json. Runtime remains 3a80299; final local HEAD/origin/main/hash/deployment readback saved outside Git as closeout.json. Clean working tree expected after normal records closeout; verify explicitly.
+- Limitations: phone widths are Chrome emulation; physical iPhone/Safari not available. Actual stored user profiles were not accessed; preservation proven with isolated synthetic profiles, unchanged storage code/datasets, raw-byte layout/upgrade comparisons and existing integrity suites. No unresolved implementation issue.

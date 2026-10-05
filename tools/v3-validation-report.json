@@ -1,0 +1,113 @@
+{
+  "version": "V3",
+  "acceptance": "ready for user acceptance",
+  "runtimeCommit": "3a802990b0092ee5f4b597c67ecd81a205575602",
+  "baseline": "4bb4c881376b5e944179d0b85253e18a864badfa",
+  "evidenceDirectory": "/Users/halimi_hanim/Projects/Islamic-App-QA-V3",
+  "pageCaseCountLocal": 27,
+  "pageCaseCountProduction": 27,
+  "centeredLinesPerMatrix": 378,
+  "maxMeasuredCenterOffsetPx": 1,
+  "listClassicScreenshotComparison": "byte-identical to baseline",
+  "themesAndWidths": 15,
+  "models": {
+    "checklist": 19,
+    "favourites": 19,
+    "recent": 23,
+    "customDeleteGroups": 9
+  },
+  "localPwa": {
+    "offlineCenteredPage446": true,
+    "offlineSeparateCards": true,
+    "url": "http://127.0.0.1:8828/",
+    "upgradeFromBaseline": true,
+    "allStorageRawBytesPreservedAfterReload": true,
+    "explicitRegistrationUpdate": true,
+    "cacheKeys": [
+      "uwa-bacaan-harian-v300-centered-page-favourites"
+    ],
+    "cachedAssetsMatch": [
+      "index.html",
+      "source-delete.js?v=300",
+      "quran/reader.js?v=300",
+      "quran/reader.css?v=300",
+      "quran/favourites.js?v=300",
+      "quran/recent.js?v=300",
+      "quran/checklist.js?v=300"
+    ],
+    "offlineCustomDeleteAndReload": true,
+    "quranAndRecoveryStateUnchangedByDelete": true,
+    "offlineFavouriteExactAyah": true,
+    "errors": []
+  },
+  "productionPwa": {
+    "offlineCenteredPage446": true,
+    "offlineSeparateCards": true,
+    "url": "https://koleksi-bacaan-harian.vercel.app/",
+    "upgradeFromBaseline": false,
+    "allStorageRawBytesPreservedAfterReload": true,
+    "explicitRegistrationUpdate": true,
+    "cacheKeys": [
+      "uwa-bacaan-harian-v300-centered-page-favourites"
+    ],
+    "cachedAssetsMatch": [
+      "index.html",
+      "source-delete.js?v=300",
+      "quran/reader.js?v=300",
+      "quran/reader.css?v=300",
+      "quran/favourites.js?v=300",
+      "quran/recent.js?v=300",
+      "quran/checklist.js?v=300"
+    ],
+    "offlineCustomDeleteAndReload": true,
+    "quranAndRecoveryStateUnchangedByDelete": true,
+    "offlineFavouriteExactAyah": true,
+    "errors": []
+  },
+  "productionAssets": [
+    {
+      "asset": "index.html",
+      "sha256": "28dd7fdfabf2f6b373847beb26014858a3a3a9989e8d010a06a0d17d8d291885",
+      "matchesCommit": true
+    },
+    {
+      "asset": "service-worker.js",
+      "sha256": "ca2170f7155af51b4ad1df37864bc253ae31e4bdd0a275dacddf1f35b94d6285",
+      "matchesCommit": true
+    },
+    {
+      "asset": "quran/reader.css",
+      "sha256": "34828467bb76396c8d6293eb5301faa4c335a6de64378d6e5df85001c9ccd580",
+      "matchesCommit": true
+    },
+    {
+      "asset": "quran/reader.js",
+      "sha256": "f741960cbdc01684cccca88e3164c341f6d8f490d700b8c46edb39272e87d085",
+      "matchesCommit": true
+    },
+    {
+      "asset": "quran/favourites.js",
+      "sha256": "b818e0cf796f8834e4d65b9e79dbe75ed09c203a8ac8478c53459ec125626375",
+      "matchesCommit": true
+    },
+    {
+      "asset": "quran/recent.js",
+      "sha256": "a907a87050c8591c616494292fc7f083ab6463f7a13719b1acefe649c197cc43",
+      "matchesCommit": true
+    },
+    {
+      "asset": "quran/checklist.js",
+      "sha256": "cb8715d35a15cf2bfdb74a3ec429809732513e54dc88c97811939dcdf7378e76",
+      "matchesCommit": true
+    },
+    {
+      "asset": "source-delete.js",
+      "sha256": "c9817740c9bd2eb4d4232408905b6773168aa0bd143037a917a7e415c0b2558b",
+      "matchesCommit": true
+    }
+  ],
+  "productionDeployment": 6852969171,
+  "physicalIPhoneSafariTested": false,
+  "allMilestones": "VERIFIED",
+  "knownIssue": "Old checklist test migration-notice assertion predates accepted UI Polish; external expectation adapter verified against baseline; app unchanged."
+}
